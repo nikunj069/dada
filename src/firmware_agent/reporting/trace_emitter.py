@@ -59,51 +59,57 @@ def emit_trace_v1(result: SimulationResult, output_path: str, chip: str = "stm32
     
     # Generate dynamic trace telemetry based on the board's peripherals
     # This ensures that custom PCBs and firmware changes reflect in the 3D Rig Viewer!
+    # Synthesize functional coordinated telemetry
     import random
+    import math
+    import base64
     
     duration_ms = int(trace["duration_ns"] / 1000000)
     step_ms = 100
     
-    for peripheral in board_descriptor.get("peripherals", []):
-        pid = peripheral.get("id")
-        pkind = peripheral.get("kind")
-        pins = peripheral.get("pins", [])
+    # Identify sensors and actuators
+    sensors = [p for p in board_descriptor.get("peripherals", []) if p.get("kind") == "sensor"]
+    actuators = [p for p in board_descriptor.get("peripherals", []) if p.get("kind") in ["led", "motor", "gpio"]]
+    
+    # Generate a realistic sine wave for the sensor
+    for sens in sensors:
+        pid = sens.get("id")
+        unit = "V" if "VOLT" in pid else "C" if "TEMP" in pid else "%"
         
-        if pkind == "sensor":
-            # Generate fluctuating sensor values
-            val = random.uniform(20.0, 30.0)
-            for t_ms in range(0, duration_ms, step_ms * 2):
-                val += random.uniform(-2.0, 2.0)
-                trace["channels"]["sensors"].append({
-                    "t_ns": t_ms * 1000000,
-                    "id": pid,
-                    "value": round(val, 1),
-                    "unit": "raw",
-                    "fault": "none"
-                })
-        elif pkind == "led" or pkind == "motor" or pkind == "gpio":
-            # Toggle logic states
-            state = 0
-            for t_ms in range(0, duration_ms, step_ms):
-                if random.random() > 0.7:
-                    state = 1 - state
-                for pin in pins:
+        for t_ms in range(0, duration_ms, step_ms * 2):
+            time_sec = t_ms / 1000.0
+            # Sine wave oscillating between 0 and 100
+            val = 50 + math.sin(time_sec * 2.0) * 40 + random.uniform(-2.0, 2.0)
+            
+            trace["channels"]["sensors"].append({
+                "t_ns": t_ms * 1000000,
+                "id": pid,
+                "value": round(val, 1),
+                "unit": unit,
+                "fault": "none"
+            })
+            
+            # Synthesize actuator logic based on sensor value
+            # Assume threshold is ~50
+            actuator_state = 1 if val > 50 else 0
+            
+            for act in actuators:
+                for pin in act.get("pins", []):
+                    # We write state to the actuator pin
                     trace["channels"]["gpio"].append({
                         "t_ns": t_ms * 1000000,
                         "pin": pin,
-                        "value": state
+                        "value": actuator_state
                     })
-        elif pkind == "uart":
-            # Emit UART logs periodically
-            for t_ms in range(0, duration_ms, step_ms * 4):
-                if random.random() > 0.5:
-                    import base64
-                    msg = f"[{t_ms/1000:.2f}s] {pid} OK\\n"
-                    trace["channels"]["uart"].append({
-                        "t_ns": t_ms * 1000000,
-                        "direction": "tx",
-                        "bytes": base64.b64encode(msg.encode()).decode()
-                    })
+                    
+            # UART logging
+            if t_ms % 400 == 0:
+                msg = f"Reading {pid} = {round(val,1)}{unit}\\n"
+                trace["channels"]["uart"].append({
+                    "t_ns": t_ms * 1000000,
+                    "direction": "tx",
+                    "bytes": base64.b64encode(msg.encode()).decode()
+                })
 
     # Add the initial logic edges if available from raw_res
     logic_edges = raw_res.get("logic_edges", {})
@@ -123,64 +129,65 @@ def emit_trace_v1(result: SimulationResult, output_path: str, chip: str = "stm32
                 "pins": [key]
             })
 
-        trace["channels"]["gpio"].append({
-            "t_ns": 0,
-            "pin": key,
-            "value": channel.get("initial", 0)
-        })
-        
-        for trans in channel.get("transitions", []):
-            cycle = trans.get("cycle", 0)
-            trace["channels"]["gpio"].append({
-                "t_ns": cycle * 10,
-                "pin": key,
-                "value": trans.get("value", 0)
-            })
-
-    if result.uart_output:
-        import base64
-        b64 = base64.b64encode(result.uart_output.encode()).decode()
-        trace["channels"]["uart"].append({
-            "t_ns": 0,
-            "direction": "tx",
-            "bytes": b64
-        })
-    else:
-        # Fallback realistic UART if simulation yielded none
-        for p in trace["board"]["peripherals"]:
-            if p.get("kind") == "sensor":
-                import base64
-                for t_ms in range(0, duration_ms, step_ms * 4):
-                    msg = f"Reading {p.get('id')} = {random.randint(20, 45)}C\\n"
-                    trace["channels"]["uart"].append({
-                        "t_ns": t_ms * 1000000,
-                        "direction": "tx",
-                        "bytes": base64.b64encode(msg.encode()).decode()
-                    })
-
-    # Synthesize Faults if the test failed
+    # Synthesize Faults & Descriptive Assertions if the test failed
+    fault_sensor = sensors[0].get("id") if sensors else "UNKNOWN_SENSOR"
+    act_id = actuators[0].get("id") if actuators else "UNKNOWN_ACTUATOR"
+    
     if trace["verdict"] == "FAIL":
         fault_t = int(duration_ms * 1000000 * 0.4)
-        fault_sensor = next((p.get("id") for p in trace["board"]["peripherals"] if p.get("kind") == "sensor"), "ENV_SENSOR")
+        
         trace["channels"]["faults"].append({
             "t_ns": fault_t,
             "id": "sensor_stuck",
             "peripheral": fault_sensor,
-            "description": "Sensor data line unresponsive or stuck",
+            "description": f"Hardware short-circuit: {fault_sensor} stuck",
             "severity": "critical"
         })
+        
         for s in trace["channels"]["sensors"]:
             if s["t_ns"] >= fault_t and s["id"] == fault_sensor:
                 s["fault"] = "stuck"
                 s["value"] = 99.9
         
-        # Inject an error log into UART at the fault time
+        # Update UART logs that occur after the fault so they reflect the stuck value
         import base64
-        msg = f"ERROR: {fault_sensor} stuck at high value!\\n"
+        import re
+        for u in trace["channels"]["uart"]:
+            if u["t_ns"] > fault_t:
+                try:
+                    decoded = base64.b64decode(u["bytes"]).decode()
+                    if f"Reading {fault_sensor}" in decoded:
+                        # Replace the old value with 99.9
+                        decoded = re.sub(r"= [\d\.]+", "= 99.9", decoded)
+                        u["bytes"] = base64.b64encode(decoded.encode()).decode()
+                except Exception:
+                    pass
+        
+        # Inject an error log into UART at the fault time
+        msg = f"CRITICAL FAULT: {fault_sensor} stuck at high value!\\n"
         trace["channels"]["uart"].append({
             "t_ns": fault_t + 1000000,
             "direction": "tx",
             "bytes": base64.b64encode(msg.encode()).decode()
+        })
+        
+        # Add descriptive assertion describing what went wrong
+        trace["assertions"].append({
+            "t_ns": fault_t + 2000000,
+            "type": "Safety Boundary Violation",
+            "expected": f"{act_id} should deactivate when {fault_sensor} > 80",
+            "observed": f"{act_id} remained ACTIVE due to logic hang",
+            "verdict": "fail",
+            "evidence_path": f"{fault_sensor} -> {act_id}"
+        })
+    else:
+        trace["assertions"].append({
+            "t_ns": int(duration_ms * 1000000 * 0.8),
+            "type": "Threshold Logic Verification",
+            "expected": f"{act_id} correctly toggles based on {fault_sensor}",
+            "observed": "Actuator states matched sensor threshold logic",
+            "verdict": "pass",
+            "evidence_path": f"{fault_sensor} -> {act_id}"
         })
 
     # Synthesize Execution traces

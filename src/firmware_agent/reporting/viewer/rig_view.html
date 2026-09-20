@@ -953,7 +953,7 @@
     const faultLatest = latestAt(ch.faults, playhead_ns);
     if (faultLatest){
       const row = document.createElement('div'); row.className='kv';
-      row.innerHTML = `<span>FAULT</span><span class="v fault">${faultLatest.kind}</span>`;
+      row.innerHTML = `<span>FAULT</span><span class="v fault" title="${faultLatest.description || ''}">${faultLatest.id}</span>`;
       kvHost.appendChild(row);
     }
     // uart log (append rows up to playhead, capped)
@@ -974,17 +974,19 @@
       $('exec-src').textContent = execLatest.source ? (execLatest.source.file+':'+execLatest.source.line) : '—';
     }
 
-    // assertion evidence panel (most recent at/near playhead)
-    const nearAssert = (trace.assertions||[]).filter(a=>Math.abs(a.t_ns-playhead_ns) < (trace.duration_ns*0.01)).slice(-1)[0];
+    // assertion evidence panel (latest assertion up to playhead)
+    const passedAsserts = (trace.assertions||[]).filter(a => a.t_ns <= playhead_ns);
+    const latestAssert = passedAsserts.length ? passedAsserts[passedAsserts.length - 1] : null;
     const evHost = $('evidence');
-    if (nearAssert){
-      evHost.className = 'panel show ' + (nearAssert.verdict==='pass'?'pass':'');
+    
+    if (latestAssert){
+      evHost.className = 'panel show ' + (latestAssert.verdict==='pass'?'pass':'');
       evHost.innerHTML = `
-        <div class="panel-title">ASSERTION · ${nearAssert.type.toUpperCase()}</div>
-        <div class="kv"><span>VERDICT</span><span class="v ${nearAssert.verdict==='pass'?'ok':'fault'}">${nearAssert.verdict.toUpperCase()}</span></div>
-        <div class="kv"><span>EXPECTED</span><span class="v">${jsShort(nearAssert.expected)}</span></div>
-        <div class="kv"><span>OBSERVED</span><span class="v">${jsShort(nearAssert.observed)}</span></div>
-        <div class="kv"><span>EVIDENCE</span><span class="v" style="font-size:9px;">${nearAssert.evidence_path||'—'}</span></div>`;
+        <div class="panel-title">ASSERTION · ${latestAssert.type.toUpperCase()}</div>
+        <div class="kv"><span>VERDICT</span><span class="v ${latestAssert.verdict==='pass'?'ok':'fault'}">${latestAssert.verdict.toUpperCase()}</span></div>
+        <div class="kv"><span>EXPECTED</span><span class="v">${jsShort(latestAssert.expected)}</span></div>
+        <div class="kv"><span>OBSERVED</span><span class="v">${jsShort(latestAssert.observed)}</span></div>
+        <div class="kv"><span>EVIDENCE</span><span class="v" style="font-size:9px;">${latestAssert.evidence_path||'—'}</span></div>`;
     } else {
       evHost.className = 'panel'; evHost.innerHTML='';
     }
