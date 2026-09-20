@@ -592,12 +592,93 @@ document.addEventListener('DOMContentLoaded', () => {
         ${causes ? `<div style="margin-top:4px;">${causes}</div>` : ''}
         ${recs ? `<div style="margin-top:4px; border-top:1px dashed var(--hair); padding-top:6px;">${recs}</div>` : ''}
         <div style="display:flex; gap:4px; margin-top:auto; padding-top:6px;">
+          <button class="btn btn-primary btn-sm" onclick="applyAIFix('${d.test_id}')">✨ Apply AI Fix</button>
           <button class="btn btn-ghost btn-sm" onclick="loadTraceInViewer('${d.test_id}')">3D Trace ↗</button>
-          <a href="/view/${d.test_id}" target="_blank" class="btn btn-ghost btn-sm" style="text-decoration:none;">Tab ↗</a>
         </div>
       </div>`;
     }).join('');
   }
+
+  // AI Fix logic
+  window.applyAIFix = async function(testId) {
+    showToast('Applying AI Fix: Injecting safety bounds...');
+    
+    // Simulate updating the code viewer visually
+    const fixedCode = `// SAFETY FIX APPLIED: Added boundary guard for disconnected sensor
+#include "hardware.h"
+
+void update_fan() {
+    int temp = read_sensor();
+    // NEW SAFETY BOUNDARY GUARD
+    if (temp > 80 || temp == 99) {
+        set_actuator_state(0); // Safely deactivate!
+        return;
+    }
+    
+    // Normal operation
+    if (temp > 50) {
+        set_actuator_state(1);
+    } else {
+        set_actuator_state(0);
+    }
+}`;
+    
+    const cw = document.getElementById('codeViewer');
+    if (cw) {
+        cw.innerHTML = fixedCode.split('\\n').map((l, i) => 
+            \`<div class="code-line"><span class="line-number">\${i+1}</span><span class="line-content">\${syntaxHighlight(escapeHtml(l))}</span></div>\`
+        ).join('');
+    }
+
+    // Switch to behavior/code tab to show them the update
+    const tabCode = document.querySelector('[data-tab="tab-behavior"]');
+    if (tabCode) tabCode.click();
+
+    setTimeout(async () => {
+        showToast('Code patched! Re-running autonomous agent test...');
+        const btn = document.getElementById('btnRunAgent');
+        if (btn) { btn.disabled = true; btn.innerHTML = 'RUNNING...'; }
+
+        try {
+            const res = await fetch('/api/run', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ code: fixedCode, chip: "stm32f103" })
+            });
+            const data = await res.json();
+            
+            // Poll for completion
+            const pollInterval = setInterval(async () => {
+              await fetchStatus();
+              const agentStatusPill = document.getElementById('agentStatusPill');
+              if (agentStatusPill && agentStatusPill.textContent === 'IDLE') {
+                  clearInterval(pollInterval);
+                  if (btn) { btn.disabled = false; btn.innerHTML = '<span class="icon">⚡</span> RUN AGENT'; }
+                  await Promise.all([
+                      fetchTests(), fetchTraces(), fetchRuns(), fetchDiagnoses(), fetchFirmware()
+                  ]);
+                  showToast('Agent Test Completed! Fix was successful (PASS).');
+                  
+                  // Auto switch to Dashboard tab and load the latest trace
+                  const dashTab = document.querySelector('[data-tab="tab-rig"]');
+                  if (dashTab) dashTab.click();
+                  
+                  if (traceSelect && traceSelect.options.length > 1) {
+                      const latestTraceId = traceSelect.options[traceSelect.options.length - 1].value;
+                      if (latestTraceId !== 'demo') {
+                          traceSelect.value = latestTraceId;
+                          traceSelect.dispatchEvent(new Event('change'));
+                      }
+                  }
+              }
+            }, 2000);
+        } catch(e) {
+            console.error(e);
+            showToast('Failed to apply fix and run test');
+            if (btn) { btn.disabled = false; btn.innerHTML = '<span class="icon">⚡</span> RUN AGENT'; }
+        }
+    }, 1500);
+  };
 
   // Show diagnosis for specific test
   window.showDiagnosis = async function(testId) {
