@@ -231,15 +231,36 @@ document.addEventListener('DOMContentLoaded', () => {
   if (traceSelect) {
     traceSelect.addEventListener('change', () => {
       const selected = traceSelect.value;
+      const fullscreenBtn = document.getElementById('fullscreenTraceBtn');
+      
       if (selected === 'demo') {
-        rigIframe.src = '/viewer';
+        if (rigIframe) rigIframe.src = '/viewer';
+        if (fullscreenBtn) fullscreenBtn.href = '/viewer';
         showToast('Loaded Live 3D Demo Trace');
       } else {
-        rigIframe.src = `/view/${encodeURIComponent(selected)}`;
+        const url = `/view/${encodeURIComponent(selected)}`;
+        if (rigIframe) rigIframe.src = url;
+        if (fullscreenBtn) fullscreenBtn.href = url;
         showToast(`Loaded ${selected} telemetry trace`);
       }
     });
   }
+  
+  // Expose loadTraceInViewer for matrix table buttons
+  window.loadTraceInViewer = function(testId) {
+    const tabs = document.querySelectorAll('.tab-pane');
+    const links = document.querySelectorAll('.nav-link');
+    tabs.forEach(t => t.classList.remove('active'));
+    links.forEach(l => l.classList.remove('active'));
+    
+    document.getElementById('tab-rig').classList.add('active');
+    document.querySelector('.nav-link[data-target="tab-rig"]').classList.add('active');
+    
+    if (traceSelect) {
+      traceSelect.value = testId;
+      traceSelect.dispatchEvent(new Event('change'));
+    }
+  };
 
   // ══════════════════════════════════════════════
   // FETCH RUNS (real data from /api/runs)

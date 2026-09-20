@@ -96,8 +96,8 @@ class AutonomousAgent:
                 os.makedirs(trace_dir, exist_ok=True)
                 sim_res = SimulationResult(**exec_result.simulation_result)
                 emit_trace_v1(sim_res, os.path.join(trace_dir, "trace.json"), chip=self.chip)
-            except Exception:
-                pass
+            except Exception as e:
+                print(f"TRACE ERROR: {e}")
             
             if exec_result.passed:
                 self.console.print("    [green]PASS[/green]")

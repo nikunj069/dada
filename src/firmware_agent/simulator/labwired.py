@@ -123,7 +123,7 @@ class LabWiredAdapter(SimulatorAdapter):
                     # Nordic/generic convention: gpio0 → P0.0..P0.N (numeric suffix)
                     elif suffix.isdigit():
                         config_block = periph.get("config", {})
-                        ngpios = config_block.get("ngpios", 16) if isinstance(config_block, dict) else 16
+                        ngpios = config_block.get("num_pins", config_block.get("ngpios", 32)) if isinstance(config_block, dict) else 32
                         for pin_num in range(ngpios):
                             pins.append(f"P{suffix}.{pin_num}")
 

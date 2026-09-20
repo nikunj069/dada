@@ -410,8 +410,7 @@ async def create_board(request: Request):
     board.setdefault("created_by", "user")
     board.setdefault("board_name", f"Custom {chip} board")
 
-    board_name = board.get("board_name", chip).replace(" ", "_").lower()
-    filename = f"{board_name}.json"
+    filename = f"{chip}.json"
     out_path = BOARDS_DIR / filename
     BOARDS_DIR.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(board, indent=2), encoding="utf-8")

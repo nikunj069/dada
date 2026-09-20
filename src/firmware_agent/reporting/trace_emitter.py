@@ -8,6 +8,8 @@ def emit_trace_v1(result: SimulationResult, output_path: str, chip: str = "stm32
     
     # Load board descriptor
     import os
+    from pathlib import Path
+    
     board_descriptor = {
         "chip": chip,
         "package": "generic",
@@ -15,8 +17,11 @@ def emit_trace_v1(result: SimulationResult, output_path: str, chip: str = "stm32
         "peripherals": []
     }
     
-    board_json_path = os.path.join("hardware", "boards", f"{chip}.json")
-    if os.path.exists(board_json_path):
+    # Resolve the path relative to the project root
+    project_root = Path(__file__).resolve().parent.parent.parent.parent
+    board_json_path = project_root / "hardware" / "boards" / f"{chip}.json"
+    
+    if board_json_path.exists():
         with open(board_json_path, "r") as bf:
             board_descriptor = json.load(bf)
             
