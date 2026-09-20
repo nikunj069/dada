@@ -334,14 +334,15 @@
       <div style="display: flex; flex-direction: column; gap: 14px;">
         <div>
           <label style="display: block; font-family: var(--font-mono); font-size: 11px; color: var(--silk-muted); margin-bottom: 6px;">FIRMWARE SOURCE (C CODE)</label>
-          <textarea id="firmwareCodeInput" class="code-input" rows="12" placeholder="Paste your C firmware code here..."></textarea>
+          <textarea id="firmwareCodeInput" class="code-input" rows="10" placeholder="Paste your C firmware code here..."></textarea>
         </div>
         
         <div>
-          <label style="display: block; font-family: var(--font-mono); font-size: 11px; color: var(--silk-muted); margin-bottom: 6px;">TARGET CHIP</label>
-          <select id="chipSelect" class="trace-select" style="width: 100%; padding: 8px 10px; font-size: 12px;">
+          <label style="display: block; font-family: var(--font-mono); font-size: 11px; color: var(--silk-muted); margin-bottom: 6px;">TARGET CHIP / MANIFEST</label>
+          <select id="chipSelect" class="trace-select" style="width: 100%; padding: 8px 10px; font-size: 12px; margin-bottom: 8px;">
             <option value="stm32f103">STM32F103 (Default)</option>
           </select>
+          <textarea id="pcbBlueprintInput" class="code-input" rows="4" placeholder="Or paste custom PCB Board Descriptor (JSON)..."></textarea>
         </div>
       </div>
       

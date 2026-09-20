@@ -671,6 +671,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const btnSubmitRun = document.getElementById('btnSubmitRun');
   const firmwareCodeInput = document.getElementById('firmwareCodeInput');
   const chipSelect = document.getElementById('chipSelect');
+  const pcbBlueprintInput = document.getElementById('pcbBlueprintInput');
 
   function closeModal() {
     if (newRunModal) newRunModal.classList.remove('show');
@@ -704,18 +705,40 @@ document.addEventListener('DOMContentLoaded', () => {
     btnSubmitRun.addEventListener('click', async () => {
       try {
         const code = firmwareCodeInput ? firmwareCodeInput.value : '';
-        const chip = chipSelect ? chipSelect.value : 'stm32f103';
+        let chip = chipSelect ? chipSelect.value : 'stm32f103';
+        const pcbJsonStr = pcbBlueprintInput ? pcbBlueprintInput.value : '';
 
         if (!code.trim()) {
           showToast('Firmware code cannot be empty.');
           return;
         }
 
+        // If user provided a PCB blueprint, POST it first
+        if (pcbJsonStr.trim()) {
+          try {
+            const pcbData = JSON.parse(pcbJsonStr);
+            if (!pcbData.chip) throw new Error("PCB JSON must contain a 'chip' field.");
+            
+            const boardRes = await fetch('/api/boards', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(pcbData)
+            });
+            if (!boardRes.ok) throw new Error("Failed to save custom board descriptor");
+            chip = pcbData.chip;
+            showToast(`Custom PCB loaded: ${chip}`);
+          } catch (e) {
+            showToast('Invalid PCB Blueprint: ' + e.message);
+            return;
+          }
+        }
+
         closeModal();
 
         if (btnRunAgent) {
           btnRunAgent.disabled = true;
-          btnRunAgent.textContent = 'STARTING...';
+          // Cool animation for execution
+          btnRunAgent.innerHTML = '<span class="icon" style="display:inline-block; animation:spin 1s linear infinite;">⟳</span> RUNNING...';
         }
         showToast('Autonomous Agent pipeline dispatched!');
 
@@ -732,10 +755,14 @@ document.addEventListener('DOMContentLoaded', () => {
           await fetchStatus();
           if (agentStatusPill && agentStatusPill.textContent === 'IDLE') {
             clearInterval(pollInterval);
+            if (btnRunAgent) {
+              btnRunAgent.disabled = false;
+              btnRunAgent.innerHTML = '<span class="icon">⚡</span> RUN AGENT';
+            }
             // Refresh all data
             await Promise.all([
               fetchTests(), fetchTraces(), fetchRuns(), fetchDiagnoses(),
-              fetchFirmware(), fetchBehavior()
+              fetchFirmware(), fetchBehavior(), fetchBoards()
             ]);
             showToast('Agent completed! All data refreshed.');
           }

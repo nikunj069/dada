@@ -1411,3 +1411,7 @@ footer.app-footer {
   border-color: var(--phosphor);
   box-shadow: 0 0 0 2px rgba(255, 176, 0, 0.1);
 }
+
+@keyframes spin {
+  100% { transform: rotate(360deg); }
+}
