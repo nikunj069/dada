@@ -126,6 +126,7 @@ class LabWiredAdapter(SimulatorAdapter):
                         ngpios = config_block.get("num_pins", config_block.get("ngpios", 32)) if isinstance(config_block, dict) else 32
                         for pin_num in range(ngpios):
                             pins.append(f"P{suffix}.{pin_num}")
+                            pins.append(f"P{suffix}.{pin_num:02d}")
 
         return SimulatorCapabilities(
             chip=chip,

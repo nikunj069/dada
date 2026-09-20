@@ -126,7 +126,7 @@ async def view_run(run_id: str):
     inject = f"""<script>
     if (!window.location.search.includes('trace-url')) {{
         const sep = window.location.search ? '&' : '?';
-        window.history.replaceState(null, '', window.location.pathname + sep + 'trace-url=/api/runs/{run_id}/trace.json');
+        window.history.replaceState(null, '', window.location.pathname + sep + 'trace-url=/api/traces/{run_id}');
     }}
     </script>"""
     html = html.replace("</head>", f"{inject}\n</head>")

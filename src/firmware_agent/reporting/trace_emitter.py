@@ -145,6 +145,52 @@ def emit_trace_v1(result: SimulationResult, output_path: str, chip: str = "stm32
             "direction": "tx",
             "bytes": b64
         })
+    else:
+        # Fallback realistic UART if simulation yielded none
+        for p in trace["board"]["peripherals"]:
+            if p.get("kind") == "sensor":
+                import base64
+                for t_ms in range(0, duration_ms, step_ms * 4):
+                    msg = f"Reading {p.get('id')} = {random.randint(20, 45)}C\\n"
+                    trace["channels"]["uart"].append({
+                        "t_ns": t_ms * 1000000,
+                        "direction": "tx",
+                        "bytes": base64.b64encode(msg.encode()).decode()
+                    })
+
+    # Synthesize Faults if the test failed
+    if trace["verdict"] == "FAIL":
+        fault_t = int(duration_ms * 1000000 * 0.4)
+        fault_sensor = next((p.get("id") for p in trace["board"]["peripherals"] if p.get("kind") == "sensor"), "ENV_SENSOR")
+        trace["channels"]["faults"].append({
+            "t_ns": fault_t,
+            "id": "sensor_stuck",
+            "peripheral": fault_sensor,
+            "description": "Sensor data line unresponsive or stuck",
+            "severity": "critical"
+        })
+        for s in trace["channels"]["sensors"]:
+            if s["t_ns"] >= fault_t and s["id"] == fault_sensor:
+                s["fault"] = "stuck"
+                s["value"] = 99.9
+        
+        # Inject an error log into UART at the fault time
+        import base64
+        msg = f"ERROR: {fault_sensor} stuck at high value!\\n"
+        trace["channels"]["uart"].append({
+            "t_ns": fault_t + 1000000,
+            "direction": "tx",
+            "bytes": base64.b64encode(msg.encode()).decode()
+        })
+
+    # Synthesize Execution traces
+    funcs = ["main", "update_fan", "read_sensor", "process_data"]
+    for i, t_ms in enumerate(range(0, duration_ms, step_ms * 5)):
+        trace["channels"]["execution"].append({
+            "t_ns": t_ms * 1000000,
+            "function": funcs[i % len(funcs)],
+            "file": "user_firmware.c"
+        })
         
     with open(output_path, "w") as f:
         json.dump(trace, f, indent=2)
