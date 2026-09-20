@@ -552,9 +552,15 @@ document.addEventListener('DOMContentLoaded', () => {
       diagnosisContainer.innerHTML = '<div class="loading-text">No diagnosis data available</div>';
       return;
     }
+    
+    const failedDiags = allDiagnoses.filter(d => d.verdict !== 'pass');
+    if (failedDiags.length === 0) {
+      diagnosisContainer.innerHTML = '<div class="loading-text" style="color:var(--sig-green); font-weight:600;"><span class="icon">✓</span> All tests passed! Firmware is fully verified.</div>';
+      return;
+    }
 
     // Show top 6 most interesting diagnoses (highest confidence)
-    const sorted = [...allDiagnoses].sort((a, b) => (b.confidence || 0) - (a.confidence || 0)).slice(0, 8);
+    const sorted = [...failedDiags].sort((a, b) => (b.confidence || 0) - (a.confidence || 0)).slice(0, 8);
 
     diagnosisContainer.innerHTML = sorted.map(d => {
       const confidence = Math.round((d.confidence || 0) * 100);
