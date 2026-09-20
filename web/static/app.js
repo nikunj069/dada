@@ -625,8 +625,8 @@ void update_fan() {
     
     const cw = document.getElementById('codeViewer');
     if (cw) {
-        cw.innerHTML = fixedCode.split('\\n').map((l, i) => 
-            \`<div class="code-line"><span class="line-number">\${i+1}</span><span class="line-content">\${syntaxHighlight(escapeHtml(l))}</span></div>\`
+        cw.innerHTML = fixedCode.split('\n').map((l, i) => 
+            `<div class="code-line"><span class="line-number">${i+1}</span><span class="line-content">${syntaxHighlight(escapeHtml(l))}</span></div>`
         ).join('');
     }
 
