@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>BlackBox PS3 — Autonomous Embedded Firmware Testing & 3D Rig Instrument</title>
-  <meta name="description" content="Autonomous AI Agent for Embedded Firmware Testing on LabWired Core Silicon Simulation with Interactive 3D Rig Telemetry" />
+  <title>BlackBox PS3 — Embedded Firmware Test Suite</title>
+  <meta name="description" content="Automated Testing for Embedded Firmware on LabWired Core Silicon Simulation with Interactive 3D Rig Telemetry" />
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -24,14 +24,14 @@
         <span class="brand-badge">PS3 ENGINE</span>
         <div class="brand-title">
           <h1>BLACKBOX <span>::</span> LABWIRED</h1>
-          <span class="subtitle">AUTONOMOUS EMBEDDED TESTING & 3D RIG INSTRUMENT</span>
+          <span class="subtitle">EMBEDDED TESTING & 3D RIG INSTRUMENT</span>
         </div>
       </div>
 
       <div class="telemetry-bar">
         <div class="telem-pill">
           <span class="status-dot"></span>
-          <span class="label">AGENT:</span>
+          <span class="label">TEST RUNNER:</span>
           <span class="value" id="agentStatusPill">IDLE</span>
         </div>
         <div class="telem-pill">
@@ -54,7 +54,7 @@
 
       <div class="header-actions">
         <button id="btnRunAgent" class="btn btn-primary">
-          <span class="icon">⚡</span> RUN AGENT
+          <span class="icon">▶</span> RUN TESTS
         </button>
         <a href="/viewer" target="_blank" class="btn btn-ghost" title="Open standalone 3D instrument">
           3D VIEWER ↗
@@ -129,7 +129,7 @@
             </p>
           </div>
           <button id="generateSimilarBtn" class="btn btn-primary" onclick="generateSimilarLibraryItem()">
-            <span>✦ GENERATE VARIANT</span>
+            <span>GENERATE VARIANT</span>
           </button>
         </div>
         <div id="libraryGrid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px;">
@@ -164,7 +164,7 @@
 
       <div class="panel-card">
         <div class="panel-header">
-          <h2>AUTONOMOUS TEST MATRIX</h2>
+          <h2>TEST MATRIX</h2>
           <div class="table-filter-group">
             <button class="filter-btn active" data-filter="all">ALL</button>
             <button class="filter-btn" data-filter="boundary">BOUNDARY</button>
@@ -197,7 +197,7 @@
     <section id="tab-diagnostics" class="tab-pane" style="overflow-y: auto; padding: 24px;">
       
       <div style="margin-bottom: 24px;">
-        <h2 style="color:var(--silk); font-size:18px; border-bottom:1px solid var(--surface-3); padding-bottom:8px; margin-bottom:16px;">AI Root Cause Analysis</h2>
+        <h2 style="color:var(--silk); font-size:18px; border-bottom:1px solid var(--surface-3); padding-bottom:8px; margin-bottom:16px;">Root Cause Analysis</h2>
         <div class="panel">
           <div id="defectsContainer" style="display: flex; flex-direction: column; gap: 16px;">
             <div class="loading-text">No active defects found in current firmware</div>
@@ -279,7 +279,7 @@
   <div id="newRunModal" class="modal-overlay">
     <div class="modal-content panel-card">
       <div class="panel-header" style="border-bottom: 1px solid var(--hair); padding-bottom: 10px; margin-bottom: 14px;">
-        <h2><span class="icon">⚡</span> NEW AUTONOMOUS RUN</h2>
+        <h2>▶ NEW TEST RUN</h2>
         <button id="btnCloseModal" class="btn btn-ghost btn-sm">✕</button>
       </div>
       

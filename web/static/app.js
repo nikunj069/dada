@@ -592,16 +592,16 @@ document.addEventListener('DOMContentLoaded', () => {
         ${causes ? `<div style="margin-top:4px;">${causes}</div>` : ''}
         ${recs ? `<div style="margin-top:4px; border-top:1px dashed var(--hair); padding-top:6px;">${recs}</div>` : ''}
         <div style="display:flex; gap:4px; margin-top:auto; padding-top:6px;">
-          <button class="btn btn-primary btn-sm" onclick="applyAIFix('${d.test_id}')">✨ Apply AI Fix</button>
+          <button class="btn btn-primary btn-sm" onclick="applyAIFix('${d.test_id}')">Apply Safety Patch</button>
           <button class="btn btn-ghost btn-sm" onclick="loadTraceInViewer('${d.test_id}')">3D Trace ↗</button>
         </div>
       </div>`;
     }).join('');
   }
 
-  // AI Fix logic
+  // Fix logic
   window.applyAIFix = async function(testId) {
-    showToast('Applying AI Fix: Injecting safety bounds...');
+    showToast('Applying Safety Patch: Injecting bounds...');
     
     // Simulate updating the code viewer visually
     const fixedCode = `// SAFETY FIX APPLIED: Added boundary guard for disconnected sensor
@@ -635,7 +635,7 @@ void update_fan() {
     if (tabCode) tabCode.click();
 
     setTimeout(async () => {
-        showToast('Code patched! Re-running autonomous agent test...');
+        showToast('Code patched! Re-running test pipeline...');
         const btn = document.getElementById('btnRunAgent');
         if (btn) { btn.disabled = true; btn.innerHTML = 'RUNNING...'; }
 
@@ -653,11 +653,11 @@ void update_fan() {
               const agentStatusPill = document.getElementById('agentStatusPill');
               if (agentStatusPill && agentStatusPill.textContent === 'IDLE') {
                   clearInterval(pollInterval);
-                  if (btn) { btn.disabled = false; btn.innerHTML = '<span class="icon">⚡</span> RUN AGENT'; }
+                  if (btn) { btn.disabled = false; btn.innerHTML = '<span class="icon">▶</span> RUN TESTS'; }
                   await Promise.all([
                       fetchTests(), fetchTraces(), fetchRuns(), fetchDiagnoses(), fetchFirmware()
                   ]);
-                  showToast('Agent Test Completed! Fix was successful (PASS).');
+                  showToast('Test Pipeline Completed! Patch successful (PASS).');
                   
                   // Auto switch to Dashboard tab and load the latest trace
                   const dashTab = document.querySelector('[data-tab="tab-rig"]');
@@ -859,14 +859,14 @@ void update_fan() {
             clearInterval(pollInterval);
             if (btnRunAgent) {
               btnRunAgent.disabled = false;
-              btnRunAgent.innerHTML = '<span class="icon">⚡</span> RUN AGENT';
+              btnRunAgent.innerHTML = '<span class="icon">▶</span> RUN TESTS';
             }
             // Refresh all data
             await Promise.all([
               fetchTests(), fetchTraces(), fetchRuns(), fetchDiagnoses(),
               fetchFirmware(), fetchBehavior(), fetchBoards()
             ]);
-            showToast('Agent completed! All data refreshed.');
+            showToast('Pipeline completed! All data refreshed.');
             
             // CRITICAL FIX: Automatically load the newly generated trace into the 3D Rig!
             if (traceSelect && traceSelect.options.length > 1) {
@@ -953,7 +953,7 @@ void update_fan() {
           clearInterval(pollInterval);
           if (btnRunAgent) {
             btnRunAgent.disabled = false;
-            btnRunAgent.innerHTML = '<span class="icon">⚡</span> RUN AGENT';
+            btnRunAgent.innerHTML = '<span class="icon">▶</span> RUN TESTS';
           }
           // Refresh all data
           await Promise.all([
