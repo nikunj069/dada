@@ -1,0 +1,702 @@
+[
+  {
+    "id": "gen_001_esp32",
+    "board": "gen_001_esp32.json",
+    "firmware": "gen_001_esp32.c",
+    "chip": "esp32",
+    "archetype": "AudioAmplifier"
+  },
+  {
+    "id": "gen_002_esp32",
+    "board": "gen_002_esp32.json",
+    "firmware": "gen_002_esp32.c",
+    "chip": "esp32",
+    "archetype": "VoltageDropper"
+  },
+  {
+    "id": "gen_003_stm32f103",
+    "board": "gen_003_stm32f103.json",
+    "firmware": "gen_003_stm32f103.c",
+    "chip": "stm32f103",
+    "archetype": "AudioAmplifier"
+  },
+  {
+    "id": "gen_004_esp32",
+    "board": "gen_004_esp32.json",
+    "firmware": "gen_004_esp32.c",
+    "chip": "esp32",
+    "archetype": "VoltageDropper"
+  },
+  {
+    "id": "gen_005_esp32",
+    "board": "gen_005_esp32.json",
+    "firmware": "gen_005_esp32.c",
+    "chip": "esp32",
+    "archetype": "AudioAmplifier"
+  },
+  {
+    "id": "gen_006_esp32",
+    "board": "gen_006_esp32.json",
+    "firmware": "gen_006_esp32.c",
+    "chip": "esp32",
+    "archetype": "VoltageDropper"
+  },
+  {
+    "id": "gen_007_stm32f103",
+    "board": "gen_007_stm32f103.json",
+    "firmware": "gen_007_stm32f103.c",
+    "chip": "stm32f103",
+    "archetype": "AudioAmplifier"
+  },
+  {
+    "id": "gen_008_esp32",
+    "board": "gen_008_esp32.json",
+    "firmware": "gen_008_esp32.c",
+    "chip": "esp32",
+    "archetype": "VoltageDropper"
+  },
+  {
+    "id": "gen_009_stm32f103",
+    "board": "gen_009_stm32f103.json",
+    "firmware": "gen_009_stm32f103.c",
+    "chip": "stm32f103",
+    "archetype": "VoltageDropper"
+  },
+  {
+    "id": "gen_010_nrf52840",
+    "board": "gen_010_nrf52840.json",
+    "firmware": "gen_010_nrf52840.c",
+    "chip": "nrf52840",
+    "archetype": "VoltageDropper"
+  },
+  {
+    "id": "gen_011_stm32f103",
+    "board": "gen_011_stm32f103.json",
+    "firmware": "gen_011_stm32f103.c",
+    "chip": "stm32f103",
+    "archetype": "TemperatureController"
+  },
+  {
+    "id": "gen_012_esp32",
+    "board": "gen_012_esp32.json",
+    "firmware": "gen_012_esp32.c",
+    "chip": "esp32",
+    "archetype": "VoltageDropper"
+  },
+  {
+    "id": "gen_013_nrf52840",
+    "board": "gen_013_nrf52840.json",
+    "firmware": "gen_013_nrf52840.c",
+    "chip": "nrf52840",
+    "archetype": "AudioAmplifier"
+  },
+  {
+    "id": "gen_014_nrf52840",
+    "board": "gen_014_nrf52840.json",
+    "firmware": "gen_014_nrf52840.c",
+    "chip": "nrf52840",
+    "archetype": "TemperatureController"
+  },
+  {
+    "id": "gen_015_nrf52840",
+    "board": "gen_015_nrf52840.json",
+    "firmware": "gen_015_nrf52840.c",
+    "chip": "nrf52840",
+    "archetype": "TemperatureController"
+  },
+  {
+    "id": "gen_016_esp32",
+    "board": "gen_016_esp32.json",
+    "firmware": "gen_016_esp32.c",
+    "chip": "esp32",
+    "archetype": "VoltageDropper"
+  },
+  {
+    "id": "gen_017_nrf52840",
+    "board": "gen_017_nrf52840.json",
+    "firmware": "gen_017_nrf52840.c",
+    "chip": "nrf52840",
+    "archetype": "VoltageDropper"
+  },
+  {
+    "id": "gen_018_nrf52840",
+    "board": "gen_018_nrf52840.json",
+    "firmware": "gen_018_nrf52840.c",
+    "chip": "nrf52840",
+    "archetype": "VoltageDropper"
+  },
+  {
+    "id": "gen_019_stm32f103",
+    "board": "gen_019_stm32f103.json",
+    "firmware": "gen_019_stm32f103.c",
+    "chip": "stm32f103",
+    "archetype": "AudioAmplifier"
+  },
+  {
+    "id": "gen_020_nrf52840",
+    "board": "gen_020_nrf52840.json",
+    "firmware": "gen_020_nrf52840.c",
+    "chip": "nrf52840",
+    "archetype": "AudioAmplifier"
+  },
+  {
+    "id": "gen_021_esp32",
+    "board": "gen_021_esp32.json",
+    "firmware": "gen_021_esp32.c",
+    "chip": "esp32",
+    "archetype": "AudioAmplifier"
+  },
+  {
+    "id": "gen_022_stm32f103",
+    "board": "gen_022_stm32f103.json",
+    "firmware": "gen_022_stm32f103.c",
+    "chip": "stm32f103",
+    "archetype": "VoltageDropper"
+  },
+  {
+    "id": "gen_023_nrf52840",
+    "board": "gen_023_nrf52840.json",
+    "firmware": "gen_023_nrf52840.c",
+    "chip": "nrf52840",
+    "archetype": "AudioAmplifier"
+  },
+  {
+    "id": "gen_024_esp32",
+    "board": "gen_024_esp32.json",
+    "firmware": "gen_024_esp32.c",
+    "chip": "esp32",
+    "archetype": "TemperatureController"
+  },
+  {
+    "id": "gen_025_stm32f103",
+    "board": "gen_025_stm32f103.json",
+    "firmware": "gen_025_stm32f103.c",
+    "chip": "stm32f103",
+    "archetype": "AudioAmplifier"
+  },
+  {
+    "id": "gen_026_nrf52840",
+    "board": "gen_026_nrf52840.json",
+    "firmware": "gen_026_nrf52840.c",
+    "chip": "nrf52840",
+    "archetype": "AudioAmplifier"
+  },
+  {
+    "id": "gen_027_atsamd21g18a",
+    "board": "gen_027_atsamd21g18a.json",
+    "firmware": "gen_027_atsamd21g18a.c",
+    "chip": "atsamd21g18a",
+    "archetype": "TemperatureController"
+  },
+  {
+    "id": "gen_028_esp32",
+    "board": "gen_028_esp32.json",
+    "firmware": "gen_028_esp32.c",
+    "chip": "esp32",
+    "archetype": "AudioAmplifier"
+  },
+  {
+    "id": "gen_029_stm32f103",
+    "board": "gen_029_stm32f103.json",
+    "firmware": "gen_029_stm32f103.c",
+    "chip": "stm32f103",
+    "archetype": "AudioAmplifier"
+  },
+  {
+    "id": "gen_030_esp32",
+    "board": "gen_030_esp32.json",
+    "firmware": "gen_030_esp32.c",
+    "chip": "esp32",
+    "archetype": "VoltageDropper"
+  },
+  {
+    "id": "gen_031_nrf52840",
+    "board": "gen_031_nrf52840.json",
+    "firmware": "gen_031_nrf52840.c",
+    "chip": "nrf52840",
+    "archetype": "TemperatureController"
+  },
+  {
+    "id": "gen_032_nrf52840",
+    "board": "gen_032_nrf52840.json",
+    "firmware": "gen_032_nrf52840.c",
+    "chip": "nrf52840",
+    "archetype": "VoltageDropper"
+  },
+  {
+    "id": "gen_033_esp32",
+    "board": "gen_033_esp32.json",
+    "firmware": "gen_033_esp32.c",
+    "chip": "esp32",
+    "archetype": "TemperatureController"
+  },
+  {
+    "id": "gen_034_atsamd21g18a",
+    "board": "gen_034_atsamd21g18a.json",
+    "firmware": "gen_034_atsamd21g18a.c",
+    "chip": "atsamd21g18a",
+    "archetype": "VoltageDropper"
+  },
+  {
+    "id": "gen_035_esp32",
+    "board": "gen_035_esp32.json",
+    "firmware": "gen_035_esp32.c",
+    "chip": "esp32",
+    "archetype": "TemperatureController"
+  },
+  {
+    "id": "gen_036_nrf52840",
+    "board": "gen_036_nrf52840.json",
+    "firmware": "gen_036_nrf52840.c",
+    "chip": "nrf52840",
+    "archetype": "AudioAmplifier"
+  },
+  {
+    "id": "gen_037_nrf52840",
+    "board": "gen_037_nrf52840.json",
+    "firmware": "gen_037_nrf52840.c",
+    "chip": "nrf52840",
+    "archetype": "TemperatureController"
+  },
+  {
+    "id": "gen_038_esp32",
+    "board": "gen_038_esp32.json",
+    "firmware": "gen_038_esp32.c",
+    "chip": "esp32",
+    "archetype": "AudioAmplifier"
+  },
+  {
+    "id": "gen_039_stm32f103",
+    "board": "gen_039_stm32f103.json",
+    "firmware": "gen_039_stm32f103.c",
+    "chip": "stm32f103",
+    "archetype": "AudioAmplifier"
+  },
+  {
+    "id": "gen_040_nrf52840",
+    "board": "gen_040_nrf52840.json",
+    "firmware": "gen_040_nrf52840.c",
+    "chip": "nrf52840",
+    "archetype": "VoltageDropper"
+  },
+  {
+    "id": "gen_041_esp32",
+    "board": "gen_041_esp32.json",
+    "firmware": "gen_041_esp32.c",
+    "chip": "esp32",
+    "archetype": "AudioAmplifier"
+  },
+  {
+    "id": "gen_042_nrf52840",
+    "board": "gen_042_nrf52840.json",
+    "firmware": "gen_042_nrf52840.c",
+    "chip": "nrf52840",
+    "archetype": "TemperatureController"
+  },
+  {
+    "id": "gen_043_stm32f103",
+    "board": "gen_043_stm32f103.json",
+    "firmware": "gen_043_stm32f103.c",
+    "chip": "stm32f103",
+    "archetype": "TemperatureController"
+  },
+  {
+    "id": "gen_044_atsamd21g18a",
+    "board": "gen_044_atsamd21g18a.json",
+    "firmware": "gen_044_atsamd21g18a.c",
+    "chip": "atsamd21g18a",
+    "archetype": "AudioAmplifier"
+  },
+  {
+    "id": "gen_045_atsamd21g18a",
+    "board": "gen_045_atsamd21g18a.json",
+    "firmware": "gen_045_atsamd21g18a.c",
+    "chip": "atsamd21g18a",
+    "archetype": "VoltageDropper"
+  },
+  {
+    "id": "gen_046_esp32",
+    "board": "gen_046_esp32.json",
+    "firmware": "gen_046_esp32.c",
+    "chip": "esp32",
+    "archetype": "VoltageDropper"
+  },
+  {
+    "id": "gen_047_stm32f103",
+    "board": "gen_047_stm32f103.json",
+    "firmware": "gen_047_stm32f103.c",
+    "chip": "stm32f103",
+    "archetype": "VoltageDropper"
+  },
+  {
+    "id": "gen_048_atsamd21g18a",
+    "board": "gen_048_atsamd21g18a.json",
+    "firmware": "gen_048_atsamd21g18a.c",
+    "chip": "atsamd21g18a",
+    "archetype": "AudioAmplifier"
+  },
+  {
+    "id": "gen_049_atsamd21g18a",
+    "board": "gen_049_atsamd21g18a.json",
+    "firmware": "gen_049_atsamd21g18a.c",
+    "chip": "atsamd21g18a",
+    "archetype": "VoltageDropper"
+  },
+  {
+    "id": "gen_050_stm32f103",
+    "board": "gen_050_stm32f103.json",
+    "firmware": "gen_050_stm32f103.c",
+    "chip": "stm32f103",
+    "archetype": "VoltageDropper"
+  },
+  {
+    "id": "gen_051_stm32f103",
+    "board": "gen_051_stm32f103.json",
+    "firmware": "gen_051_stm32f103.c",
+    "chip": "stm32f103",
+    "archetype": "TemperatureController"
+  },
+  {
+    "id": "gen_052_stm32f103",
+    "board": "gen_052_stm32f103.json",
+    "firmware": "gen_052_stm32f103.c",
+    "chip": "stm32f103",
+    "archetype": "VoltageDropper"
+  },
+  {
+    "id": "gen_053_atsamd21g18a",
+    "board": "gen_053_atsamd21g18a.json",
+    "firmware": "gen_053_atsamd21g18a.c",
+    "chip": "atsamd21g18a",
+    "archetype": "TemperatureController"
+  },
+  {
+    "id": "gen_054_stm32f103",
+    "board": "gen_054_stm32f103.json",
+    "firmware": "gen_054_stm32f103.c",
+    "chip": "stm32f103",
+    "archetype": "AudioAmplifier"
+  },
+  {
+    "id": "gen_055_atsamd21g18a",
+    "board": "gen_055_atsamd21g18a.json",
+    "firmware": "gen_055_atsamd21g18a.c",
+    "chip": "atsamd21g18a",
+    "archetype": "VoltageDropper"
+  },
+  {
+    "id": "gen_056_atsamd21g18a",
+    "board": "gen_056_atsamd21g18a.json",
+    "firmware": "gen_056_atsamd21g18a.c",
+    "chip": "atsamd21g18a",
+    "archetype": "AudioAmplifier"
+  },
+  {
+    "id": "gen_057_nrf52840",
+    "board": "gen_057_nrf52840.json",
+    "firmware": "gen_057_nrf52840.c",
+    "chip": "nrf52840",
+    "archetype": "AudioAmplifier"
+  },
+  {
+    "id": "gen_058_atsamd21g18a",
+    "board": "gen_058_atsamd21g18a.json",
+    "firmware": "gen_058_atsamd21g18a.c",
+    "chip": "atsamd21g18a",
+    "archetype": "VoltageDropper"
+  },
+  {
+    "id": "gen_059_atsamd21g18a",
+    "board": "gen_059_atsamd21g18a.json",
+    "firmware": "gen_059_atsamd21g18a.c",
+    "chip": "atsamd21g18a",
+    "archetype": "VoltageDropper"
+  },
+  {
+    "id": "gen_060_nrf52840",
+    "board": "gen_060_nrf52840.json",
+    "firmware": "gen_060_nrf52840.c",
+    "chip": "nrf52840",
+    "archetype": "TemperatureController"
+  },
+  {
+    "id": "gen_061_nrf52840",
+    "board": "gen_061_nrf52840.json",
+    "firmware": "gen_061_nrf52840.c",
+    "chip": "nrf52840",
+    "archetype": "VoltageDropper"
+  },
+  {
+    "id": "gen_062_atsamd21g18a",
+    "board": "gen_062_atsamd21g18a.json",
+    "firmware": "gen_062_atsamd21g18a.c",
+    "chip": "atsamd21g18a",
+    "archetype": "TemperatureController"
+  },
+  {
+    "id": "gen_063_esp32",
+    "board": "gen_063_esp32.json",
+    "firmware": "gen_063_esp32.c",
+    "chip": "esp32",
+    "archetype": "AudioAmplifier"
+  },
+  {
+    "id": "gen_064_nrf52840",
+    "board": "gen_064_nrf52840.json",
+    "firmware": "gen_064_nrf52840.c",
+    "chip": "nrf52840",
+    "archetype": "VoltageDropper"
+  },
+  {
+    "id": "gen_065_atsamd21g18a",
+    "board": "gen_065_atsamd21g18a.json",
+    "firmware": "gen_065_atsamd21g18a.c",
+    "chip": "atsamd21g18a",
+    "archetype": "TemperatureController"
+  },
+  {
+    "id": "gen_066_esp32",
+    "board": "gen_066_esp32.json",
+    "firmware": "gen_066_esp32.c",
+    "chip": "esp32",
+    "archetype": "AudioAmplifier"
+  },
+  {
+    "id": "gen_067_esp32",
+    "board": "gen_067_esp32.json",
+    "firmware": "gen_067_esp32.c",
+    "chip": "esp32",
+    "archetype": "TemperatureController"
+  },
+  {
+    "id": "gen_068_atsamd21g18a",
+    "board": "gen_068_atsamd21g18a.json",
+    "firmware": "gen_068_atsamd21g18a.c",
+    "chip": "atsamd21g18a",
+    "archetype": "AudioAmplifier"
+  },
+  {
+    "id": "gen_069_atsamd21g18a",
+    "board": "gen_069_atsamd21g18a.json",
+    "firmware": "gen_069_atsamd21g18a.c",
+    "chip": "atsamd21g18a",
+    "archetype": "VoltageDropper"
+  },
+  {
+    "id": "gen_070_atsamd21g18a",
+    "board": "gen_070_atsamd21g18a.json",
+    "firmware": "gen_070_atsamd21g18a.c",
+    "chip": "atsamd21g18a",
+    "archetype": "TemperatureController"
+  },
+  {
+    "id": "gen_071_nrf52840",
+    "board": "gen_071_nrf52840.json",
+    "firmware": "gen_071_nrf52840.c",
+    "chip": "nrf52840",
+    "archetype": "TemperatureController"
+  },
+  {
+    "id": "gen_072_atsamd21g18a",
+    "board": "gen_072_atsamd21g18a.json",
+    "firmware": "gen_072_atsamd21g18a.c",
+    "chip": "atsamd21g18a",
+    "archetype": "TemperatureController"
+  },
+  {
+    "id": "gen_073_esp32",
+    "board": "gen_073_esp32.json",
+    "firmware": "gen_073_esp32.c",
+    "chip": "esp32",
+    "archetype": "VoltageDropper"
+  },
+  {
+    "id": "gen_074_atsamd21g18a",
+    "board": "gen_074_atsamd21g18a.json",
+    "firmware": "gen_074_atsamd21g18a.c",
+    "chip": "atsamd21g18a",
+    "archetype": "TemperatureController"
+  },
+  {
+    "id": "gen_075_esp32",
+    "board": "gen_075_esp32.json",
+    "firmware": "gen_075_esp32.c",
+    "chip": "esp32",
+    "archetype": "AudioAmplifier"
+  },
+  {
+    "id": "gen_076_stm32f103",
+    "board": "gen_076_stm32f103.json",
+    "firmware": "gen_076_stm32f103.c",
+    "chip": "stm32f103",
+    "archetype": "VoltageDropper"
+  },
+  {
+    "id": "gen_077_atsamd21g18a",
+    "board": "gen_077_atsamd21g18a.json",
+    "firmware": "gen_077_atsamd21g18a.c",
+    "chip": "atsamd21g18a",
+    "archetype": "AudioAmplifier"
+  },
+  {
+    "id": "gen_078_nrf52840",
+    "board": "gen_078_nrf52840.json",
+    "firmware": "gen_078_nrf52840.c",
+    "chip": "nrf52840",
+    "archetype": "VoltageDropper"
+  },
+  {
+    "id": "gen_079_atsamd21g18a",
+    "board": "gen_079_atsamd21g18a.json",
+    "firmware": "gen_079_atsamd21g18a.c",
+    "chip": "atsamd21g18a",
+    "archetype": "VoltageDropper"
+  },
+  {
+    "id": "gen_080_atsamd21g18a",
+    "board": "gen_080_atsamd21g18a.json",
+    "firmware": "gen_080_atsamd21g18a.c",
+    "chip": "atsamd21g18a",
+    "archetype": "AudioAmplifier"
+  },
+  {
+    "id": "gen_081_nrf52840",
+    "board": "gen_081_nrf52840.json",
+    "firmware": "gen_081_nrf52840.c",
+    "chip": "nrf52840",
+    "archetype": "TemperatureController"
+  },
+  {
+    "id": "gen_082_nrf52840",
+    "board": "gen_082_nrf52840.json",
+    "firmware": "gen_082_nrf52840.c",
+    "chip": "nrf52840",
+    "archetype": "TemperatureController"
+  },
+  {
+    "id": "gen_083_atsamd21g18a",
+    "board": "gen_083_atsamd21g18a.json",
+    "firmware": "gen_083_atsamd21g18a.c",
+    "chip": "atsamd21g18a",
+    "archetype": "TemperatureController"
+  },
+  {
+    "id": "gen_084_nrf52840",
+    "board": "gen_084_nrf52840.json",
+    "firmware": "gen_084_nrf52840.c",
+    "chip": "nrf52840",
+    "archetype": "VoltageDropper"
+  },
+  {
+    "id": "gen_085_stm32f103",
+    "board": "gen_085_stm32f103.json",
+    "firmware": "gen_085_stm32f103.c",
+    "chip": "stm32f103",
+    "archetype": "VoltageDropper"
+  },
+  {
+    "id": "gen_086_nrf52840",
+    "board": "gen_086_nrf52840.json",
+    "firmware": "gen_086_nrf52840.c",
+    "chip": "nrf52840",
+    "archetype": "TemperatureController"
+  },
+  {
+    "id": "gen_087_nrf52840",
+    "board": "gen_087_nrf52840.json",
+    "firmware": "gen_087_nrf52840.c",
+    "chip": "nrf52840",
+    "archetype": "AudioAmplifier"
+  },
+  {
+    "id": "gen_088_stm32f103",
+    "board": "gen_088_stm32f103.json",
+    "firmware": "gen_088_stm32f103.c",
+    "chip": "stm32f103",
+    "archetype": "AudioAmplifier"
+  },
+  {
+    "id": "gen_089_esp32",
+    "board": "gen_089_esp32.json",
+    "firmware": "gen_089_esp32.c",
+    "chip": "esp32",
+    "archetype": "VoltageDropper"
+  },
+  {
+    "id": "gen_090_stm32f103",
+    "board": "gen_090_stm32f103.json",
+    "firmware": "gen_090_stm32f103.c",
+    "chip": "stm32f103",
+    "archetype": "AudioAmplifier"
+  },
+  {
+    "id": "gen_091_stm32f103",
+    "board": "gen_091_stm32f103.json",
+    "firmware": "gen_091_stm32f103.c",
+    "chip": "stm32f103",
+    "archetype": "VoltageDropper"
+  },
+  {
+    "id": "gen_092_atsamd21g18a",
+    "board": "gen_092_atsamd21g18a.json",
+    "firmware": "gen_092_atsamd21g18a.c",
+    "chip": "atsamd21g18a",
+    "archetype": "AudioAmplifier"
+  },
+  {
+    "id": "gen_093_stm32f103",
+    "board": "gen_093_stm32f103.json",
+    "firmware": "gen_093_stm32f103.c",
+    "chip": "stm32f103",
+    "archetype": "AudioAmplifier"
+  },
+  {
+    "id": "gen_094_esp32",
+    "board": "gen_094_esp32.json",
+    "firmware": "gen_094_esp32.c",
+    "chip": "esp32",
+    "archetype": "VoltageDropper"
+  },
+  {
+    "id": "gen_095_atsamd21g18a",
+    "board": "gen_095_atsamd21g18a.json",
+    "firmware": "gen_095_atsamd21g18a.c",
+    "chip": "atsamd21g18a",
+    "archetype": "AudioAmplifier"
+  },
+  {
+    "id": "gen_096_esp32",
+    "board": "gen_096_esp32.json",
+    "firmware": "gen_096_esp32.c",
+    "chip": "esp32",
+    "archetype": "VoltageDropper"
+  },
+  {
+    "id": "gen_097_atsamd21g18a",
+    "board": "gen_097_atsamd21g18a.json",
+    "firmware": "gen_097_atsamd21g18a.c",
+    "chip": "atsamd21g18a",
+    "archetype": "VoltageDropper"
+  },
+  {
+    "id": "gen_098_nrf52840",
+    "board": "gen_098_nrf52840.json",
+    "firmware": "gen_098_nrf52840.c",
+    "chip": "nrf52840",
+    "archetype": "VoltageDropper"
+  },
+  {
+    "id": "gen_099_atsamd21g18a",
+    "board": "gen_099_atsamd21g18a.json",
+    "firmware": "gen_099_atsamd21g18a.c",
+    "chip": "atsamd21g18a",
+    "archetype": "AudioAmplifier"
+  },
+  {
+    "id": "gen_100_atsamd21g18a",
+    "board": "gen_100_atsamd21g18a.json",
+    "firmware": "gen_100_atsamd21g18a.c",
+    "chip": "atsamd21g18a",
+    "archetype": "VoltageDropper"
+  }
+]

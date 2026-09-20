@@ -1,0 +1,22 @@
+{
+  "chip": "nrf52840",
+  "package": "generic",
+  "board_name": "GenBoard 014 - TemperatureController",
+  "created_by": "generator",
+  "peripherals": [
+    {
+      "id": "TEMP_SENS",
+      "kind": "sensor",
+      "pins": [
+        "P1.02"
+      ]
+    },
+    {
+      "id": "FAN_MOTOR",
+      "kind": "motor",
+      "pins": [
+        "P1.01"
+      ]
+    }
+  ]
+}

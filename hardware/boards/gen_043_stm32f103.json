@@ -1,0 +1,22 @@
+{
+  "chip": "stm32f103",
+  "package": "generic",
+  "board_name": "GenBoard 043 - TemperatureController",
+  "created_by": "generator",
+  "peripherals": [
+    {
+      "id": "TEMP_SENS",
+      "kind": "sensor",
+      "pins": [
+        "PB0"
+      ]
+    },
+    {
+      "id": "FAN_MOTOR",
+      "kind": "motor",
+      "pins": [
+        "PA2"
+      ]
+    }
+  ]
+}

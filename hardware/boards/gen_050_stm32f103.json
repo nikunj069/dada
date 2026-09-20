@@ -1,0 +1,22 @@
+{
+  "chip": "stm32f103",
+  "package": "generic",
+  "board_name": "GenBoard 050 - VoltageDropper",
+  "created_by": "generator",
+  "peripherals": [
+    {
+      "id": "V_MONITOR",
+      "kind": "sensor",
+      "pins": [
+        "PA0"
+      ]
+    },
+    {
+      "id": "ALARM_LED",
+      "kind": "led",
+      "pins": [
+        "PA2"
+      ]
+    }
+  ]
+}

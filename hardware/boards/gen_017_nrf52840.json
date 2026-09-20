@@ -1,0 +1,22 @@
+{
+  "chip": "nrf52840",
+  "package": "generic",
+  "board_name": "GenBoard 017 - VoltageDropper",
+  "created_by": "generator",
+  "peripherals": [
+    {
+      "id": "V_MONITOR",
+      "kind": "sensor",
+      "pins": [
+        "P0.14"
+      ]
+    },
+    {
+      "id": "ALARM_LED",
+      "kind": "led",
+      "pins": [
+        "P0.11"
+      ]
+    }
+  ]
+}

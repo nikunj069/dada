@@ -1,0 +1,29 @@
+{
+  "chip": "nrf52840",
+  "package": "generic",
+  "board_name": "GenBoard 057 - AudioAmplifier",
+  "created_by": "generator",
+  "peripherals": [
+    {
+      "id": "AUDIO_IN",
+      "kind": "sensor",
+      "pins": [
+        "P1.01"
+      ]
+    },
+    {
+      "id": "SPEAKER",
+      "kind": "motor",
+      "pins": [
+        "P0.12"
+      ]
+    },
+    {
+      "id": "CLIP_LED",
+      "kind": "led",
+      "pins": [
+        "P1.02"
+      ]
+    }
+  ]
+}

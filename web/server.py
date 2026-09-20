@@ -682,6 +682,39 @@ async def trigger_run(request: RunRequest, background_tasks: BackgroundTasks):
     background_tasks.add_task(run_agent_task, fw_path, chip)
     return {"status": "started", "message": "Autonomous agent test pipeline launched"}
 
+@app.post("/api/run_library/{library_id}")
+async def trigger_run_library(library_id: str, background_tasks: BackgroundTasks):
+    global is_running_tests, ACTIVE_FIRMWARE_C
+    if is_running_tests:
+        return {"status": "busy", "message": "Agent test loop is already running"}
+    
+    # library_id is something like "gen_001_esp32"
+    chip = library_id.split("_")[-1]
+    
+    c_file = BASE_DIR / "firmware" / "demos" / f"{library_id}.c"
+    if not c_file.exists():
+        raise HTTPException(status_code=404, detail="Library firmware not found")
+        
+    board_file = BASE_DIR / "hardware" / "boards" / f"{library_id}.json"
+    if not board_file.exists():
+        raise HTTPException(status_code=404, detail="Library board not found")
+        
+    # Copy library board to the standard chip board name so trace generator picks it up?
+    # Wait, the frontend passes `chip` to run_agent_task which passes it to LabWiredAdapter
+    # LabWiredAdapter uses `chip` to load `hardware/boards/{chip}.json`.
+    # So we MUST overwrite `hardware/boards/{chip}.json` or pass the exact library_id!
+    # Let's overwrite `hardware/boards/{chip}.json` with our generated board so the agent uses it!
+    standard_board_file = BASE_DIR / "hardware" / "boards" / f"{chip}.json"
+    import shutil
+    shutil.copy(board_file, standard_board_file)
+    
+    ACTIVE_FIRMWARE_C = c_file
+    fw_path = str(c_file)
+    
+    background_tasks.add_task(run_agent_task, fw_path, chip)
+    return {"status": "started", "message": f"Pipeline launched for {library_id}"}
+
+
 
 def main():
     port = int(os.environ.get("PORT", 8080))

@@ -1,0 +1,29 @@
+{
+  "chip": "esp32",
+  "package": "generic",
+  "board_name": "GenBoard 075 - AudioAmplifier",
+  "created_by": "generator",
+  "peripherals": [
+    {
+      "id": "AUDIO_IN",
+      "kind": "sensor",
+      "pins": [
+        "P5"
+      ]
+    },
+    {
+      "id": "SPEAKER",
+      "kind": "motor",
+      "pins": [
+        "P14"
+      ]
+    },
+    {
+      "id": "CLIP_LED",
+      "kind": "led",
+      "pins": [
+        "P2"
+      ]
+    }
+  ]
+}

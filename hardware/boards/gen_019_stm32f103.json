@@ -1,0 +1,29 @@
+{
+  "chip": "stm32f103",
+  "package": "generic",
+  "board_name": "GenBoard 019 - AudioAmplifier",
+  "created_by": "generator",
+  "peripherals": [
+    {
+      "id": "AUDIO_IN",
+      "kind": "sensor",
+      "pins": [
+        "PB0"
+      ]
+    },
+    {
+      "id": "SPEAKER",
+      "kind": "motor",
+      "pins": [
+        "PA3"
+      ]
+    },
+    {
+      "id": "CLIP_LED",
+      "kind": "led",
+      "pins": [
+        "PA1"
+      ]
+    }
+  ]
+}

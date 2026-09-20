@@ -1,0 +1,22 @@
+{
+  "chip": "esp32",
+  "package": "generic",
+  "board_name": "GenBoard 035 - TemperatureController",
+  "created_by": "generator",
+  "peripherals": [
+    {
+      "id": "TEMP_SENS",
+      "kind": "sensor",
+      "pins": [
+        "P4"
+      ]
+    },
+    {
+      "id": "FAN_MOTOR",
+      "kind": "motor",
+      "pins": [
+        "P2"
+      ]
+    }
+  ]
+}

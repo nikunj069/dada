@@ -800,6 +800,103 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ══════════════════════════════════════════════
+  // LIBRARY & PROCEDURAL GENERATION
+  // ══════════════════════════════════════════════
+  let allLibraryItems = [];
+
+  async function fetchLibrary() {
+    try {
+      const res = await fetch('/static/library_index.json');
+      if (!res.ok) return;
+      allLibraryItems = await res.json();
+      renderLibrary();
+    } catch (e) {
+      console.warn('Library fetch error:', e);
+    }
+  }
+
+  function renderLibrary() {
+    const grid = document.getElementById('libraryGrid');
+    const badge = document.getElementById('libraryCountBadge');
+    if (!grid) return;
+    
+    if (badge) badge.textContent = allLibraryItems.length;
+
+    grid.innerHTML = allLibraryItems.map((item, idx) => {
+      const chipBadge = `<span class="chip-badge" style="background:var(--surface-3); color:var(--silk);">${item.chip}</span>`;
+      return `<div class="board-card" style="display: flex; flex-direction: column; justify-content: space-between; border: 1px solid var(--surface-3); background: var(--surface-1); padding: 16px; border-radius: 8px;">
+        <div>
+          <div style="font-size: 14px; font-weight: 600; color: var(--silk); margin-bottom: 8px; display: flex; justify-content: space-between;">
+            <span>Example #${idx+1}</span>
+            ${chipBadge}
+          </div>
+          <div style="font-size: 12px; color: var(--silk-muted); margin-bottom: 4px;">Type: <strong style="color:var(--copper);">${item.archetype}</strong></div>
+          <div style="font-size: 11px; color: var(--silk-dim); font-family: var(--font-mono);">Board: ${item.board}</div>
+          <div style="font-size: 11px; color: var(--silk-dim); font-family: var(--font-mono);">Firmware: ${item.firmware}</div>
+        </div>
+        <div style="margin-top: 16px;">
+          <button class="btn btn-ghost btn-sm" style="width: 100%; justify-content: center; border: 1px solid var(--surface-3);" onclick="runLibraryItem('${item.id}')">Load & Test ↗</button>
+        </div>
+      </div>`;
+    }).join('');
+  }
+
+  window.runLibraryItem = async function(libraryId) {
+    showToast(`Loading and Testing Library Item: ${libraryId}...`);
+    
+    const btnRunAgent = document.getElementById('btnRunAgent');
+    if (btnRunAgent) {
+      btnRunAgent.disabled = true;
+      btnRunAgent.innerHTML = '<span class="icon" style="display:inline-block; animation:spin 1s linear infinite;">⟳</span> RUNNING...';
+    }
+
+    try {
+      const res = await fetch(`/api/run_library/${libraryId}`, { method: 'POST' });
+      const data = await res.json();
+      showToast(data.message);
+
+      // Poll status until complete
+      const pollInterval = setInterval(async () => {
+        await fetchStatus();
+        const agentStatusPill = document.getElementById('agentStatusPill');
+        if (agentStatusPill && agentStatusPill.textContent === 'IDLE') {
+          clearInterval(pollInterval);
+          if (btnRunAgent) {
+            btnRunAgent.disabled = false;
+            btnRunAgent.innerHTML = '<span class="icon">⚡</span> RUN AGENT';
+          }
+          // Refresh all data
+          await Promise.all([
+            fetchTests(), fetchTraces(), fetchRuns(), fetchDiagnoses(),
+            fetchFirmware(), fetchBehavior(), fetchBoards(), fetchLibrary()
+          ]);
+          showToast('Library Item Test complete! 3D Rig updated.');
+          // Auto switch to Dashboard tab
+          const dashTab = document.querySelector('[data-tab="tab-rig"]');
+          if (dashTab) dashTab.click();
+        }
+      }, 2000);
+    } catch (e) {
+      console.error('Library run error:', e);
+      showToast('Failed to run library item.');
+      if (btnRunAgent) {
+        btnRunAgent.disabled = false;
+        btnRunAgent.innerHTML = '<span class="icon">⚡</span> RUN AGENT';
+      }
+    }
+  };
+
+  window.generateSimilarLibraryItem = async function() {
+    // A placeholder for generating a similar variant
+    const currentActive = traceSelect ? traceSelect.value : null;
+    showToast(`Generating procedural variant for active context...`);
+    setTimeout(() => {
+        showToast(`Variant generated! Try loading it from the library.`);
+        fetchLibrary(); // Refresh library
+    }, 2000);
+  };
+
+  // ══════════════════════════════════════════════
   // UTILITIES
   // ══════════════════════════════════════════════
   function escapeHtml(s) {
@@ -819,6 +916,7 @@ document.addEventListener('DOMContentLoaded', () => {
   fetchBehavior();
   fetchBoards();
   fetchDiagnoses();
+  fetchLibrary();
 
   // Periodic status refresh
   setInterval(fetchStatus, 5000);

@@ -1,0 +1,22 @@
+{
+  "chip": "esp32",
+  "package": "generic",
+  "board_name": "GenBoard 012 - VoltageDropper",
+  "created_by": "generator",
+  "peripherals": [
+    {
+      "id": "V_MONITOR",
+      "kind": "sensor",
+      "pins": [
+        "P0"
+      ]
+    },
+    {
+      "id": "ALARM_LED",
+      "kind": "led",
+      "pins": [
+        "P2"
+      ]
+    }
+  ]
+}

@@ -95,6 +95,10 @@
       <button class="nav-tab" data-tab="tab-report">
         <span>▤ REPORT</span>
       </button>
+      <button class="nav-tab" data-tab="tab-library">
+        <span>◪ PROCEDURAL LIBRARY</span>
+        <span class="tab-badge" id="libraryCountBadge">100+</span>
+      </button>
     </div>
   </nav>
 
@@ -128,6 +132,25 @@
       </div>
     </section>
 
+    <!-- ── Tab: Procedural Library ── -->
+    <section id="tab-library" class="tab-pane">
+      <div class="panel library-panel" style="padding: 24px; display: flex; flex-direction: column; gap: 24px; height: 100%; overflow-y: auto;">
+        <div style="display: flex; justify-content: space-between; align-items: flex-end; border-bottom: 1px solid var(--surface-3); padding-bottom: 16px;">
+          <div>
+            <h2 style="font-size: 20px; font-weight: 600; color: var(--silk); margin-bottom: 8px;">Procedural Board Library</h2>
+            <p style="font-size: 13px; color: var(--silk-muted); margin: 0; max-width: 600px;">
+              Explore 100+ procedurally generated embedded systems, featuring different combinations of MCUs (STM32, NRF52840, ESP32) and peripherals (Sensors, Motors, Audio, Displays).
+            </p>
+          </div>
+          <button id="generateSimilarBtn" class="btn btn-primary" onclick="generateSimilarLibraryItem()">
+            <span>✦ GENERATE VARIANT</span>
+          </button>
+        </div>
+        <div id="libraryGrid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px;">
+          <!-- Populated by app.js -->
+        </div>
+      </div>
+    </section>
     <!-- ── Tab 2: Test Matrix ── -->
     <section id="tab-matrix" class="tab-pane">
       <div class="metrics-grid">

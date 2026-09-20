@@ -1,0 +1,29 @@
+{
+  "chip": "atsamd21g18a",
+  "package": "generic",
+  "board_name": "GenBoard 080 - AudioAmplifier",
+  "created_by": "generator",
+  "peripherals": [
+    {
+      "id": "AUDIO_IN",
+      "kind": "sensor",
+      "pins": [
+        "PA04"
+      ]
+    },
+    {
+      "id": "SPEAKER",
+      "kind": "motor",
+      "pins": [
+        "PB09"
+      ]
+    },
+    {
+      "id": "CLIP_LED",
+      "kind": "led",
+      "pins": [
+        "PA05"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "chip": "atsamd21g18a",
+  "package": "generic",
+  "board_name": "GenBoard 055 - VoltageDropper",
+  "created_by": "generator",
+  "peripherals": [
+    {
+      "id": "V_MONITOR",
+      "kind": "sensor",
+      "pins": [
+        "PB09"
+      ]
+    },
+    {
+      "id": "ALARM_LED",
+      "kind": "led",
+      "pins": [
+        "PA02"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "chip": "atsamd21g18a",
+  "package": "generic",
+  "board_name": "GenBoard 027 - TemperatureController",
+  "created_by": "generator",
+  "peripherals": [
+    {
+      "id": "TEMP_SENS",
+      "kind": "sensor",
+      "pins": [
+        "PA04"
+      ]
+    },
+    {
+      "id": "FAN_MOTOR",
+      "kind": "motor",
+      "pins": [
+        "PA05"
+      ]
+    }
+  ]
+}
