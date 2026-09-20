@@ -1,0 +1,24 @@
+{
+  "chip": "esp32",
+  "package": "generic",
+  "board_name": "GenBoard 072 - PIR_Motion2Water_Pump_Threshold_Low",
+  "created_by": "generator",
+  "peripherals": [
+    {
+      "id": "PIR_SENS",
+      "kind": "sensor",
+      "pins": [
+        "P12"
+      ],
+      "label": "PIR_Motion Sensor"
+    },
+    {
+      "id": "WTR_PUMP",
+      "kind": "motor",
+      "pins": [
+        "P5"
+      ],
+      "label": "Water Pump"
+    }
+  ]
+}

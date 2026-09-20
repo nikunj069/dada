@@ -1,0 +1,24 @@
+{
+  "chip": "esp32",
+  "package": "generic",
+  "board_name": "GenBoard 034 - HallEffect2Heater_Threshold_Low",
+  "created_by": "generator",
+  "peripherals": [
+    {
+      "id": "HALL_SENS",
+      "kind": "sensor",
+      "pins": [
+        "P12"
+      ],
+      "label": "HallEffect Sensor"
+    },
+    {
+      "id": "HEAT_COIL",
+      "kind": "led",
+      "pins": [
+        "P2"
+      ],
+      "label": "Heater"
+    }
+  ]
+}

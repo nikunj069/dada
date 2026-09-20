@@ -1,0 +1,24 @@
+{
+  "chip": "stm32f103",
+  "package": "generic",
+  "board_name": "GenBoard 097 - PIR_Motion2Heater_Threshold_High",
+  "created_by": "generator",
+  "peripherals": [
+    {
+      "id": "PIR_SENS",
+      "kind": "sensor",
+      "pins": [
+        "PC13"
+      ],
+      "label": "PIR_Motion Sensor"
+    },
+    {
+      "id": "HEAT_COIL",
+      "kind": "led",
+      "pins": [
+        "PA3"
+      ],
+      "label": "Heater"
+    }
+  ]
+}

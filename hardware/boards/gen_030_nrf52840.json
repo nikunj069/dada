@@ -1,0 +1,24 @@
+{
+  "chip": "nrf52840",
+  "package": "generic",
+  "board_name": "GenBoard 030 - Moisture2Drive_Motor_Threshold_High",
+  "created_by": "generator",
+  "peripherals": [
+    {
+      "id": "MOISTURE_SENS",
+      "kind": "sensor",
+      "pins": [
+        "P0.14"
+      ],
+      "label": "Moisture Sensor"
+    },
+    {
+      "id": "DRIVE_MOTOR",
+      "kind": "motor",
+      "pins": [
+        "P1.02"
+      ],
+      "label": "Drive Motor"
+    }
+  ]
+}

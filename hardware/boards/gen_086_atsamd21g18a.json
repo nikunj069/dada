@@ -1,0 +1,24 @@
+{
+  "chip": "atsamd21g18a",
+  "package": "generic",
+  "board_name": "GenBoard 086 - Voltage2Warning_Light_Threshold_High",
+  "created_by": "generator",
+  "peripherals": [
+    {
+      "id": "VOLT_SENS",
+      "kind": "sensor",
+      "pins": [
+        "PA02"
+      ],
+      "label": "Voltage Sensor"
+    },
+    {
+      "id": "WARN_LED",
+      "kind": "led",
+      "pins": [
+        "PA04"
+      ],
+      "label": "Warning Light"
+    }
+  ]
+}

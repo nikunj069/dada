@@ -1,0 +1,24 @@
+{
+  "chip": "stm32f103",
+  "package": "generic",
+  "board_name": "GenBoard 026 - Gyroscope2Heater_Threshold_High",
+  "created_by": "generator",
+  "peripherals": [
+    {
+      "id": "GYRO_SENS",
+      "kind": "sensor",
+      "pins": [
+        "PC13"
+      ],
+      "label": "Gyroscope Sensor"
+    },
+    {
+      "id": "HEAT_COIL",
+      "kind": "led",
+      "pins": [
+        "PA1"
+      ],
+      "label": "Heater"
+    }
+  ]
+}

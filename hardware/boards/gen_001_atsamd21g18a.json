@@ -1,0 +1,24 @@
+{
+  "chip": "atsamd21g18a",
+  "package": "generic",
+  "board_name": "GenBoard 001 - Distance2Warning_Light_Threshold_High",
+  "created_by": "generator",
+  "peripherals": [
+    {
+      "id": "DIST_SENS",
+      "kind": "sensor",
+      "pins": [
+        "PA05"
+      ],
+      "label": "Distance Sensor"
+    },
+    {
+      "id": "WARN_LED",
+      "kind": "led",
+      "pins": [
+        "PB09"
+      ],
+      "label": "Warning Light"
+    }
+  ]
+}

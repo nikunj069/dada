@@ -1,0 +1,24 @@
+{
+  "chip": "atsamd21g18a",
+  "package": "generic",
+  "board_name": "GenBoard 025 - Light2Alarm_Buzzer_Threshold_Low",
+  "created_by": "generator",
+  "peripherals": [
+    {
+      "id": "LIGHT_SENS",
+      "kind": "sensor",
+      "pins": [
+        "PA05"
+      ],
+      "label": "Light Sensor"
+    },
+    {
+      "id": "ALARM_BUZZ",
+      "kind": "led",
+      "pins": [
+        "PB09"
+      ],
+      "label": "Alarm Buzzer"
+    }
+  ]
+}

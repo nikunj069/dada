@@ -1,22 +1,24 @@
 {
   "chip": "esp32",
   "package": "generic",
-  "board_name": "GenBoard 016 - VoltageDropper",
+  "board_name": "GenBoard 016 - Acceleration2Warning_Light_Threshold_High",
   "created_by": "generator",
   "peripherals": [
     {
-      "id": "V_MONITOR",
+      "id": "ACCEL_SENS",
       "kind": "sensor",
       "pins": [
-        "P4"
-      ]
+        "P0"
+      ],
+      "label": "Acceleration Sensor"
     },
     {
-      "id": "ALARM_LED",
+      "id": "WARN_LED",
       "kind": "led",
       "pins": [
-        "P2"
-      ]
+        "P15"
+      ],
+      "label": "Warning Light"
     }
   ]
 }

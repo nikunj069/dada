@@ -1,29 +1,24 @@
 {
   "chip": "atsamd21g18a",
   "package": "generic",
-  "board_name": "GenBoard 056 - AudioAmplifier",
+  "board_name": "GenBoard 056 - HallEffect2Drive_Motor_Threshold_High",
   "created_by": "generator",
   "peripherals": [
     {
-      "id": "AUDIO_IN",
+      "id": "HALL_SENS",
       "kind": "sensor",
       "pins": [
-        "PA05"
-      ]
+        "PB08"
+      ],
+      "label": "HallEffect Sensor"
     },
     {
-      "id": "SPEAKER",
+      "id": "DRIVE_MOTOR",
       "kind": "motor",
       "pins": [
-        "PB08"
-      ]
-    },
-    {
-      "id": "CLIP_LED",
-      "kind": "led",
-      "pins": [
-        "PB09"
-      ]
+        "PA02"
+      ],
+      "label": "Drive Motor"
     }
   ]
 }

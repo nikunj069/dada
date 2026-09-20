@@ -78,22 +78,8 @@
         <span>▦ TEST MATRIX</span>
         <span class="tab-badge" id="testCountBadge">21</span>
       </button>
-      <button class="nav-tab" data-tab="tab-behavior">
-        <span>⬡ AST BEHAVIOR</span>
-      </button>
-      <button class="nav-tab" data-tab="tab-defects">
-        <span>⚠ ROOT CAUSE</span>
-        <span class="tab-badge" style="background:rgba(255,79,62,0.15); color:var(--sig-red);">5 BUGS</span>
-      </button>
-      <button class="nav-tab" data-tab="tab-runs">
-        <span>◈ RUNS EXPLORER</span>
-        <span class="tab-badge" id="runsCountBadge">0</span>
-      </button>
-      <button class="nav-tab" data-tab="tab-boards">
-        <span>⬢ BOARDS</span>
-      </button>
-      <button class="nav-tab" data-tab="tab-report">
-        <span>▤ REPORT</span>
+      <button class="nav-tab" data-tab="tab-diagnostics">
+        <span>▤ ADVANCED DIAGNOSTICS</span>
       </button>
       <button class="nav-tab" data-tab="tab-library">
         <span>◪ PROCEDURAL LIBRARY</span>
@@ -207,118 +193,61 @@
       </div>
     </section>
 
-    <!-- ── Tab 3: AST Behavior Graph ── -->
-    <section id="tab-behavior" class="tab-pane">
-      <div class="telemetry-banner">
-        <div class="telemetry-status">
-          <span class="dot"></span>
-          LIVE TELEMETRY: CONNECTED
-          <span style="color:var(--silk-muted); font-weight:400; margin-left:8px;">
-            Tree-sitter AST nodes linked to hardware executions
-          </span>
-        </div>
-        <div style="display:flex; gap:8px;">
-          <button class="btn btn-ghost btn-sm" onclick="loadTraceInViewer('demo')">
-            INSPECT IN 3D RIG ↗
-          </button>
-        </div>
-      </div>
-
-      <div class="behavior-layout">
-        <div class="panel-card">
-          <div class="panel-header">
-            <h2>PARSED FUNCTIONS (TREE-SITTER)</h2>
-            <span id="funcCountBadge" class="badge badge-info">0 FUNCTIONS</span>
-          </div>
-          <div id="funcListContainer" class="function-list">
-            <div class="loading-text">Parsing firmware AST...</div>
-          </div>
-        </div>
-
-        <div class="panel-card">
-          <div class="panel-header">
-            <h2>SOURCE CODE & ANNOTATIONS</h2>
-            <span style="font-size:11px; color:var(--silk-muted); font-family:var(--font-mono);">fan_controller.c</span>
-          </div>
-          <div id="codeViewer" class="code-viewer">
-            <div class="loading-text">Loading firmware source...</div>
+    <!-- ── Tab: Advanced Diagnostics (Aggregated) ── -->
+    <section id="tab-diagnostics" class="tab-pane" style="overflow-y: auto; padding: 24px;">
+      
+      <div style="margin-bottom: 24px;">
+        <h2 style="color:var(--silk); font-size:18px; border-bottom:1px solid var(--surface-3); padding-bottom:8px; margin-bottom:16px;">AI Root Cause Analysis</h2>
+        <div class="panel">
+          <div id="defectsContainer" style="display: flex; flex-direction: column; gap: 16px;">
+            <div class="loading-text">No active defects found in current firmware</div>
           </div>
         </div>
       </div>
-    </section>
 
-    <!-- ── Tab 4: Root Cause & Defects ── -->
-    <section id="tab-defects" class="tab-pane">
-      <div class="panel-card">
-        <div class="panel-header">
-          <h2>ROOT CAUSE LOCALIZATION</h2>
-          <span style="font-family:var(--font-mono); font-size:11px; color:var(--silk-muted);">
-            Autonomous failure mapping from physical tests to C source lines
-          </span>
+      <details style="margin-bottom: 24px;">
+        <summary style="cursor: pointer; color:var(--silk); font-size:18px; border-bottom:1px solid var(--surface-3); padding-bottom:8px; margin-bottom:16px; font-weight: 600;">▶ Runs Explorer & Comparison</summary>
+        <div class="panel">
+          <div class="compare-row" style="margin-bottom: 16px;">
+            <label>COMPARE RUNS:</label>
+            <select id="compareRunA"><option value="">Select Run A</option></select>
+            <span style="color:var(--copper); font-family:var(--font-display); font-weight:700;">VS</span>
+            <select id="compareRunB"><option value="">Select Run B</option></select>
+            <button class="btn btn-primary btn-sm" id="btnCompare">COMPARE IN 3D ↗</button>
+          </div>
+          <div id="runsContainer" class="runs-grid">
+            <div class="loading-text">No trace runs found</div>
+          </div>
         </div>
-        <div id="defectsContainer" class="defects-grid">
-          <div class="loading-text">Loading defect analysis...</div>
-        </div>
-      </div>
+      </details>
 
-      <div class="panel-card">
-        <div class="panel-header">
-          <h2>AI DIAGNOSIS ENGINE</h2>
-          <span style="font-family:var(--font-mono); font-size:11px; color:var(--silk-muted);">
-            Per-test probable cause analysis with confidence scoring
-          </span>
+      <details style="margin-bottom: 24px;">
+        <summary style="cursor: pointer; color:var(--silk); font-size:18px; border-bottom:1px solid var(--surface-3); padding-bottom:8px; margin-bottom:16px; font-weight: 600;">▶ Behavior Diagnosis</summary>
+        <div class="panel">
+          <div id="diagnosisContainer" class="runs-grid">
+            <div class="loading-text">No diagnosis data available</div>
+          </div>
         </div>
-        <div id="diagnosisContainer" class="defects-grid">
-          <div class="loading-text">Loading AI diagnoses...</div>
+      </details>
+      
+      <details style="margin-bottom: 24px;">
+        <summary style="cursor: pointer; color:var(--silk); font-size:18px; border-bottom:1px solid var(--surface-3); padding-bottom:8px; margin-bottom:16px; font-weight: 600;">▶ Board Descriptors</summary>
+        <div class="panel">
+          <div id="boardsContainer" class="boards-grid">
+            <div class="loading-text">Loading board descriptors...</div>
+          </div>
         </div>
-      </div>
-    </section>
+      </details>
 
-    <!-- ── Tab 5: Runs Explorer ── -->
-    <section id="tab-runs" class="tab-pane">
-      <div class="compare-row">
-        <label>COMPARE RUNS:</label>
-        <select id="compareRunA">
-          <option value="">Select Run A</option>
-        </select>
-        <span style="color:var(--copper); font-family:var(--font-display); font-weight:700;">VS</span>
-        <select id="compareRunB">
-          <option value="">Select Run B</option>
-        </select>
-        <button class="btn btn-primary btn-sm" id="btnCompare">COMPARE IN 3D ↗</button>
-      </div>
+      <details style="margin-bottom: 24px;">
+        <summary style="cursor: pointer; color:var(--silk); font-size:18px; border-bottom:1px solid var(--surface-3); padding-bottom:8px; margin-bottom:16px; font-weight: 600;">▶ Firmware Source Code</summary>
+        <div class="panel">
+          <div class="code-editor" id="codeViewer" style="max-height: 400px; overflow-y: auto;">
+            <div class="loading-text">No source code loaded</div>
+          </div>
+        </div>
+      </details>
 
-      <div class="panel-card">
-        <div class="panel-header">
-          <h2>ALL TRACE RUNS</h2>
-          <span id="runsCountLabel" class="badge badge-info">0 RUNS</span>
-        </div>
-        <div id="runsContainer" class="runs-grid">
-          <div class="loading-text">Loading trace runs...</div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ── Tab 6: Boards ── -->
-    <section id="tab-boards" class="tab-pane">
-      <div class="panel-card">
-        <div class="panel-header">
-          <h2>BOARD DESCRIPTORS & SIMULATOR</h2>
-          <span style="font-family:var(--font-mono); font-size:11px; color:var(--silk-muted);">
-            Hardware configurations in hardware/boards/
-          </span>
-        </div>
-        <div id="boardsContainer" class="boards-grid">
-          <div class="loading-text">Loading board descriptors...</div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ── Tab 7: Report ── -->
-    <section id="tab-report" class="tab-pane">
-      <div class="panel-card" style="padding:0; overflow:hidden; height:800px;">
-        <iframe src="/report" style="width:100%; height:100%; border:none;" title="LabWired Test Execution Report"></iframe>
-      </div>
     </section>
 
   </main>

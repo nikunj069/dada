@@ -1,29 +1,24 @@
 {
   "chip": "nrf52840",
   "package": "generic",
-  "board_name": "GenBoard 057 - AudioAmplifier",
+  "board_name": "GenBoard 057 - Acceleration2Cooling_Fan_Threshold_Low",
   "created_by": "generator",
   "peripherals": [
     {
-      "id": "AUDIO_IN",
+      "id": "ACCEL_SENS",
       "kind": "sensor",
       "pins": [
-        "P1.01"
-      ]
+        "P0.13"
+      ],
+      "label": "Acceleration Sensor"
     },
     {
-      "id": "SPEAKER",
+      "id": "FAN_MOTOR",
       "kind": "motor",
       "pins": [
-        "P0.12"
-      ]
-    },
-    {
-      "id": "CLIP_LED",
-      "kind": "led",
-      "pins": [
         "P1.02"
-      ]
+      ],
+      "label": "Cooling Fan"
     }
   ]
 }

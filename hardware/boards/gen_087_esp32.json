@@ -1,0 +1,24 @@
+{
+  "chip": "esp32",
+  "package": "generic",
+  "board_name": "GenBoard 087 - PIR_Motion2Power_Relay_Threshold_High",
+  "created_by": "generator",
+  "peripherals": [
+    {
+      "id": "PIR_SENS",
+      "kind": "sensor",
+      "pins": [
+        "P2"
+      ],
+      "label": "PIR_Motion Sensor"
+    },
+    {
+      "id": "PWR_RELAY",
+      "kind": "led",
+      "pins": [
+        "P5"
+      ],
+      "label": "Power Relay"
+    }
+  ]
+}

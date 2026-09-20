@@ -1,22 +1,24 @@
 {
   "chip": "esp32",
   "package": "generic",
-  "board_name": "GenBoard 012 - VoltageDropper",
+  "board_name": "GenBoard 012 - Moisture2Alarm_Buzzer_Threshold_Low",
   "created_by": "generator",
   "peripherals": [
     {
-      "id": "V_MONITOR",
+      "id": "MOISTURE_SENS",
       "kind": "sensor",
       "pins": [
         "P0"
-      ]
+      ],
+      "label": "Moisture Sensor"
     },
     {
-      "id": "ALARM_LED",
+      "id": "ALARM_BUZZ",
       "kind": "led",
       "pins": [
-        "P2"
-      ]
+        "P13"
+      ],
+      "label": "Alarm Buzzer"
     }
   ]
 }

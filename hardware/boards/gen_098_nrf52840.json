@@ -1,22 +1,24 @@
 {
   "chip": "nrf52840",
   "package": "generic",
-  "board_name": "GenBoard 098 - VoltageDropper",
+  "board_name": "GenBoard 098 - Pressure2Alarm_Buzzer_Threshold_High",
   "created_by": "generator",
   "peripherals": [
     {
-      "id": "V_MONITOR",
+      "id": "PRESSURE_SENS",
       "kind": "sensor",
       "pins": [
         "P1.01"
-      ]
+      ],
+      "label": "Pressure Sensor"
     },
     {
-      "id": "ALARM_LED",
+      "id": "ALARM_BUZZ",
       "kind": "led",
       "pins": [
-        "P1.02"
-      ]
+        "P0.14"
+      ],
+      "label": "Alarm Buzzer"
     }
   ]
 }

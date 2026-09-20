@@ -1,0 +1,24 @@
+{
+  "chip": "stm32f103",
+  "package": "generic",
+  "board_name": "GenBoard 028 - Temperature2Cooling_Fan_Threshold_Low",
+  "created_by": "generator",
+  "peripherals": [
+    {
+      "id": "TEMP_SENS",
+      "kind": "sensor",
+      "pins": [
+        "PB0"
+      ],
+      "label": "Temperature Sensor"
+    },
+    {
+      "id": "FAN_MOTOR",
+      "kind": "motor",
+      "pins": [
+        "PA0"
+      ],
+      "label": "Cooling Fan"
+    }
+  ]
+}

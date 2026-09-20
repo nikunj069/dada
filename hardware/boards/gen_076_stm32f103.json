@@ -1,22 +1,24 @@
 {
   "chip": "stm32f103",
   "package": "generic",
-  "board_name": "GenBoard 076 - VoltageDropper",
+  "board_name": "GenBoard 076 - Light2Water_Pump_Threshold_High",
   "created_by": "generator",
   "peripherals": [
     {
-      "id": "V_MONITOR",
+      "id": "LIGHT_SENS",
       "kind": "sensor",
       "pins": [
-        "PA2"
-      ]
+        "PA0"
+      ],
+      "label": "Light Sensor"
     },
     {
-      "id": "ALARM_LED",
-      "kind": "led",
+      "id": "WTR_PUMP",
+      "kind": "motor",
       "pins": [
-        "PB1"
-      ]
+        "PB0"
+      ],
+      "label": "Water Pump"
     }
   ]
 }

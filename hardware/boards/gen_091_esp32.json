@@ -1,0 +1,24 @@
+{
+  "chip": "esp32",
+  "package": "generic",
+  "board_name": "GenBoard 091 - Voltage2Warning_Light_Threshold_High",
+  "created_by": "generator",
+  "peripherals": [
+    {
+      "id": "VOLT_SENS",
+      "kind": "sensor",
+      "pins": [
+        "P4"
+      ],
+      "label": "Voltage Sensor"
+    },
+    {
+      "id": "WARN_LED",
+      "kind": "led",
+      "pins": [
+        "P5"
+      ],
+      "label": "Warning Light"
+    }
+  ]
+}

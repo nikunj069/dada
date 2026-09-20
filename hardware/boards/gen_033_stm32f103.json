@@ -1,0 +1,24 @@
+{
+  "chip": "stm32f103",
+  "package": "generic",
+  "board_name": "GenBoard 033 - Acceleration2Drive_Motor_Threshold_Low",
+  "created_by": "generator",
+  "peripherals": [
+    {
+      "id": "ACCEL_SENS",
+      "kind": "sensor",
+      "pins": [
+        "PA0"
+      ],
+      "label": "Acceleration Sensor"
+    },
+    {
+      "id": "DRIVE_MOTOR",
+      "kind": "motor",
+      "pins": [
+        "PA2"
+      ],
+      "label": "Drive Motor"
+    }
+  ]
+}

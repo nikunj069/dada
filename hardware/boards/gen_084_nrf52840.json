@@ -1,22 +1,24 @@
 {
   "chip": "nrf52840",
   "package": "generic",
-  "board_name": "GenBoard 084 - VoltageDropper",
+  "board_name": "GenBoard 084 - Humidity2Power_Relay_Threshold_Low",
   "created_by": "generator",
   "peripherals": [
     {
-      "id": "V_MONITOR",
+      "id": "HUMIDITY_SENS",
       "kind": "sensor",
       "pins": [
-        "P0.13"
-      ]
+        "P1.02"
+      ],
+      "label": "Humidity Sensor"
     },
     {
-      "id": "ALARM_LED",
+      "id": "PWR_RELAY",
       "kind": "led",
       "pins": [
-        "P0.14"
-      ]
+        "P0.11"
+      ],
+      "label": "Power Relay"
     }
   ]
 }

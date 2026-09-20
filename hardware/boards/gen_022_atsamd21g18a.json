@@ -1,0 +1,24 @@
+{
+  "chip": "atsamd21g18a",
+  "package": "generic",
+  "board_name": "GenBoard 022 - Current2Heater_Threshold_Low",
+  "created_by": "generator",
+  "peripherals": [
+    {
+      "id": "CURR_SENS",
+      "kind": "sensor",
+      "pins": [
+        "PA04"
+      ],
+      "label": "Current Sensor"
+    },
+    {
+      "id": "HEAT_COIL",
+      "kind": "led",
+      "pins": [
+        "PA02"
+      ],
+      "label": "Heater"
+    }
+  ]
+}

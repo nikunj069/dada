@@ -1,0 +1,24 @@
+{
+  "chip": "stm32f103",
+  "package": "generic",
+  "board_name": "GenBoard 077 - Voltage2LED_Indicator_Threshold_High",
+  "created_by": "generator",
+  "peripherals": [
+    {
+      "id": "VOLT_SENS",
+      "kind": "sensor",
+      "pins": [
+        "PA0"
+      ],
+      "label": "Voltage Sensor"
+    },
+    {
+      "id": "IND_LED",
+      "kind": "led",
+      "pins": [
+        "PA1"
+      ],
+      "label": "LED Indicator"
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "chip": "stm32f103",
+  "package": "generic",
+  "board_name": "GenBoard 089 - Magnetic2LED_Indicator_Threshold_Low",
+  "created_by": "generator",
+  "peripherals": [
+    {
+      "id": "MAG_SENS",
+      "kind": "sensor",
+      "pins": [
+        "PB1"
+      ],
+      "label": "Magnetic Sensor"
+    },
+    {
+      "id": "IND_LED",
+      "kind": "led",
+      "pins": [
+        "PB0"
+      ],
+      "label": "LED Indicator"
+    }
+  ]
+}

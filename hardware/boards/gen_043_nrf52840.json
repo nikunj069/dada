@@ -1,0 +1,24 @@
+{
+  "chip": "nrf52840",
+  "package": "generic",
+  "board_name": "GenBoard 043 - Moisture2Alarm_Buzzer_Threshold_High",
+  "created_by": "generator",
+  "peripherals": [
+    {
+      "id": "MOISTURE_SENS",
+      "kind": "sensor",
+      "pins": [
+        "P0.11"
+      ],
+      "label": "Moisture Sensor"
+    },
+    {
+      "id": "ALARM_BUZZ",
+      "kind": "led",
+      "pins": [
+        "P0.12"
+      ],
+      "label": "Alarm Buzzer"
+    }
+  ]
+}

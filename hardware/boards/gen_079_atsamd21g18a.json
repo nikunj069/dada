@@ -1,22 +1,24 @@
 {
   "chip": "atsamd21g18a",
   "package": "generic",
-  "board_name": "GenBoard 079 - VoltageDropper",
+  "board_name": "GenBoard 079 - Current2Power_Relay_Threshold_High",
   "created_by": "generator",
   "peripherals": [
     {
-      "id": "V_MONITOR",
+      "id": "CURR_SENS",
       "kind": "sensor",
       "pins": [
-        "PA02"
-      ]
+        "PB09"
+      ],
+      "label": "Current Sensor"
     },
     {
-      "id": "ALARM_LED",
+      "id": "PWR_RELAY",
       "kind": "led",
       "pins": [
-        "PB08"
-      ]
+        "PA04"
+      ],
+      "label": "Power Relay"
     }
   ]
 }

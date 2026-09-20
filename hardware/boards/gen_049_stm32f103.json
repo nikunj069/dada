@@ -1,0 +1,24 @@
+{
+  "chip": "stm32f103",
+  "package": "generic",
+  "board_name": "GenBoard 049 - Moisture2LED_Indicator_Threshold_Low",
+  "created_by": "generator",
+  "peripherals": [
+    {
+      "id": "MOISTURE_SENS",
+      "kind": "sensor",
+      "pins": [
+        "PA1"
+      ],
+      "label": "Moisture Sensor"
+    },
+    {
+      "id": "IND_LED",
+      "kind": "led",
+      "pins": [
+        "PB0"
+      ],
+      "label": "LED Indicator"
+    }
+  ]
+}

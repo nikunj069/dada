@@ -1,0 +1,24 @@
+{
+  "chip": "stm32f103",
+  "package": "generic",
+  "board_name": "GenBoard 100 - Distance2Water_Pump_Threshold_High",
+  "created_by": "generator",
+  "peripherals": [
+    {
+      "id": "DIST_SENS",
+      "kind": "sensor",
+      "pins": [
+        "PA1"
+      ],
+      "label": "Distance Sensor"
+    },
+    {
+      "id": "WTR_PUMP",
+      "kind": "motor",
+      "pins": [
+        "PA3"
+      ],
+      "label": "Water Pump"
+    }
+  ]
+}

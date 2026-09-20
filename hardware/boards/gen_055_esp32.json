@@ -1,0 +1,24 @@
+{
+  "chip": "esp32",
+  "package": "generic",
+  "board_name": "GenBoard 055 - Humidity2LED_Indicator_Threshold_Low",
+  "created_by": "generator",
+  "peripherals": [
+    {
+      "id": "HUMIDITY_SENS",
+      "kind": "sensor",
+      "pins": [
+        "P4"
+      ],
+      "label": "Humidity Sensor"
+    },
+    {
+      "id": "IND_LED",
+      "kind": "led",
+      "pins": [
+        "P2"
+      ],
+      "label": "LED Indicator"
+    }
+  ]
+}

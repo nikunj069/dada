@@ -1,29 +1,24 @@
 {
   "chip": "stm32f103",
   "package": "generic",
-  "board_name": "GenBoard 088 - AudioAmplifier",
+  "board_name": "GenBoard 088 - Gas2Power_Relay_Threshold_High",
   "created_by": "generator",
   "peripherals": [
     {
-      "id": "AUDIO_IN",
+      "id": "GAS_SENS",
       "kind": "sensor",
       "pins": [
-        "PA1"
-      ]
+        "PC13"
+      ],
+      "label": "Gas Sensor"
     },
     {
-      "id": "SPEAKER",
-      "kind": "motor",
-      "pins": [
-        "PB1"
-      ]
-    },
-    {
-      "id": "CLIP_LED",
+      "id": "PWR_RELAY",
       "kind": "led",
       "pins": [
         "PA3"
-      ]
+      ],
+      "label": "Power Relay"
     }
   ]
 }

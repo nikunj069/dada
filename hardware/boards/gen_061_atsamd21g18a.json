@@ -1,0 +1,24 @@
+{
+  "chip": "atsamd21g18a",
+  "package": "generic",
+  "board_name": "GenBoard 061 - HallEffect2Warning_Light_Threshold_High",
+  "created_by": "generator",
+  "peripherals": [
+    {
+      "id": "HALL_SENS",
+      "kind": "sensor",
+      "pins": [
+        "PA02"
+      ],
+      "label": "HallEffect Sensor"
+    },
+    {
+      "id": "WARN_LED",
+      "kind": "led",
+      "pins": [
+        "PA05"
+      ],
+      "label": "Warning Light"
+    }
+  ]
+}

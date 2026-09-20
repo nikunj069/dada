@@ -1018,11 +1018,23 @@
       bindAtPlayhead();
     }
 
-    // motor spin
+    // component animations
+    const timeSec = now * 0.001;
     for (const id in peripheralNodes){
       const n = peripheralNodes[id];
       if (n.kind==='motor' && n.blades){
         n.blades.rotation.y += dt*0.01*(n.speedRef.v*14+ (n.speedRef.v>0?0.02:0));
+      } else if (n.kind === 'sensor') {
+        // Subtle hover animation for sensors
+        n.group.position.y = n.group.userData.baseY + Math.sin(timeSec * 2 + n.group.position.x) * 0.05;
+        if (n.labelSprite) {
+          n.labelSprite.scale.setScalar(1.1 + Math.sin(timeSec * 4) * 0.05);
+        }
+      } else if (n.kind === 'led' && n.mat) {
+        // If LED is on (emissive intensity > 0), pulse it
+        if (n.mat.emissiveIntensity > 0.1) {
+          n.mat.emissiveIntensity = 1.4 + Math.sin(timeSec * 15) * 0.4;
+        }
       }
     }
     renderer.render(scene, camera);

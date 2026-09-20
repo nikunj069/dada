@@ -1,702 +1,802 @@
 [
   {
-    "id": "gen_001_esp32",
-    "board": "gen_001_esp32.json",
-    "firmware": "gen_001_esp32.c",
+    "id": "gen_001_atsamd21g18a",
+    "board": "gen_001_atsamd21g18a.json",
+    "firmware": "gen_001_atsamd21g18a.c",
+    "chip": "atsamd21g18a",
+    "archetype": "Distance2Warning_Light_Threshold_High",
+    "description": "Activates when distance is high."
+  },
+  {
+    "id": "gen_002_atsamd21g18a",
+    "board": "gen_002_atsamd21g18a.json",
+    "firmware": "gen_002_atsamd21g18a.c",
+    "chip": "atsamd21g18a",
+    "archetype": "Magnetic2Power_Relay_Threshold_High",
+    "description": "Activates when magnetic is high."
+  },
+  {
+    "id": "gen_003_nrf52840",
+    "board": "gen_003_nrf52840.json",
+    "firmware": "gen_003_nrf52840.c",
+    "chip": "nrf52840",
+    "archetype": "HallEffect2Warning_Light_Threshold_Low",
+    "description": "Activates when halleffect drops too low."
+  },
+  {
+    "id": "gen_004_nrf52840",
+    "board": "gen_004_nrf52840.json",
+    "firmware": "gen_004_nrf52840.c",
+    "chip": "nrf52840",
+    "archetype": "Moisture2Water_Pump_Threshold_Low",
+    "description": "Activates when moisture drops too low."
+  },
+  {
+    "id": "gen_005_atsamd21g18a",
+    "board": "gen_005_atsamd21g18a.json",
+    "firmware": "gen_005_atsamd21g18a.c",
+    "chip": "atsamd21g18a",
+    "archetype": "PIR_Motion2Power_Relay_Threshold_Low",
+    "description": "Activates when pir_motion drops too low."
+  },
+  {
+    "id": "gen_006_nrf52840",
+    "board": "gen_006_nrf52840.json",
+    "firmware": "gen_006_nrf52840.c",
+    "chip": "nrf52840",
+    "archetype": "Gas2Heater_Threshold_Low",
+    "description": "Activates when gas drops too low."
+  },
+  {
+    "id": "gen_007_esp32",
+    "board": "gen_007_esp32.json",
+    "firmware": "gen_007_esp32.c",
     "chip": "esp32",
-    "archetype": "AudioAmplifier"
+    "archetype": "Magnetic2Power_Relay_Threshold_Low",
+    "description": "Activates when magnetic drops too low."
   },
   {
-    "id": "gen_002_esp32",
-    "board": "gen_002_esp32.json",
-    "firmware": "gen_002_esp32.c",
-    "chip": "esp32",
-    "archetype": "VoltageDropper"
-  },
-  {
-    "id": "gen_003_stm32f103",
-    "board": "gen_003_stm32f103.json",
-    "firmware": "gen_003_stm32f103.c",
-    "chip": "stm32f103",
-    "archetype": "AudioAmplifier"
-  },
-  {
-    "id": "gen_004_esp32",
-    "board": "gen_004_esp32.json",
-    "firmware": "gen_004_esp32.c",
-    "chip": "esp32",
-    "archetype": "VoltageDropper"
-  },
-  {
-    "id": "gen_005_esp32",
-    "board": "gen_005_esp32.json",
-    "firmware": "gen_005_esp32.c",
-    "chip": "esp32",
-    "archetype": "AudioAmplifier"
-  },
-  {
-    "id": "gen_006_esp32",
-    "board": "gen_006_esp32.json",
-    "firmware": "gen_006_esp32.c",
-    "chip": "esp32",
-    "archetype": "VoltageDropper"
-  },
-  {
-    "id": "gen_007_stm32f103",
-    "board": "gen_007_stm32f103.json",
-    "firmware": "gen_007_stm32f103.c",
-    "chip": "stm32f103",
-    "archetype": "AudioAmplifier"
-  },
-  {
-    "id": "gen_008_esp32",
-    "board": "gen_008_esp32.json",
-    "firmware": "gen_008_esp32.c",
-    "chip": "esp32",
-    "archetype": "VoltageDropper"
+    "id": "gen_008_nrf52840",
+    "board": "gen_008_nrf52840.json",
+    "firmware": "gen_008_nrf52840.c",
+    "chip": "nrf52840",
+    "archetype": "Gyroscope2LED_Indicator_Threshold_Low",
+    "description": "Activates when gyroscope drops too low."
   },
   {
     "id": "gen_009_stm32f103",
     "board": "gen_009_stm32f103.json",
     "firmware": "gen_009_stm32f103.c",
     "chip": "stm32f103",
-    "archetype": "VoltageDropper"
+    "archetype": "Gas2Alarm_Buzzer_Threshold_High",
+    "description": "Activates when gas is high."
   },
   {
     "id": "gen_010_nrf52840",
     "board": "gen_010_nrf52840.json",
     "firmware": "gen_010_nrf52840.c",
     "chip": "nrf52840",
-    "archetype": "VoltageDropper"
+    "archetype": "Distance2Drive_Motor_Threshold_Low",
+    "description": "Activates when distance drops too low."
   },
   {
-    "id": "gen_011_stm32f103",
-    "board": "gen_011_stm32f103.json",
-    "firmware": "gen_011_stm32f103.c",
-    "chip": "stm32f103",
-    "archetype": "TemperatureController"
+    "id": "gen_011_atsamd21g18a",
+    "board": "gen_011_atsamd21g18a.json",
+    "firmware": "gen_011_atsamd21g18a.c",
+    "chip": "atsamd21g18a",
+    "archetype": "Magnetic2Drive_Motor_Threshold_Low",
+    "description": "Activates when magnetic drops too low."
   },
   {
     "id": "gen_012_esp32",
     "board": "gen_012_esp32.json",
     "firmware": "gen_012_esp32.c",
     "chip": "esp32",
-    "archetype": "VoltageDropper"
+    "archetype": "Moisture2Alarm_Buzzer_Threshold_Low",
+    "description": "Activates when moisture drops too low."
   },
   {
     "id": "gen_013_nrf52840",
     "board": "gen_013_nrf52840.json",
     "firmware": "gen_013_nrf52840.c",
     "chip": "nrf52840",
-    "archetype": "AudioAmplifier"
+    "archetype": "Gyroscope2LED_Indicator_Threshold_Low",
+    "description": "Activates when gyroscope drops too low."
   },
   {
     "id": "gen_014_nrf52840",
     "board": "gen_014_nrf52840.json",
     "firmware": "gen_014_nrf52840.c",
     "chip": "nrf52840",
-    "archetype": "TemperatureController"
+    "archetype": "Current2LED_Indicator_Threshold_Low",
+    "description": "Activates when current drops too low."
   },
   {
-    "id": "gen_015_nrf52840",
-    "board": "gen_015_nrf52840.json",
-    "firmware": "gen_015_nrf52840.c",
-    "chip": "nrf52840",
-    "archetype": "TemperatureController"
+    "id": "gen_015_atsamd21g18a",
+    "board": "gen_015_atsamd21g18a.json",
+    "firmware": "gen_015_atsamd21g18a.c",
+    "chip": "atsamd21g18a",
+    "archetype": "Moisture2LED_Indicator_Threshold_Low",
+    "description": "Activates when moisture drops too low."
   },
   {
     "id": "gen_016_esp32",
     "board": "gen_016_esp32.json",
     "firmware": "gen_016_esp32.c",
     "chip": "esp32",
-    "archetype": "VoltageDropper"
+    "archetype": "Acceleration2Warning_Light_Threshold_High",
+    "description": "Activates when acceleration is high."
   },
   {
-    "id": "gen_017_nrf52840",
-    "board": "gen_017_nrf52840.json",
-    "firmware": "gen_017_nrf52840.c",
-    "chip": "nrf52840",
-    "archetype": "VoltageDropper"
+    "id": "gen_017_atsamd21g18a",
+    "board": "gen_017_atsamd21g18a.json",
+    "firmware": "gen_017_atsamd21g18a.c",
+    "chip": "atsamd21g18a",
+    "archetype": "PIR_Motion2Water_Pump_Threshold_High",
+    "description": "Activates when pir_motion is high."
   },
   {
     "id": "gen_018_nrf52840",
     "board": "gen_018_nrf52840.json",
     "firmware": "gen_018_nrf52840.c",
     "chip": "nrf52840",
-    "archetype": "VoltageDropper"
+    "archetype": "Voltage2Alarm_Buzzer_Threshold_High",
+    "description": "Activates when voltage is high."
   },
   {
-    "id": "gen_019_stm32f103",
-    "board": "gen_019_stm32f103.json",
-    "firmware": "gen_019_stm32f103.c",
-    "chip": "stm32f103",
-    "archetype": "AudioAmplifier"
-  },
-  {
-    "id": "gen_020_nrf52840",
-    "board": "gen_020_nrf52840.json",
-    "firmware": "gen_020_nrf52840.c",
+    "id": "gen_019_nrf52840",
+    "board": "gen_019_nrf52840.json",
+    "firmware": "gen_019_nrf52840.c",
     "chip": "nrf52840",
-    "archetype": "AudioAmplifier"
+    "archetype": "Humidity2Alarm_Buzzer_Threshold_High",
+    "description": "Activates when humidity is high."
   },
   {
-    "id": "gen_021_esp32",
-    "board": "gen_021_esp32.json",
-    "firmware": "gen_021_esp32.c",
+    "id": "gen_020_esp32",
+    "board": "gen_020_esp32.json",
+    "firmware": "gen_020_esp32.c",
     "chip": "esp32",
-    "archetype": "AudioAmplifier"
+    "archetype": "Sound2LED_Indicator_Threshold_High",
+    "description": "Activates when sound is high."
   },
   {
-    "id": "gen_022_stm32f103",
-    "board": "gen_022_stm32f103.json",
-    "firmware": "gen_022_stm32f103.c",
-    "chip": "stm32f103",
-    "archetype": "VoltageDropper"
+    "id": "gen_021_nrf52840",
+    "board": "gen_021_nrf52840.json",
+    "firmware": "gen_021_nrf52840.c",
+    "chip": "nrf52840",
+    "archetype": "Magnetic2Heater_Threshold_High",
+    "description": "Activates when magnetic is high."
+  },
+  {
+    "id": "gen_022_atsamd21g18a",
+    "board": "gen_022_atsamd21g18a.json",
+    "firmware": "gen_022_atsamd21g18a.c",
+    "chip": "atsamd21g18a",
+    "archetype": "Current2Heater_Threshold_Low",
+    "description": "Activates when current drops too low."
   },
   {
     "id": "gen_023_nrf52840",
     "board": "gen_023_nrf52840.json",
     "firmware": "gen_023_nrf52840.c",
     "chip": "nrf52840",
-    "archetype": "AudioAmplifier"
+    "archetype": "Voltage2LED_Indicator_Threshold_Low",
+    "description": "Activates when voltage drops too low."
   },
   {
     "id": "gen_024_esp32",
     "board": "gen_024_esp32.json",
     "firmware": "gen_024_esp32.c",
     "chip": "esp32",
-    "archetype": "TemperatureController"
+    "archetype": "Pressure2Water_Pump_Threshold_Low",
+    "description": "Activates when pressure drops too low."
   },
   {
-    "id": "gen_025_stm32f103",
-    "board": "gen_025_stm32f103.json",
-    "firmware": "gen_025_stm32f103.c",
-    "chip": "stm32f103",
-    "archetype": "AudioAmplifier"
-  },
-  {
-    "id": "gen_026_nrf52840",
-    "board": "gen_026_nrf52840.json",
-    "firmware": "gen_026_nrf52840.c",
-    "chip": "nrf52840",
-    "archetype": "AudioAmplifier"
-  },
-  {
-    "id": "gen_027_atsamd21g18a",
-    "board": "gen_027_atsamd21g18a.json",
-    "firmware": "gen_027_atsamd21g18a.c",
+    "id": "gen_025_atsamd21g18a",
+    "board": "gen_025_atsamd21g18a.json",
+    "firmware": "gen_025_atsamd21g18a.c",
     "chip": "atsamd21g18a",
-    "archetype": "TemperatureController"
+    "archetype": "Light2Alarm_Buzzer_Threshold_Low",
+    "description": "Activates when light drops too low."
   },
   {
-    "id": "gen_028_esp32",
-    "board": "gen_028_esp32.json",
-    "firmware": "gen_028_esp32.c",
-    "chip": "esp32",
-    "archetype": "AudioAmplifier"
-  },
-  {
-    "id": "gen_029_stm32f103",
-    "board": "gen_029_stm32f103.json",
-    "firmware": "gen_029_stm32f103.c",
+    "id": "gen_026_stm32f103",
+    "board": "gen_026_stm32f103.json",
+    "firmware": "gen_026_stm32f103.c",
     "chip": "stm32f103",
-    "archetype": "AudioAmplifier"
+    "archetype": "Gyroscope2Heater_Threshold_High",
+    "description": "Activates when gyroscope is high."
   },
   {
-    "id": "gen_030_esp32",
-    "board": "gen_030_esp32.json",
-    "firmware": "gen_030_esp32.c",
+    "id": "gen_027_esp32",
+    "board": "gen_027_esp32.json",
+    "firmware": "gen_027_esp32.c",
     "chip": "esp32",
-    "archetype": "VoltageDropper"
+    "archetype": "Voltage2LED_Indicator_Threshold_Low",
+    "description": "Activates when voltage drops too low."
   },
   {
-    "id": "gen_031_nrf52840",
-    "board": "gen_031_nrf52840.json",
-    "firmware": "gen_031_nrf52840.c",
-    "chip": "nrf52840",
-    "archetype": "TemperatureController"
-  },
-  {
-    "id": "gen_032_nrf52840",
-    "board": "gen_032_nrf52840.json",
-    "firmware": "gen_032_nrf52840.c",
-    "chip": "nrf52840",
-    "archetype": "VoltageDropper"
-  },
-  {
-    "id": "gen_033_esp32",
-    "board": "gen_033_esp32.json",
-    "firmware": "gen_033_esp32.c",
-    "chip": "esp32",
-    "archetype": "TemperatureController"
-  },
-  {
-    "id": "gen_034_atsamd21g18a",
-    "board": "gen_034_atsamd21g18a.json",
-    "firmware": "gen_034_atsamd21g18a.c",
-    "chip": "atsamd21g18a",
-    "archetype": "VoltageDropper"
-  },
-  {
-    "id": "gen_035_esp32",
-    "board": "gen_035_esp32.json",
-    "firmware": "gen_035_esp32.c",
-    "chip": "esp32",
-    "archetype": "TemperatureController"
-  },
-  {
-    "id": "gen_036_nrf52840",
-    "board": "gen_036_nrf52840.json",
-    "firmware": "gen_036_nrf52840.c",
-    "chip": "nrf52840",
-    "archetype": "AudioAmplifier"
-  },
-  {
-    "id": "gen_037_nrf52840",
-    "board": "gen_037_nrf52840.json",
-    "firmware": "gen_037_nrf52840.c",
-    "chip": "nrf52840",
-    "archetype": "TemperatureController"
-  },
-  {
-    "id": "gen_038_esp32",
-    "board": "gen_038_esp32.json",
-    "firmware": "gen_038_esp32.c",
-    "chip": "esp32",
-    "archetype": "AudioAmplifier"
-  },
-  {
-    "id": "gen_039_stm32f103",
-    "board": "gen_039_stm32f103.json",
-    "firmware": "gen_039_stm32f103.c",
+    "id": "gen_028_stm32f103",
+    "board": "gen_028_stm32f103.json",
+    "firmware": "gen_028_stm32f103.c",
     "chip": "stm32f103",
-    "archetype": "AudioAmplifier"
+    "archetype": "Temperature2Cooling_Fan_Threshold_Low",
+    "description": "Activates when temperature drops too low."
   },
   {
-    "id": "gen_040_nrf52840",
-    "board": "gen_040_nrf52840.json",
-    "firmware": "gen_040_nrf52840.c",
+    "id": "gen_029_atsamd21g18a",
+    "board": "gen_029_atsamd21g18a.json",
+    "firmware": "gen_029_atsamd21g18a.c",
+    "chip": "atsamd21g18a",
+    "archetype": "Magnetic2Water_Pump_Threshold_High",
+    "description": "Activates when magnetic is high."
+  },
+  {
+    "id": "gen_030_nrf52840",
+    "board": "gen_030_nrf52840.json",
+    "firmware": "gen_030_nrf52840.c",
     "chip": "nrf52840",
-    "archetype": "VoltageDropper"
+    "archetype": "Moisture2Drive_Motor_Threshold_High",
+    "description": "Activates when moisture is high."
   },
   {
-    "id": "gen_041_esp32",
-    "board": "gen_041_esp32.json",
-    "firmware": "gen_041_esp32.c",
-    "chip": "esp32",
-    "archetype": "AudioAmplifier"
-  },
-  {
-    "id": "gen_042_nrf52840",
-    "board": "gen_042_nrf52840.json",
-    "firmware": "gen_042_nrf52840.c",
-    "chip": "nrf52840",
-    "archetype": "TemperatureController"
-  },
-  {
-    "id": "gen_043_stm32f103",
-    "board": "gen_043_stm32f103.json",
-    "firmware": "gen_043_stm32f103.c",
+    "id": "gen_031_stm32f103",
+    "board": "gen_031_stm32f103.json",
+    "firmware": "gen_031_stm32f103.c",
     "chip": "stm32f103",
-    "archetype": "TemperatureController"
+    "archetype": "Voltage2Alarm_Buzzer_Threshold_High",
+    "description": "Activates when voltage is high."
   },
   {
-    "id": "gen_044_atsamd21g18a",
-    "board": "gen_044_atsamd21g18a.json",
-    "firmware": "gen_044_atsamd21g18a.c",
-    "chip": "atsamd21g18a",
-    "archetype": "AudioAmplifier"
+    "id": "gen_032_stm32f103",
+    "board": "gen_032_stm32f103.json",
+    "firmware": "gen_032_stm32f103.c",
+    "chip": "stm32f103",
+    "archetype": "Moisture2Drive_Motor_Threshold_High",
+    "description": "Activates when moisture is high."
   },
   {
-    "id": "gen_045_atsamd21g18a",
-    "board": "gen_045_atsamd21g18a.json",
-    "firmware": "gen_045_atsamd21g18a.c",
-    "chip": "atsamd21g18a",
-    "archetype": "VoltageDropper"
+    "id": "gen_033_stm32f103",
+    "board": "gen_033_stm32f103.json",
+    "firmware": "gen_033_stm32f103.c",
+    "chip": "stm32f103",
+    "archetype": "Acceleration2Drive_Motor_Threshold_Low",
+    "description": "Activates when acceleration drops too low."
   },
   {
-    "id": "gen_046_esp32",
-    "board": "gen_046_esp32.json",
-    "firmware": "gen_046_esp32.c",
+    "id": "gen_034_esp32",
+    "board": "gen_034_esp32.json",
+    "firmware": "gen_034_esp32.c",
     "chip": "esp32",
-    "archetype": "VoltageDropper"
+    "archetype": "HallEffect2Heater_Threshold_Low",
+    "description": "Activates when halleffect drops too low."
+  },
+  {
+    "id": "gen_035_nrf52840",
+    "board": "gen_035_nrf52840.json",
+    "firmware": "gen_035_nrf52840.c",
+    "chip": "nrf52840",
+    "archetype": "Magnetic2Power_Relay_Threshold_Low",
+    "description": "Activates when magnetic drops too low."
+  },
+  {
+    "id": "gen_036_esp32",
+    "board": "gen_036_esp32.json",
+    "firmware": "gen_036_esp32.c",
+    "chip": "esp32",
+    "archetype": "Humidity2Water_Pump_Threshold_High",
+    "description": "Activates when humidity is high."
+  },
+  {
+    "id": "gen_037_atsamd21g18a",
+    "board": "gen_037_atsamd21g18a.json",
+    "firmware": "gen_037_atsamd21g18a.c",
+    "chip": "atsamd21g18a",
+    "archetype": "Current2Warning_Light_Threshold_High",
+    "description": "Activates when current is high."
+  },
+  {
+    "id": "gen_038_nrf52840",
+    "board": "gen_038_nrf52840.json",
+    "firmware": "gen_038_nrf52840.c",
+    "chip": "nrf52840",
+    "archetype": "Moisture2Alarm_Buzzer_Threshold_Low",
+    "description": "Activates when moisture drops too low."
+  },
+  {
+    "id": "gen_039_esp32",
+    "board": "gen_039_esp32.json",
+    "firmware": "gen_039_esp32.c",
+    "chip": "esp32",
+    "archetype": "Sound2Drive_Motor_Threshold_High",
+    "description": "Activates when sound is high."
+  },
+  {
+    "id": "gen_040_esp32",
+    "board": "gen_040_esp32.json",
+    "firmware": "gen_040_esp32.c",
+    "chip": "esp32",
+    "archetype": "Voltage2Warning_Light_Threshold_Low",
+    "description": "Activates when voltage drops too low."
+  },
+  {
+    "id": "gen_041_atsamd21g18a",
+    "board": "gen_041_atsamd21g18a.json",
+    "firmware": "gen_041_atsamd21g18a.c",
+    "chip": "atsamd21g18a",
+    "archetype": "Gas2Water_Pump_Threshold_High",
+    "description": "Activates when gas is high."
+  },
+  {
+    "id": "gen_042_stm32f103",
+    "board": "gen_042_stm32f103.json",
+    "firmware": "gen_042_stm32f103.c",
+    "chip": "stm32f103",
+    "archetype": "HallEffect2Warning_Light_Threshold_Low",
+    "description": "Activates when halleffect drops too low."
+  },
+  {
+    "id": "gen_043_nrf52840",
+    "board": "gen_043_nrf52840.json",
+    "firmware": "gen_043_nrf52840.c",
+    "chip": "nrf52840",
+    "archetype": "Moisture2Alarm_Buzzer_Threshold_High",
+    "description": "Activates when moisture is high."
+  },
+  {
+    "id": "gen_044_stm32f103",
+    "board": "gen_044_stm32f103.json",
+    "firmware": "gen_044_stm32f103.c",
+    "chip": "stm32f103",
+    "archetype": "HallEffect2Warning_Light_Threshold_High",
+    "description": "Activates when halleffect is high."
+  },
+  {
+    "id": "gen_045_esp32",
+    "board": "gen_045_esp32.json",
+    "firmware": "gen_045_esp32.c",
+    "chip": "esp32",
+    "archetype": "Distance2Power_Relay_Threshold_High",
+    "description": "Activates when distance is high."
+  },
+  {
+    "id": "gen_046_nrf52840",
+    "board": "gen_046_nrf52840.json",
+    "firmware": "gen_046_nrf52840.c",
+    "chip": "nrf52840",
+    "archetype": "Magnetic2Warning_Light_Threshold_High",
+    "description": "Activates when magnetic is high."
   },
   {
     "id": "gen_047_stm32f103",
     "board": "gen_047_stm32f103.json",
     "firmware": "gen_047_stm32f103.c",
     "chip": "stm32f103",
-    "archetype": "VoltageDropper"
+    "archetype": "Current2Power_Relay_Threshold_Low",
+    "description": "Activates when current drops too low."
   },
   {
-    "id": "gen_048_atsamd21g18a",
-    "board": "gen_048_atsamd21g18a.json",
-    "firmware": "gen_048_atsamd21g18a.c",
-    "chip": "atsamd21g18a",
-    "archetype": "AudioAmplifier"
+    "id": "gen_048_esp32",
+    "board": "gen_048_esp32.json",
+    "firmware": "gen_048_esp32.c",
+    "chip": "esp32",
+    "archetype": "Light2Power_Relay_Threshold_Low",
+    "description": "Activates when light drops too low."
   },
   {
-    "id": "gen_049_atsamd21g18a",
-    "board": "gen_049_atsamd21g18a.json",
-    "firmware": "gen_049_atsamd21g18a.c",
-    "chip": "atsamd21g18a",
-    "archetype": "VoltageDropper"
+    "id": "gen_049_stm32f103",
+    "board": "gen_049_stm32f103.json",
+    "firmware": "gen_049_stm32f103.c",
+    "chip": "stm32f103",
+    "archetype": "Moisture2LED_Indicator_Threshold_Low",
+    "description": "Activates when moisture drops too low."
   },
   {
     "id": "gen_050_stm32f103",
     "board": "gen_050_stm32f103.json",
     "firmware": "gen_050_stm32f103.c",
     "chip": "stm32f103",
-    "archetype": "VoltageDropper"
+    "archetype": "Magnetic2LED_Indicator_Threshold_Low",
+    "description": "Activates when magnetic drops too low."
   },
   {
-    "id": "gen_051_stm32f103",
-    "board": "gen_051_stm32f103.json",
-    "firmware": "gen_051_stm32f103.c",
-    "chip": "stm32f103",
-    "archetype": "TemperatureController"
+    "id": "gen_051_nrf52840",
+    "board": "gen_051_nrf52840.json",
+    "firmware": "gen_051_nrf52840.c",
+    "chip": "nrf52840",
+    "archetype": "HallEffect2Drive_Motor_Threshold_Low",
+    "description": "Activates when halleffect drops too low."
   },
   {
-    "id": "gen_052_stm32f103",
-    "board": "gen_052_stm32f103.json",
-    "firmware": "gen_052_stm32f103.c",
-    "chip": "stm32f103",
-    "archetype": "VoltageDropper"
+    "id": "gen_052_nrf52840",
+    "board": "gen_052_nrf52840.json",
+    "firmware": "gen_052_nrf52840.c",
+    "chip": "nrf52840",
+    "archetype": "Temperature2Cooling_Fan_Threshold_High",
+    "description": "Activates when temperature is high."
   },
   {
     "id": "gen_053_atsamd21g18a",
     "board": "gen_053_atsamd21g18a.json",
     "firmware": "gen_053_atsamd21g18a.c",
     "chip": "atsamd21g18a",
-    "archetype": "TemperatureController"
+    "archetype": "Pressure2Alarm_Buzzer_Threshold_Low",
+    "description": "Activates when pressure drops too low."
   },
   {
     "id": "gen_054_stm32f103",
     "board": "gen_054_stm32f103.json",
     "firmware": "gen_054_stm32f103.c",
     "chip": "stm32f103",
-    "archetype": "AudioAmplifier"
+    "archetype": "Light2Drive_Motor_Threshold_High",
+    "description": "Activates when light is high."
   },
   {
-    "id": "gen_055_atsamd21g18a",
-    "board": "gen_055_atsamd21g18a.json",
-    "firmware": "gen_055_atsamd21g18a.c",
-    "chip": "atsamd21g18a",
-    "archetype": "VoltageDropper"
+    "id": "gen_055_esp32",
+    "board": "gen_055_esp32.json",
+    "firmware": "gen_055_esp32.c",
+    "chip": "esp32",
+    "archetype": "Humidity2LED_Indicator_Threshold_Low",
+    "description": "Activates when humidity drops too low."
   },
   {
     "id": "gen_056_atsamd21g18a",
     "board": "gen_056_atsamd21g18a.json",
     "firmware": "gen_056_atsamd21g18a.c",
     "chip": "atsamd21g18a",
-    "archetype": "AudioAmplifier"
+    "archetype": "HallEffect2Drive_Motor_Threshold_High",
+    "description": "Activates when halleffect is high."
   },
   {
     "id": "gen_057_nrf52840",
     "board": "gen_057_nrf52840.json",
     "firmware": "gen_057_nrf52840.c",
     "chip": "nrf52840",
-    "archetype": "AudioAmplifier"
+    "archetype": "Acceleration2Cooling_Fan_Threshold_Low",
+    "description": "Activates when acceleration drops too low."
   },
   {
-    "id": "gen_058_atsamd21g18a",
-    "board": "gen_058_atsamd21g18a.json",
-    "firmware": "gen_058_atsamd21g18a.c",
-    "chip": "atsamd21g18a",
-    "archetype": "VoltageDropper"
-  },
-  {
-    "id": "gen_059_atsamd21g18a",
-    "board": "gen_059_atsamd21g18a.json",
-    "firmware": "gen_059_atsamd21g18a.c",
-    "chip": "atsamd21g18a",
-    "archetype": "VoltageDropper"
-  },
-  {
-    "id": "gen_060_nrf52840",
-    "board": "gen_060_nrf52840.json",
-    "firmware": "gen_060_nrf52840.c",
+    "id": "gen_058_nrf52840",
+    "board": "gen_058_nrf52840.json",
+    "firmware": "gen_058_nrf52840.c",
     "chip": "nrf52840",
-    "archetype": "TemperatureController"
+    "archetype": "Gas2LED_Indicator_Threshold_High",
+    "description": "Activates when gas is high."
   },
   {
-    "id": "gen_061_nrf52840",
-    "board": "gen_061_nrf52840.json",
-    "firmware": "gen_061_nrf52840.c",
-    "chip": "nrf52840",
-    "archetype": "VoltageDropper"
+    "id": "gen_059_stm32f103",
+    "board": "gen_059_stm32f103.json",
+    "firmware": "gen_059_stm32f103.c",
+    "chip": "stm32f103",
+    "archetype": "Sound2Heater_Threshold_Low",
+    "description": "Activates when sound drops too low."
   },
   {
-    "id": "gen_062_atsamd21g18a",
-    "board": "gen_062_atsamd21g18a.json",
-    "firmware": "gen_062_atsamd21g18a.c",
+    "id": "gen_060_atsamd21g18a",
+    "board": "gen_060_atsamd21g18a.json",
+    "firmware": "gen_060_atsamd21g18a.c",
     "chip": "atsamd21g18a",
-    "archetype": "TemperatureController"
+    "archetype": "Gas2Power_Relay_Threshold_Low",
+    "description": "Activates when gas drops too low."
+  },
+  {
+    "id": "gen_061_atsamd21g18a",
+    "board": "gen_061_atsamd21g18a.json",
+    "firmware": "gen_061_atsamd21g18a.c",
+    "chip": "atsamd21g18a",
+    "archetype": "HallEffect2Warning_Light_Threshold_High",
+    "description": "Activates when halleffect is high."
+  },
+  {
+    "id": "gen_062_esp32",
+    "board": "gen_062_esp32.json",
+    "firmware": "gen_062_esp32.c",
+    "chip": "esp32",
+    "archetype": "Pressure2Warning_Light_Threshold_High",
+    "description": "Activates when pressure is high."
   },
   {
     "id": "gen_063_esp32",
     "board": "gen_063_esp32.json",
     "firmware": "gen_063_esp32.c",
     "chip": "esp32",
-    "archetype": "AudioAmplifier"
+    "archetype": "Distance2Heater_Threshold_High",
+    "description": "Activates when distance is high."
   },
   {
-    "id": "gen_064_nrf52840",
-    "board": "gen_064_nrf52840.json",
-    "firmware": "gen_064_nrf52840.c",
+    "id": "gen_064_esp32",
+    "board": "gen_064_esp32.json",
+    "firmware": "gen_064_esp32.c",
+    "chip": "esp32",
+    "archetype": "Gyroscope2LED_Indicator_Threshold_High",
+    "description": "Activates when gyroscope is high."
+  },
+  {
+    "id": "gen_065_esp32",
+    "board": "gen_065_esp32.json",
+    "firmware": "gen_065_esp32.c",
+    "chip": "esp32",
+    "archetype": "Light2Alarm_Buzzer_Threshold_Low",
+    "description": "Activates when light drops too low."
+  },
+  {
+    "id": "gen_066_atsamd21g18a",
+    "board": "gen_066_atsamd21g18a.json",
+    "firmware": "gen_066_atsamd21g18a.c",
+    "chip": "atsamd21g18a",
+    "archetype": "Humidity2Power_Relay_Threshold_Low",
+    "description": "Activates when humidity drops too low."
+  },
+  {
+    "id": "gen_067_nrf52840",
+    "board": "gen_067_nrf52840.json",
+    "firmware": "gen_067_nrf52840.c",
     "chip": "nrf52840",
-    "archetype": "VoltageDropper"
+    "archetype": "Sound2Warning_Light_Threshold_Low",
+    "description": "Activates when sound drops too low."
   },
   {
-    "id": "gen_065_atsamd21g18a",
-    "board": "gen_065_atsamd21g18a.json",
-    "firmware": "gen_065_atsamd21g18a.c",
-    "chip": "atsamd21g18a",
-    "archetype": "TemperatureController"
-  },
-  {
-    "id": "gen_066_esp32",
-    "board": "gen_066_esp32.json",
-    "firmware": "gen_066_esp32.c",
+    "id": "gen_068_esp32",
+    "board": "gen_068_esp32.json",
+    "firmware": "gen_068_esp32.c",
     "chip": "esp32",
-    "archetype": "AudioAmplifier"
+    "archetype": "Temperature2Alarm_Buzzer_Threshold_High",
+    "description": "Activates when temperature is high."
   },
   {
-    "id": "gen_067_esp32",
-    "board": "gen_067_esp32.json",
-    "firmware": "gen_067_esp32.c",
-    "chip": "esp32",
-    "archetype": "TemperatureController"
-  },
-  {
-    "id": "gen_068_atsamd21g18a",
-    "board": "gen_068_atsamd21g18a.json",
-    "firmware": "gen_068_atsamd21g18a.c",
-    "chip": "atsamd21g18a",
-    "archetype": "AudioAmplifier"
-  },
-  {
-    "id": "gen_069_atsamd21g18a",
-    "board": "gen_069_atsamd21g18a.json",
-    "firmware": "gen_069_atsamd21g18a.c",
-    "chip": "atsamd21g18a",
-    "archetype": "VoltageDropper"
-  },
-  {
-    "id": "gen_070_atsamd21g18a",
-    "board": "gen_070_atsamd21g18a.json",
-    "firmware": "gen_070_atsamd21g18a.c",
-    "chip": "atsamd21g18a",
-    "archetype": "TemperatureController"
-  },
-  {
-    "id": "gen_071_nrf52840",
-    "board": "gen_071_nrf52840.json",
-    "firmware": "gen_071_nrf52840.c",
+    "id": "gen_069_nrf52840",
+    "board": "gen_069_nrf52840.json",
+    "firmware": "gen_069_nrf52840.c",
     "chip": "nrf52840",
-    "archetype": "TemperatureController"
+    "archetype": "PIR_Motion2LED_Indicator_Threshold_Low",
+    "description": "Activates when pir_motion drops too low."
   },
   {
-    "id": "gen_072_atsamd21g18a",
-    "board": "gen_072_atsamd21g18a.json",
-    "firmware": "gen_072_atsamd21g18a.c",
-    "chip": "atsamd21g18a",
-    "archetype": "TemperatureController"
-  },
-  {
-    "id": "gen_073_esp32",
-    "board": "gen_073_esp32.json",
-    "firmware": "gen_073_esp32.c",
+    "id": "gen_070_esp32",
+    "board": "gen_070_esp32.json",
+    "firmware": "gen_070_esp32.c",
     "chip": "esp32",
-    "archetype": "VoltageDropper"
+    "archetype": "Temperature2LED_Indicator_Threshold_High",
+    "description": "Activates when temperature is high."
   },
   {
-    "id": "gen_074_atsamd21g18a",
-    "board": "gen_074_atsamd21g18a.json",
-    "firmware": "gen_074_atsamd21g18a.c",
-    "chip": "atsamd21g18a",
-    "archetype": "TemperatureController"
-  },
-  {
-    "id": "gen_075_esp32",
-    "board": "gen_075_esp32.json",
-    "firmware": "gen_075_esp32.c",
+    "id": "gen_071_esp32",
+    "board": "gen_071_esp32.json",
+    "firmware": "gen_071_esp32.c",
     "chip": "esp32",
-    "archetype": "AudioAmplifier"
+    "archetype": "Moisture2Warning_Light_Threshold_Low",
+    "description": "Activates when moisture drops too low."
+  },
+  {
+    "id": "gen_072_esp32",
+    "board": "gen_072_esp32.json",
+    "firmware": "gen_072_esp32.c",
+    "chip": "esp32",
+    "archetype": "PIR_Motion2Water_Pump_Threshold_Low",
+    "description": "Activates when pir_motion drops too low."
+  },
+  {
+    "id": "gen_073_nrf52840",
+    "board": "gen_073_nrf52840.json",
+    "firmware": "gen_073_nrf52840.c",
+    "chip": "nrf52840",
+    "archetype": "Magnetic2Warning_Light_Threshold_Low",
+    "description": "Activates when magnetic drops too low."
+  },
+  {
+    "id": "gen_074_nrf52840",
+    "board": "gen_074_nrf52840.json",
+    "firmware": "gen_074_nrf52840.c",
+    "chip": "nrf52840",
+    "archetype": "Gyroscope2Water_Pump_Threshold_High",
+    "description": "Activates when gyroscope is high."
+  },
+  {
+    "id": "gen_075_nrf52840",
+    "board": "gen_075_nrf52840.json",
+    "firmware": "gen_075_nrf52840.c",
+    "chip": "nrf52840",
+    "archetype": "Pressure2Alarm_Buzzer_Threshold_High",
+    "description": "Activates when pressure is high."
   },
   {
     "id": "gen_076_stm32f103",
     "board": "gen_076_stm32f103.json",
     "firmware": "gen_076_stm32f103.c",
     "chip": "stm32f103",
-    "archetype": "VoltageDropper"
+    "archetype": "Light2Water_Pump_Threshold_High",
+    "description": "Activates when light is high."
   },
   {
-    "id": "gen_077_atsamd21g18a",
-    "board": "gen_077_atsamd21g18a.json",
-    "firmware": "gen_077_atsamd21g18a.c",
-    "chip": "atsamd21g18a",
-    "archetype": "AudioAmplifier"
+    "id": "gen_077_stm32f103",
+    "board": "gen_077_stm32f103.json",
+    "firmware": "gen_077_stm32f103.c",
+    "chip": "stm32f103",
+    "archetype": "Voltage2LED_Indicator_Threshold_High",
+    "description": "Activates when voltage is high."
   },
   {
-    "id": "gen_078_nrf52840",
-    "board": "gen_078_nrf52840.json",
-    "firmware": "gen_078_nrf52840.c",
-    "chip": "nrf52840",
-    "archetype": "VoltageDropper"
+    "id": "gen_078_esp32",
+    "board": "gen_078_esp32.json",
+    "firmware": "gen_078_esp32.c",
+    "chip": "esp32",
+    "archetype": "PIR_Motion2Drive_Motor_Threshold_Low",
+    "description": "Activates when pir_motion drops too low."
   },
   {
     "id": "gen_079_atsamd21g18a",
     "board": "gen_079_atsamd21g18a.json",
     "firmware": "gen_079_atsamd21g18a.c",
     "chip": "atsamd21g18a",
-    "archetype": "VoltageDropper"
+    "archetype": "Current2Power_Relay_Threshold_High",
+    "description": "Activates when current is high."
   },
   {
-    "id": "gen_080_atsamd21g18a",
-    "board": "gen_080_atsamd21g18a.json",
-    "firmware": "gen_080_atsamd21g18a.c",
-    "chip": "atsamd21g18a",
-    "archetype": "AudioAmplifier"
+    "id": "gen_080_esp32",
+    "board": "gen_080_esp32.json",
+    "firmware": "gen_080_esp32.c",
+    "chip": "esp32",
+    "archetype": "Moisture2LED_Indicator_Threshold_High",
+    "description": "Activates when moisture is high."
   },
   {
-    "id": "gen_081_nrf52840",
-    "board": "gen_081_nrf52840.json",
-    "firmware": "gen_081_nrf52840.c",
-    "chip": "nrf52840",
-    "archetype": "TemperatureController"
+    "id": "gen_081_stm32f103",
+    "board": "gen_081_stm32f103.json",
+    "firmware": "gen_081_stm32f103.c",
+    "chip": "stm32f103",
+    "archetype": "Gyroscope2Power_Relay_Threshold_High",
+    "description": "Activates when gyroscope is high."
   },
   {
     "id": "gen_082_nrf52840",
     "board": "gen_082_nrf52840.json",
     "firmware": "gen_082_nrf52840.c",
     "chip": "nrf52840",
-    "archetype": "TemperatureController"
+    "archetype": "Light2Warning_Light_Threshold_High",
+    "description": "Activates when light is high."
   },
   {
-    "id": "gen_083_atsamd21g18a",
-    "board": "gen_083_atsamd21g18a.json",
-    "firmware": "gen_083_atsamd21g18a.c",
-    "chip": "atsamd21g18a",
-    "archetype": "TemperatureController"
+    "id": "gen_083_nrf52840",
+    "board": "gen_083_nrf52840.json",
+    "firmware": "gen_083_nrf52840.c",
+    "chip": "nrf52840",
+    "archetype": "Magnetic2Cooling_Fan_Threshold_Low",
+    "description": "Activates when magnetic drops too low."
   },
   {
     "id": "gen_084_nrf52840",
     "board": "gen_084_nrf52840.json",
     "firmware": "gen_084_nrf52840.c",
     "chip": "nrf52840",
-    "archetype": "VoltageDropper"
+    "archetype": "Humidity2Power_Relay_Threshold_Low",
+    "description": "Activates when humidity drops too low."
   },
   {
-    "id": "gen_085_stm32f103",
-    "board": "gen_085_stm32f103.json",
-    "firmware": "gen_085_stm32f103.c",
-    "chip": "stm32f103",
-    "archetype": "VoltageDropper"
+    "id": "gen_085_atsamd21g18a",
+    "board": "gen_085_atsamd21g18a.json",
+    "firmware": "gen_085_atsamd21g18a.c",
+    "chip": "atsamd21g18a",
+    "archetype": "Distance2Power_Relay_Threshold_Low",
+    "description": "Activates when distance drops too low."
   },
   {
-    "id": "gen_086_nrf52840",
-    "board": "gen_086_nrf52840.json",
-    "firmware": "gen_086_nrf52840.c",
-    "chip": "nrf52840",
-    "archetype": "TemperatureController"
+    "id": "gen_086_atsamd21g18a",
+    "board": "gen_086_atsamd21g18a.json",
+    "firmware": "gen_086_atsamd21g18a.c",
+    "chip": "atsamd21g18a",
+    "archetype": "Voltage2Warning_Light_Threshold_High",
+    "description": "Activates when voltage is high."
   },
   {
-    "id": "gen_087_nrf52840",
-    "board": "gen_087_nrf52840.json",
-    "firmware": "gen_087_nrf52840.c",
-    "chip": "nrf52840",
-    "archetype": "AudioAmplifier"
+    "id": "gen_087_esp32",
+    "board": "gen_087_esp32.json",
+    "firmware": "gen_087_esp32.c",
+    "chip": "esp32",
+    "archetype": "PIR_Motion2Power_Relay_Threshold_High",
+    "description": "Activates when pir_motion is high."
   },
   {
     "id": "gen_088_stm32f103",
     "board": "gen_088_stm32f103.json",
     "firmware": "gen_088_stm32f103.c",
     "chip": "stm32f103",
-    "archetype": "AudioAmplifier"
+    "archetype": "Gas2Power_Relay_Threshold_High",
+    "description": "Activates when gas is high."
   },
   {
-    "id": "gen_089_esp32",
-    "board": "gen_089_esp32.json",
-    "firmware": "gen_089_esp32.c",
-    "chip": "esp32",
-    "archetype": "VoltageDropper"
+    "id": "gen_089_stm32f103",
+    "board": "gen_089_stm32f103.json",
+    "firmware": "gen_089_stm32f103.c",
+    "chip": "stm32f103",
+    "archetype": "Magnetic2LED_Indicator_Threshold_Low",
+    "description": "Activates when magnetic drops too low."
   },
   {
     "id": "gen_090_stm32f103",
     "board": "gen_090_stm32f103.json",
     "firmware": "gen_090_stm32f103.c",
     "chip": "stm32f103",
-    "archetype": "AudioAmplifier"
+    "archetype": "Acceleration2Warning_Light_Threshold_Low",
+    "description": "Activates when acceleration drops too low."
   },
   {
-    "id": "gen_091_stm32f103",
-    "board": "gen_091_stm32f103.json",
-    "firmware": "gen_091_stm32f103.c",
-    "chip": "stm32f103",
-    "archetype": "VoltageDropper"
-  },
-  {
-    "id": "gen_092_atsamd21g18a",
-    "board": "gen_092_atsamd21g18a.json",
-    "firmware": "gen_092_atsamd21g18a.c",
-    "chip": "atsamd21g18a",
-    "archetype": "AudioAmplifier"
-  },
-  {
-    "id": "gen_093_stm32f103",
-    "board": "gen_093_stm32f103.json",
-    "firmware": "gen_093_stm32f103.c",
-    "chip": "stm32f103",
-    "archetype": "AudioAmplifier"
-  },
-  {
-    "id": "gen_094_esp32",
-    "board": "gen_094_esp32.json",
-    "firmware": "gen_094_esp32.c",
+    "id": "gen_091_esp32",
+    "board": "gen_091_esp32.json",
+    "firmware": "gen_091_esp32.c",
     "chip": "esp32",
-    "archetype": "VoltageDropper"
+    "archetype": "Voltage2Warning_Light_Threshold_High",
+    "description": "Activates when voltage is high."
   },
   {
-    "id": "gen_095_atsamd21g18a",
-    "board": "gen_095_atsamd21g18a.json",
-    "firmware": "gen_095_atsamd21g18a.c",
+    "id": "gen_092_esp32",
+    "board": "gen_092_esp32.json",
+    "firmware": "gen_092_esp32.c",
+    "chip": "esp32",
+    "archetype": "Temperature2Power_Relay_Threshold_High",
+    "description": "Activates when temperature is high."
+  },
+  {
+    "id": "gen_093_atsamd21g18a",
+    "board": "gen_093_atsamd21g18a.json",
+    "firmware": "gen_093_atsamd21g18a.c",
     "chip": "atsamd21g18a",
-    "archetype": "AudioAmplifier"
+    "archetype": "Pressure2Alarm_Buzzer_Threshold_High",
+    "description": "Activates when pressure is high."
+  },
+  {
+    "id": "gen_094_nrf52840",
+    "board": "gen_094_nrf52840.json",
+    "firmware": "gen_094_nrf52840.c",
+    "chip": "nrf52840",
+    "archetype": "Gas2Power_Relay_Threshold_High",
+    "description": "Activates when gas is high."
+  },
+  {
+    "id": "gen_095_nrf52840",
+    "board": "gen_095_nrf52840.json",
+    "firmware": "gen_095_nrf52840.c",
+    "chip": "nrf52840",
+    "archetype": "HallEffect2Alarm_Buzzer_Threshold_Low",
+    "description": "Activates when halleffect drops too low."
   },
   {
     "id": "gen_096_esp32",
     "board": "gen_096_esp32.json",
     "firmware": "gen_096_esp32.c",
     "chip": "esp32",
-    "archetype": "VoltageDropper"
+    "archetype": "PIR_Motion2Cooling_Fan_Threshold_Low",
+    "description": "Activates when pir_motion drops too low."
   },
   {
-    "id": "gen_097_atsamd21g18a",
-    "board": "gen_097_atsamd21g18a.json",
-    "firmware": "gen_097_atsamd21g18a.c",
-    "chip": "atsamd21g18a",
-    "archetype": "VoltageDropper"
+    "id": "gen_097_stm32f103",
+    "board": "gen_097_stm32f103.json",
+    "firmware": "gen_097_stm32f103.c",
+    "chip": "stm32f103",
+    "archetype": "PIR_Motion2Heater_Threshold_High",
+    "description": "Activates when pir_motion is high."
   },
   {
     "id": "gen_098_nrf52840",
     "board": "gen_098_nrf52840.json",
     "firmware": "gen_098_nrf52840.c",
     "chip": "nrf52840",
-    "archetype": "VoltageDropper"
+    "archetype": "Pressure2Alarm_Buzzer_Threshold_High",
+    "description": "Activates when pressure is high."
   },
   {
     "id": "gen_099_atsamd21g18a",
     "board": "gen_099_atsamd21g18a.json",
     "firmware": "gen_099_atsamd21g18a.c",
     "chip": "atsamd21g18a",
-    "archetype": "AudioAmplifier"
+    "archetype": "Gas2Power_Relay_Threshold_High",
+    "description": "Activates when gas is high."
   },
   {
-    "id": "gen_100_atsamd21g18a",
-    "board": "gen_100_atsamd21g18a.json",
-    "firmware": "gen_100_atsamd21g18a.c",
-    "chip": "atsamd21g18a",
-    "archetype": "VoltageDropper"
+    "id": "gen_100_stm32f103",
+    "board": "gen_100_stm32f103.json",
+    "firmware": "gen_100_stm32f103.c",
+    "chip": "stm32f103",
+    "archetype": "Distance2Water_Pump_Threshold_High",
+    "description": "Activates when distance is high."
   }
 ]

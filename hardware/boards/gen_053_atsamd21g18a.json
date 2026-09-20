@@ -1,22 +1,24 @@
 {
   "chip": "atsamd21g18a",
   "package": "generic",
-  "board_name": "GenBoard 053 - TemperatureController",
+  "board_name": "GenBoard 053 - Pressure2Alarm_Buzzer_Threshold_Low",
   "created_by": "generator",
   "peripherals": [
     {
-      "id": "TEMP_SENS",
+      "id": "PRESSURE_SENS",
       "kind": "sensor",
       "pins": [
         "PA02"
-      ]
+      ],
+      "label": "Pressure Sensor"
     },
     {
-      "id": "FAN_MOTOR",
-      "kind": "motor",
+      "id": "ALARM_BUZZ",
+      "kind": "led",
       "pins": [
-        "PA04"
-      ]
+        "PB09"
+      ],
+      "label": "Alarm Buzzer"
     }
   ]
 }

@@ -1,22 +1,24 @@
 {
   "chip": "stm32f103",
   "package": "generic",
-  "board_name": "GenBoard 009 - VoltageDropper",
+  "board_name": "GenBoard 009 - Gas2Alarm_Buzzer_Threshold_High",
   "created_by": "generator",
   "peripherals": [
     {
-      "id": "V_MONITOR",
+      "id": "GAS_SENS",
       "kind": "sensor",
       "pins": [
-        "PA3"
-      ]
+        "PA0"
+      ],
+      "label": "Gas Sensor"
     },
     {
-      "id": "ALARM_LED",
+      "id": "ALARM_BUZZ",
       "kind": "led",
       "pins": [
-        "PB1"
-      ]
+        "PA2"
+      ],
+      "label": "Alarm Buzzer"
     }
   ]
 }

@@ -1,29 +1,24 @@
 {
   "chip": "stm32f103",
   "package": "generic",
-  "board_name": "GenBoard 090 - AudioAmplifier",
+  "board_name": "GenBoard 090 - Acceleration2Warning_Light_Threshold_Low",
   "created_by": "generator",
   "peripherals": [
     {
-      "id": "AUDIO_IN",
+      "id": "ACCEL_SENS",
       "kind": "sensor",
       "pins": [
-        "PA2"
-      ]
+        "PB0"
+      ],
+      "label": "Acceleration Sensor"
     },
     {
-      "id": "SPEAKER",
-      "kind": "motor",
-      "pins": [
-        "PC13"
-      ]
-    },
-    {
-      "id": "CLIP_LED",
+      "id": "WARN_LED",
       "kind": "led",
       "pins": [
-        "PB1"
-      ]
+        "PA1"
+      ],
+      "label": "Warning Light"
     }
   ]
 }

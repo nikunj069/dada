@@ -1,29 +1,24 @@
 {
   "chip": "esp32",
   "package": "generic",
-  "board_name": "GenBoard 063 - AudioAmplifier",
+  "board_name": "GenBoard 063 - Distance2Heater_Threshold_High",
   "created_by": "generator",
   "peripherals": [
     {
-      "id": "AUDIO_IN",
+      "id": "DIST_SENS",
       "kind": "sensor",
       "pins": [
-        "P14"
-      ]
+        "P0"
+      ],
+      "label": "Distance Sensor"
     },
     {
-      "id": "SPEAKER",
-      "kind": "motor",
-      "pins": [
-        "P5"
-      ]
-    },
-    {
-      "id": "CLIP_LED",
+      "id": "HEAT_COIL",
       "kind": "led",
       "pins": [
-        "P13"
-      ]
+        "P12"
+      ],
+      "label": "Heater"
     }
   ]
 }

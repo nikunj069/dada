@@ -1,0 +1,24 @@
+{
+  "chip": "esp32",
+  "package": "generic",
+  "board_name": "GenBoard 068 - Temperature2Alarm_Buzzer_Threshold_High",
+  "created_by": "generator",
+  "peripherals": [
+    {
+      "id": "TEMP_SENS",
+      "kind": "sensor",
+      "pins": [
+        "P13"
+      ],
+      "label": "Temperature Sensor"
+    },
+    {
+      "id": "ALARM_BUZZ",
+      "kind": "led",
+      "pins": [
+        "P15"
+      ],
+      "label": "Alarm Buzzer"
+    }
+  ]
+}

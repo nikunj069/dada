@@ -1,29 +1,24 @@
 {
   "chip": "stm32f103",
   "package": "generic",
-  "board_name": "GenBoard 054 - AudioAmplifier",
+  "board_name": "GenBoard 054 - Light2Drive_Motor_Threshold_High",
   "created_by": "generator",
   "peripherals": [
     {
-      "id": "AUDIO_IN",
+      "id": "LIGHT_SENS",
       "kind": "sensor",
       "pins": [
-        "PA1"
-      ]
+        "PB0"
+      ],
+      "label": "Light Sensor"
     },
     {
-      "id": "SPEAKER",
+      "id": "DRIVE_MOTOR",
       "kind": "motor",
       "pins": [
-        "PA3"
-      ]
-    },
-    {
-      "id": "CLIP_LED",
-      "kind": "led",
-      "pins": [
-        "PA2"
-      ]
+        "PC13"
+      ],
+      "label": "Drive Motor"
     }
   ]
 }

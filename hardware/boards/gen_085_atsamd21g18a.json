@@ -1,0 +1,24 @@
+{
+  "chip": "atsamd21g18a",
+  "package": "generic",
+  "board_name": "GenBoard 085 - Distance2Power_Relay_Threshold_Low",
+  "created_by": "generator",
+  "peripherals": [
+    {
+      "id": "DIST_SENS",
+      "kind": "sensor",
+      "pins": [
+        "PA02"
+      ],
+      "label": "Distance Sensor"
+    },
+    {
+      "id": "PWR_RELAY",
+      "kind": "led",
+      "pins": [
+        "PB08"
+      ],
+      "label": "Power Relay"
+    }
+  ]
+}

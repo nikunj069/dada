@@ -1,22 +1,24 @@
 {
   "chip": "esp32",
   "package": "generic",
-  "board_name": "GenBoard 024 - TemperatureController",
+  "board_name": "GenBoard 024 - Pressure2Water_Pump_Threshold_Low",
   "created_by": "generator",
   "peripherals": [
     {
-      "id": "TEMP_SENS",
+      "id": "PRESSURE_SENS",
       "kind": "sensor",
       "pins": [
-        "P4"
-      ]
+        "P2"
+      ],
+      "label": "Pressure Sensor"
     },
     {
-      "id": "FAN_MOTOR",
+      "id": "WTR_PUMP",
       "kind": "motor",
       "pins": [
-        "P12"
-      ]
+        "P15"
+      ],
+      "label": "Water Pump"
     }
   ]
 }

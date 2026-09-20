@@ -1,0 +1,24 @@
+{
+  "chip": "atsamd21g18a",
+  "package": "generic",
+  "board_name": "GenBoard 015 - Moisture2LED_Indicator_Threshold_Low",
+  "created_by": "generator",
+  "peripherals": [
+    {
+      "id": "MOISTURE_SENS",
+      "kind": "sensor",
+      "pins": [
+        "PA04"
+      ],
+      "label": "Moisture Sensor"
+    },
+    {
+      "id": "IND_LED",
+      "kind": "led",
+      "pins": [
+        "PA05"
+      ],
+      "label": "LED Indicator"
+    }
+  ]
+}

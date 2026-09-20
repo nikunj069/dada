@@ -1,0 +1,24 @@
+{
+  "chip": "nrf52840",
+  "package": "generic",
+  "board_name": "GenBoard 003 - HallEffect2Warning_Light_Threshold_Low",
+  "created_by": "generator",
+  "peripherals": [
+    {
+      "id": "HALL_SENS",
+      "kind": "sensor",
+      "pins": [
+        "P0.13"
+      ],
+      "label": "HallEffect Sensor"
+    },
+    {
+      "id": "WARN_LED",
+      "kind": "led",
+      "pins": [
+        "P0.12"
+      ],
+      "label": "Warning Light"
+    }
+  ]
+}

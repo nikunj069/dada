@@ -1,22 +1,24 @@
 {
   "chip": "stm32f103",
   "package": "generic",
-  "board_name": "GenBoard 050 - VoltageDropper",
+  "board_name": "GenBoard 050 - Magnetic2LED_Indicator_Threshold_Low",
   "created_by": "generator",
   "peripherals": [
     {
-      "id": "V_MONITOR",
+      "id": "MAG_SENS",
       "kind": "sensor",
       "pins": [
-        "PA0"
-      ]
+        "PA3"
+      ],
+      "label": "Magnetic Sensor"
     },
     {
-      "id": "ALARM_LED",
+      "id": "IND_LED",
       "kind": "led",
       "pins": [
         "PA2"
-      ]
+      ],
+      "label": "LED Indicator"
     }
   ]
 }

@@ -1,0 +1,24 @@
+{
+  "chip": "esp32",
+  "package": "generic",
+  "board_name": "GenBoard 007 - Magnetic2Power_Relay_Threshold_Low",
+  "created_by": "generator",
+  "peripherals": [
+    {
+      "id": "MAG_SENS",
+      "kind": "sensor",
+      "pins": [
+        "P14"
+      ],
+      "label": "Magnetic Sensor"
+    },
+    {
+      "id": "PWR_RELAY",
+      "kind": "led",
+      "pins": [
+        "P13"
+      ],
+      "label": "Power Relay"
+    }
+  ]
+}

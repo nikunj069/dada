@@ -1,0 +1,24 @@
+{
+  "chip": "stm32f103",
+  "package": "generic",
+  "board_name": "GenBoard 031 - Voltage2Alarm_Buzzer_Threshold_High",
+  "created_by": "generator",
+  "peripherals": [
+    {
+      "id": "VOLT_SENS",
+      "kind": "sensor",
+      "pins": [
+        "PA3"
+      ],
+      "label": "Voltage Sensor"
+    },
+    {
+      "id": "ALARM_BUZZ",
+      "kind": "led",
+      "pins": [
+        "PC13"
+      ],
+      "label": "Alarm Buzzer"
+    }
+  ]
+}

@@ -1,22 +1,22 @@
 #include "system.h"
-#define TEMP_HIGH 49
+#define THRESHOLD 71
 
-int temperature = 0;
+int sensor_value = 0;
 
-void update_fan(int t) {
-    if (t >= TEMP_HIGH) {
-        GPIO_Write(PIN_PA04, 1);
-        uart_print("FAN ON\n");
+void process_logic(int val) {
+    if (val < THRESHOLD) {
+        GPIO_Write(PIN_PB09, 1);
+        uart_print("BUZZER ON\n");
     } else {
-        GPIO_Write(PIN_PA04, 0);
-        uart_print("FAN OFF\n");
+        GPIO_Write(PIN_PB09, 0);
+        uart_print("BUZZER OFF\n");
     }
 }
 
 int main() {
     while(1) {
-        temperature = read_sensor(PIN_PA02);
-        update_fan(temperature);
+        sensor_value = read_sensor(PIN_PA02);
+        process_logic(sensor_value);
     }
     return 0;
 }

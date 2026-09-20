@@ -1,29 +1,24 @@
 {
   "chip": "nrf52840",
   "package": "generic",
-  "board_name": "GenBoard 013 - AudioAmplifier",
+  "board_name": "GenBoard 013 - Gyroscope2LED_Indicator_Threshold_Low",
   "created_by": "generator",
   "peripherals": [
     {
-      "id": "AUDIO_IN",
+      "id": "GYRO_SENS",
       "kind": "sensor",
       "pins": [
         "P0.13"
-      ]
+      ],
+      "label": "Gyroscope Sensor"
     },
     {
-      "id": "SPEAKER",
-      "kind": "motor",
-      "pins": [
-        "P1.02"
-      ]
-    },
-    {
-      "id": "CLIP_LED",
+      "id": "IND_LED",
       "kind": "led",
       "pins": [
-        "P0.14"
-      ]
+        "P0.11"
+      ],
+      "label": "LED Indicator"
     }
   ]
 }

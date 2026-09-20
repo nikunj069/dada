@@ -1,0 +1,24 @@
+{
+  "chip": "stm32f103",
+  "package": "generic",
+  "board_name": "GenBoard 044 - HallEffect2Warning_Light_Threshold_High",
+  "created_by": "generator",
+  "peripherals": [
+    {
+      "id": "HALL_SENS",
+      "kind": "sensor",
+      "pins": [
+        "PB1"
+      ],
+      "label": "HallEffect Sensor"
+    },
+    {
+      "id": "WARN_LED",
+      "kind": "led",
+      "pins": [
+        "PA3"
+      ],
+      "label": "Warning Light"
+    }
+  ]
+}

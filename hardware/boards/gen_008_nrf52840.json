@@ -1,0 +1,24 @@
+{
+  "chip": "nrf52840",
+  "package": "generic",
+  "board_name": "GenBoard 008 - Gyroscope2LED_Indicator_Threshold_Low",
+  "created_by": "generator",
+  "peripherals": [
+    {
+      "id": "GYRO_SENS",
+      "kind": "sensor",
+      "pins": [
+        "P1.01"
+      ],
+      "label": "Gyroscope Sensor"
+    },
+    {
+      "id": "IND_LED",
+      "kind": "led",
+      "pins": [
+        "P0.14"
+      ],
+      "label": "LED Indicator"
+    }
+  ]
+}

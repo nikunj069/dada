@@ -1,22 +1,22 @@
 #include "system.h"
-#define V_MIN 72
+#define THRESHOLD 58
 
-int voltage = 0;
+int sensor_value = 0;
 
-void check_voltage(int v) {
-    if (v < V_MIN) {
-        GPIO_Write(PIN_P0.12, 1);
-        uart_print("UNDERVOLTAGE\n");
+void process_logic(int val) {
+    if (val >= THRESHOLD) {
+        GPIO_Write(PIN_P0.13, 1);
+        uart_print("BUZZER ON\n");
     } else {
-        GPIO_Write(PIN_P0.12, 0);
-        uart_print("V OK\n");
+        GPIO_Write(PIN_P0.13, 0);
+        uart_print("BUZZER OFF\n");
     }
 }
 
 int main() {
     while(1) {
-        voltage = read_sensor(PIN_P0.11);
-        check_voltage(voltage);
+        sensor_value = read_sensor(PIN_P1.02);
+        process_logic(sensor_value);
     }
     return 0;
 }

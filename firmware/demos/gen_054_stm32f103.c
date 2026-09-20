@@ -1,24 +1,22 @@
 #include "system.h"
-#define CLIP_LIMIT 34
+#define THRESHOLD 57
 
-int audio = 0;
+int sensor_value = 0;
 
-void process_audio(int a) {
-    if (a > CLIP_LIMIT || a < -CLIP_LIMIT) {
-        GPIO_Write(PIN_PA2, 1); // Clipping indicator
-        uart_print("CLIP\n");
-        GPIO_Write(PIN_PA3, 1); // Distorted output
+void process_logic(int val) {
+    if (val >= THRESHOLD) {
+        GPIO_Write(PIN_PC13, 1);
+        uart_print("MOTOR ON\n");
     } else {
-        GPIO_Write(PIN_PA2, 0);
-        uart_print("AUDIO OK\n");
-        GPIO_Write(PIN_PA3, a > 0 ? 1 : 0); // Simplified PWM
+        GPIO_Write(PIN_PC13, 0);
+        uart_print("MOTOR OFF\n");
     }
 }
 
 int main() {
     while(1) {
-        audio = read_sensor(PIN_PA1);
-        process_audio(audio);
+        sensor_value = read_sensor(PIN_PB0);
+        process_logic(sensor_value);
     }
     return 0;
 }

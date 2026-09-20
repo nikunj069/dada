@@ -1,0 +1,24 @@
+{
+  "chip": "esp32",
+  "package": "generic",
+  "board_name": "GenBoard 045 - Distance2Power_Relay_Threshold_High",
+  "created_by": "generator",
+  "peripherals": [
+    {
+      "id": "DIST_SENS",
+      "kind": "sensor",
+      "pins": [
+        "P12"
+      ],
+      "label": "Distance Sensor"
+    },
+    {
+      "id": "PWR_RELAY",
+      "kind": "led",
+      "pins": [
+        "P5"
+      ],
+      "label": "Power Relay"
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "chip": "esp32",
+  "package": "generic",
+  "board_name": "GenBoard 078 - PIR_Motion2Drive_Motor_Threshold_Low",
+  "created_by": "generator",
+  "peripherals": [
+    {
+      "id": "PIR_SENS",
+      "kind": "sensor",
+      "pins": [
+        "P5"
+      ],
+      "label": "PIR_Motion Sensor"
+    },
+    {
+      "id": "DRIVE_MOTOR",
+      "kind": "motor",
+      "pins": [
+        "P15"
+      ],
+      "label": "Drive Motor"
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "chip": "stm32f103",
+  "package": "generic",
+  "board_name": "GenBoard 032 - Moisture2Drive_Motor_Threshold_High",
+  "created_by": "generator",
+  "peripherals": [
+    {
+      "id": "MOISTURE_SENS",
+      "kind": "sensor",
+      "pins": [
+        "PA0"
+      ],
+      "label": "Moisture Sensor"
+    },
+    {
+      "id": "DRIVE_MOTOR",
+      "kind": "motor",
+      "pins": [
+        "PB1"
+      ],
+      "label": "Drive Motor"
+    }
+  ]
+}
