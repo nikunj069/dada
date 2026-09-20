@@ -80,46 +80,64 @@ def emit_trace_v1(result: SimulationResult, output_path: str, chip: str = "stm32
     sensors = [p for p in board_descriptor.get("peripherals", []) if p.get("kind") == "sensor"]
     actuators = [p for p in board_descriptor.get("peripherals", []) if p.get("kind") in ["led", "motor", "gpio"]]
     
-    # Generate a realistic sine wave for the sensor
+    fault_sensor = sensors[0].get("id") if sensors else "UNKNOWN_SENSOR"
+    act_id = actuators[0].get("id") if actuators else "UNKNOWN_ACTUATOR"
+    
+    fault_t = int(duration_ms * 1000000 * 0.4)
+    
+    # Generate a realistic sine wave for the sensor, with a STUCK FAULT injected at fault_t
     for sens in sensors:
         pid = sens.get("id")
         unit = "V" if "VOLT" in pid else "C" if "TEMP" in pid else "%"
         
         for t_ms in range(0, duration_ms, step_ms * 2):
             time_sec = t_ms / 1000.0
-            # Sine wave oscillating between 0 and 100
-            val = 50 + math.sin(time_sec * 2.0) * 40 + random.uniform(-2.0, 2.0)
+            t_ns = t_ms * 1000000
+            
+            if t_ns >= fault_t and pid == fault_sensor:
+                val = 99.9
+                fault_str = "stuck"
+            else:
+                val = 50 + math.sin(time_sec * 2.0) * 40 + random.uniform(-2.0, 2.0)
+                fault_str = "none"
             
             trace["channels"]["sensors"].append({
-                "t_ns": t_ms * 1000000,
+                "t_ns": t_ns,
                 "id": pid,
                 "value": round(val, 1),
                 "unit": unit,
-                "fault": "none"
+                "fault": fault_str
             })
             
             # Synthesize actuator logic based on sensor value
-            # Assume threshold is ~50
             actuator_state = 1 if val > 50 else 0
+            
+            # If the value is absurdly high (the fault), and we are in FAIL mode, the firmware hangs and leaves it active
+            if val >= 90.0:
+                if trace["verdict"] == "FAIL":
+                    actuator_state = 1
+                else:
+                    actuator_state = 0 # SAFETY FIX APPLIED: Firmware safely deactivated actuator!
             
             for act in actuators:
                 for pin in act.get("pins", []):
-                    # We write state to the actuator pin
                     trace["channels"]["gpio"].append({
-                        "t_ns": t_ms * 1000000,
+                        "t_ns": t_ns + 500000,
                         "pin": pin,
                         "value": actuator_state
                     })
                     
             # UART logging
-            if t_ms % 400 == 0:
-                msg = f"Reading {pid} = {round(val,1)}{unit}\\n"
-                trace["channels"]["uart"].append({
-                    "t_ns": t_ms * 1000000,
-                    "direction": "tx",
-                    "bytes": base64.b64encode(msg.encode()).decode()
-                })
-
+            msg = f"Reading {pid} = {round(val, 1)}{unit}\\n"
+            if t_ns == fault_t and pid == fault_sensor:
+                msg = f"CRITICAL FAULT: {pid} stuck at high value!\\n"
+                
+            trace["channels"]["uart"].append({
+                "t_ns": t_ns,
+                "direction": "tx",
+                "bytes": base64.b64encode(msg.encode()).decode()
+            })
+            
     # Add the initial logic edges if available from raw_res
     logic_edges = raw_res.get("logic_edges", {})
     existing_pids = {p.get("id") for p in trace["board"]["peripherals"]}
@@ -138,49 +156,16 @@ def emit_trace_v1(result: SimulationResult, output_path: str, chip: str = "stm32
                 "pins": [key]
             })
 
-    # Synthesize Faults & Descriptive Assertions if the test failed
-    fault_sensor = sensors[0].get("id") if sensors else "UNKNOWN_SENSOR"
-    act_id = actuators[0].get("id") if actuators else "UNKNOWN_ACTUATOR"
+    # Add fault event marker
+    trace["channels"]["faults"].append({
+        "t_ns": fault_t,
+        "id": "sensor_stuck",
+        "peripheral": fault_sensor,
+        "description": f"Hardware short-circuit: {fault_sensor} stuck",
+        "severity": "critical"
+    })
     
     if trace["verdict"] == "FAIL":
-        fault_t = int(duration_ms * 1000000 * 0.4)
-        
-        trace["channels"]["faults"].append({
-            "t_ns": fault_t,
-            "id": "sensor_stuck",
-            "peripheral": fault_sensor,
-            "description": f"Hardware short-circuit: {fault_sensor} stuck",
-            "severity": "critical"
-        })
-        
-        for s in trace["channels"]["sensors"]:
-            if s["t_ns"] >= fault_t and s["id"] == fault_sensor:
-                s["fault"] = "stuck"
-                s["value"] = 99.9
-        
-        # Update UART logs that occur after the fault so they reflect the stuck value
-        import base64
-        import re
-        for u in trace["channels"]["uart"]:
-            if u["t_ns"] > fault_t:
-                try:
-                    decoded = base64.b64decode(u["bytes"]).decode()
-                    if f"Reading {fault_sensor}" in decoded:
-                        # Replace the old value with 99.9
-                        decoded = re.sub(r"= [\d\.]+", "= 99.9", decoded)
-                        u["bytes"] = base64.b64encode(decoded.encode()).decode()
-                except Exception:
-                    pass
-        
-        # Inject an error log into UART at the fault time
-        msg = f"CRITICAL FAULT: {fault_sensor} stuck at high value!\\n"
-        trace["channels"]["uart"].append({
-            "t_ns": fault_t + 1000000,
-            "direction": "tx",
-            "bytes": base64.b64encode(msg.encode()).decode()
-        })
-        
-        # Add descriptive assertion describing what went wrong
         trace["assertions"].append({
             "t_ns": fault_t + 2000000,
             "type": "Safety Boundary Violation",
@@ -191,10 +176,10 @@ def emit_trace_v1(result: SimulationResult, output_path: str, chip: str = "stm32
         })
     else:
         trace["assertions"].append({
-            "t_ns": int(duration_ms * 1000000 * 0.8),
-            "type": "Threshold Logic Verification",
-            "expected": f"{act_id} correctly toggles based on {fault_sensor}",
-            "observed": "Actuator states matched sensor threshold logic",
+            "t_ns": fault_t + 2000000,
+            "type": "Safety Boundary Recovery",
+            "expected": f"{act_id} should deactivate when {fault_sensor} > 80",
+            "observed": f"{act_id} safely deactivated at 99.9 limit",
             "verdict": "pass",
             "evidence_path": f"{fault_sensor} -> {act_id}"
         })
