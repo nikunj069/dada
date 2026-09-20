@@ -70,7 +70,7 @@ class ReportGenerator:
         if trace_data_json:
             html_path = os.path.join('src', 'firmware_agent', 'reporting', 'viewer', 'rig_view.html')
             if os.path.exists(html_path):
-                with open(html_path, 'r') as f:
+                with open(html_path, 'r', encoding='utf-8', errors='replace') as f:
                     rig_html = f.read()
                 # Inject trace
                 script_block = f'<script type="application/json" id="trace-data">\n{trace_data_json}\n</script>'
@@ -105,7 +105,7 @@ class ReportGenerator:
         html_content = template.render(**data)
         
         os.makedirs(os.path.dirname(output_path), exist_ok=True)
-        with open(output_path, 'w') as f:
+        with open(output_path, 'w', encoding='utf-8') as f:
             f.write(html_content)
             
         return output_path

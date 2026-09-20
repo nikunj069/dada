@@ -267,6 +267,23 @@ class LabWiredAdapter(SimulatorAdapter):
                 stop_reason="wall_time",
                 stop_reason_details={"error": "Host process timed out"},
             )
+        except (FileNotFoundError, OSError) as e:
+            duration = time.time() - start_time
+            run_manifest = {
+                "command": cmd,
+                "working_dir": str(self._output_dir),
+                "resolved_binary": self._bin,
+                "exit_code": "NOT_FOUND",
+                "duration_s": duration,
+                "error": str(e)
+            }
+            (self._output_dir / "run_manifest.json").write_text(json.dumps(run_manifest, indent=2))
+            
+            return SimulationResult(
+                status="fail",
+                stop_reason="simulator_missing",
+                stop_reason_details={"error": f"Simulator binary not found on host: {e}"},
+            )
 
         # Parse LabWired artifacts
         return self._parse_results(proc)

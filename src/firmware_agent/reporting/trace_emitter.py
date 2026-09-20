@@ -32,13 +32,14 @@ def emit_trace_v1(result: SimulationResult, output_path: str, chip: str = "stm32
             import logging
             logging.getLogger(__name__).warning(f"Chip '{chip}' not available in simulator: {cap.error}. Skipping pin validation.")
                         
+    raw_res = result.raw_result or {}
     trace = {
         "schema": "trace.v1",
-        "run_id": result.raw_result.get("config", {}).get("script", "").split("/")[-2] if "config" in result.raw_result else "unknown",
+        "run_id": raw_res.get("config", {}).get("script", "").split("/")[-2] if "config" in raw_res else "unknown",
         "test_id": "test_scenario",
-        "firmware_hash": result.raw_result.get("firmware_hash", ""),
+        "firmware_hash": raw_res.get("firmware_hash", ""),
         "verdict": "PASS" if result.status == "pass" else "FAIL" if result.status == "fail" else "UNAVAILABLE",
-        "duration_ns": result.cycles * 10, # Mock 100MHz clock for now
+        "duration_ns": (result.cycles or 0) * 10, # Mock 100MHz clock for now
         "board": board_descriptor,
         "channels": {
 
@@ -54,7 +55,7 @@ def emit_trace_v1(result: SimulationResult, output_path: str, chip: str = "stm32
     
 
     # 2. Extract GPIO logic edges
-    logic_edges = result.raw_result.get("logic_edges", {})
+    logic_edges = raw_res.get("logic_edges", {})
     
     # Get existing peripheral IDs
     existing_pids = {p.get("id") for p in trace["board"]["peripherals"]}

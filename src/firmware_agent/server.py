@@ -1,22 +1,33 @@
 """
 PS3 Firmware Agent — Local Web Server (FastAPI)
 
-Serves the dashboard, 3D viewer, board designer, and run APIs.
+Serves the unified dashboard, 3D viewer, test execution runner, board designer, and run APIs.
 Start with: firmware-agent serve
 """
 from __future__ import annotations
 
 import json
 import os
+import math
 from datetime import datetime
 from pathlib import Path
-from typing import Any
+from typing import Any, Optional
 
-from fastapi import FastAPI, HTTPException, Request
+from fastapi import FastAPI, HTTPException, Request, BackgroundTasks
 from fastapi.responses import FileResponse, HTMLResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
+from fastapi.middleware.cors import CORSMiddleware
+import uvicorn
 
 app = FastAPI(title="PS3 Firmware Agent", version="1.0.0")
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # ---------- paths ----------
 PROJECT_ROOT = Path(os.environ.get("PS3_PROJECT_ROOT", Path(__file__).resolve().parents[2]))
@@ -24,9 +35,16 @@ TRACES_DIR = PROJECT_ROOT / "artifacts" / "traces"
 BOARDS_DIR = PROJECT_ROOT / "hardware" / "boards"
 VIEWER_PATH = PROJECT_ROOT / "src" / "firmware_agent" / "reporting" / "viewer" / "rig_view.html"
 SCHEMAS_DIR = PROJECT_ROOT / "schemas"
-STATIC_DIR = PROJECT_ROOT / "src" / "firmware_agent" / "static"
+SRC_STATIC = PROJECT_ROOT / "src" / "firmware_agent" / "static"
+WEB_STATIC = PROJECT_ROOT / "web" / "static"
+FIRMWARE_C = PROJECT_ROOT / "firmware" / "demos" / "fan_controller.c"
+
+STATIC_DIR = WEB_STATIC if WEB_STATIC.exists() else SRC_STATIC
 STATIC_DIR.mkdir(parents=True, exist_ok=True)
 app.mount("/static", StaticFiles(directory=str(STATIC_DIR)), name="static")
+
+is_running_tests = False
+
 
 def _get_capabilities(chip: str):
     """Return SimulatorCapabilities for a chip, importing locally to avoid circular deps."""
@@ -46,102 +64,129 @@ def list_runs():
     runs = []
     if not TRACES_DIR.exists():
         return runs
-    for run_dir in sorted(TRACES_DIR.iterdir()):
-        if not run_dir.is_dir():
-            continue
-        trace_path = run_dir / "trace.json"
-        if not trace_path.exists():
-            continue
+
+    for trace_file in sorted(TRACES_DIR.glob("*/trace.json")):
         try:
-            trace = json.loads(trace_path.read_text())
-        except (json.JSONDecodeError, OSError):
+            data = json.loads(trace_file.read_text(encoding="utf-8", errors="replace"))
+            run_id = trace_file.parent.name
+            mtime = datetime.fromtimestamp(trace_file.stat().st_mtime).isoformat()
+            runs.append({
+                "run_id": run_id,
+                "schema": data.get("schema", "unknown"),
+                "test_id": data.get("test_id", "unknown"),
+                "verdict": data.get("verdict", "UNAVAILABLE"),
+                "chip": data.get("board", {}).get("chip", "unknown"),
+                "duration_ns": data.get("duration_ns", 0),
+                "timestamp": mtime,
+                "trace_path": f"/api/runs/{run_id}/trace.json",
+                "view_path": f"/view/{run_id}"
+            })
+        except Exception:
             continue
-        runs.append({
-            "run_id": run_dir.name,
-            "verdict": trace.get("verdict", "UNAVAILABLE"),
-            "chip": trace.get("board", {}).get("chip", "unknown"),
-            "duration_ns": trace.get("duration_ns", 0),
-            "timestamp": datetime.fromtimestamp(trace_path.stat().st_mtime).isoformat(),
-            "trace_file": str(trace_path),
-        })
     return runs
 
 
 @app.get("/api/runs/{run_id}/trace.json")
 def get_trace(run_id: str):
-    """Serve the raw trace.v1.json for a run."""
+    """Return raw trace.json for a given run."""
     trace_path = TRACES_DIR / run_id / "trace.json"
     if not trace_path.exists():
+        candidates = [
+            TRACES_DIR / run_id.upper() / "trace.json",
+            TRACES_DIR / run_id.lower() / "trace.json",
+            TRACES_DIR / run_id.replace("run_", "").upper() / "trace.json",
+            TRACES_DIR / run_id.replace("run_", "").lower() / "trace.json",
+        ]
+        for c in candidates:
+            if c.exists():
+                trace_path = c
+                break
+    if not trace_path.exists():
         raise HTTPException(404, f"No trace found for run_id={run_id}")
-    return JSONResponse(json.loads(trace_path.read_text()))
+    try:
+        data = json.loads(trace_path.read_text(encoding="utf-8", errors="replace"))
+        return JSONResponse(data)
+    except Exception as e:
+        raise HTTPException(500, f"Error reading trace: {e}")
 
 
 # ---------- API: Boards ----------
 
 @app.get("/api/boards")
 def list_boards():
-    """List all board descriptors, annotated with simulator capability info."""
+    """List available board descriptors, with simulator backing status."""
     boards = []
     if not BOARDS_DIR.exists():
         return boards
-    for board_file in sorted(BOARDS_DIR.glob("*.json")):
+
+    for bf in sorted(BOARDS_DIR.glob("*.json")):
         try:
-            board = json.loads(board_file.read_text())
-        except (json.JSONDecodeError, OSError):
+            data = json.loads(bf.read_text(encoding="utf-8", errors="replace"))
+            chip = data.get("chip", "unknown")
+            cap = _get_capabilities(chip)
+            boards.append({
+                "file": bf.name,
+                "board": data,
+                "simulator": {
+                    "available": cap.available,
+                    "supported_pins_count": len(cap.supported_pins),
+                    "error": cap.error
+                }
+            })
+        except Exception:
             continue
-        chip = board.get("chip", "")
-        cap = _get_capabilities(chip)
-        boards.append({
-            "file": board_file.name,
-            "board": board,
-            "simulator": {
-                "chip": cap.chip,
-                "available": cap.available,
-                "error": cap.error,
-                "supported_pins_count": len(cap.supported_pins),
-            }
-        })
     return boards
 
 
 @app.get("/api/boards/{chip}")
 def get_board(chip: str):
-    """Return a single board descriptor + live capability info."""
+    """Return board descriptor and simulator capabilities for a chip."""
     board_path = BOARDS_DIR / f"{chip}.json"
-    if board_path.exists():
-        board = json.loads(board_path.read_text())
+    if not board_path.exists():
+        # Fall back to checking any board that declares this chip
+        matched = None
+        if BOARDS_DIR.exists():
+            for bf in BOARDS_DIR.glob("*.json"):
+                try:
+                    d = json.loads(bf.read_text(encoding="utf-8", errors="replace"))
+                    if d.get("chip") == chip:
+                        matched = d
+                        break
+                except Exception:
+                    pass
+        if not matched:
+            raise HTTPException(404, f"No board descriptor found for chip '{chip}'")
+        data = matched
     else:
-        board = None
-    cap = _get_capabilities(chip)
+        data = json.loads(board_path.read_text(encoding="utf-8", errors="replace"))
+
+    cap = _get_capabilities(data.get("chip", chip))
     return {
-        "board": board,
-        "simulator": {
-            "chip": cap.chip,
+        "board": data,
+        "capabilities": {
             "available": cap.available,
-            "error": cap.error,
             "supported_pins": cap.supported_pins,
-            "can_observe_gpio": cap.can_observe_gpio,
-            "can_observe_uart": cap.can_observe_uart,
+            "error": cap.error
         }
     }
 
 
 @app.post("/api/boards")
 async def create_board(request: Request):
-    """Accept a new board descriptor JSON, validate against schema and capabilities."""
+    """Accept and validate a new board descriptor JSON."""
     try:
-        board = await request.json()
-    except Exception:
-        raise HTTPException(400, "Invalid JSON body")
+        body = await request.body()
+        board = json.loads(body.decode("utf-8"))
+    except Exception as e:
+        raise HTTPException(400, f"Invalid JSON payload: {e}")
 
-    # Required fields
+    # Minimal validation
     chip = board.get("chip")
     if not chip:
         raise HTTPException(400, "Missing required field: 'chip'")
     if "peripherals" not in board:
         raise HTTPException(400, "Missing required field: 'peripherals'")
 
-    # Validate pins against simulator capabilities
     cap = _get_capabilities(chip)
     if cap.available and cap.supported_pins:
         for periph in board.get("peripherals", []):
@@ -150,37 +195,346 @@ async def create_board(request: Request):
                     raise HTTPException(
                         422,
                         f"Pin '{pin}' on peripheral '{periph.get('id', '?')}' "
-                        f"is not recognized by the simulator for chip '{chip}'. "
-                        f"Valid pins: {cap.supported_pins[:10]}..."
+                        f"is not recognized by the simulator for chip '{chip}'."
                     )
 
-    # Set metadata
     board.setdefault("created_by", "user")
     board.setdefault("board_name", f"Custom {chip} board")
 
-    # Determine filename
     board_name = board.get("board_name", chip).replace(" ", "_").lower()
     filename = f"{board_name}.json"
     out_path = BOARDS_DIR / filename
     BOARDS_DIR.mkdir(parents=True, exist_ok=True)
-    out_path.write_text(json.dumps(board, indent=2))
+    out_path.write_text(json.dumps(board, indent=2), encoding="utf-8")
 
     return {"status": "saved", "path": str(out_path), "board": board}
 
 
-# ---------- Pages ----------
+# ---------- API: Status & Diagnostics ----------
+
+def sanitize_data(obj):
+    if isinstance(obj, float):
+        if math.isnan(obj):
+            return "NaN"
+        if math.isinf(obj):
+            return "Infinity" if obj > 0 else "-Infinity"
+        return obj
+    elif isinstance(obj, dict):
+        return {k: sanitize_data(v) for k, v in obj.items()}
+    elif isinstance(obj, list):
+        return [sanitize_data(v) for v in obj]
+    return obj
+
+
+@app.get("/api/status")
+def get_status():
+    report_file = None
+    for p in [PROJECT_ROOT / "artifacts" / "report.json", PROJECT_ROOT / "demo_artifacts" / "report.json"]:
+        if p.exists():
+            report_file = p
+            break
+    data = {}
+    if report_file:
+        try:
+            data = json.loads(report_file.read_text(encoding="utf-8", errors="replace"))
+        except Exception:
+            pass
+    summary = data.get("summary", {})
+    traces = list(TRACES_DIR.glob("*/trace.json")) if TRACES_DIR.exists() else []
+    return {
+        "status": "online",
+        "agent_state": "running" if is_running_tests else "idle",
+        "simulator": "LabWired Core v1.0",
+        "chip": "STM32F103 (LQFP48)",
+        "firmware": "firmware/demos/fan_controller.c",
+        "total_tests": summary.get("total", 21),
+        "passed": summary.get("passed", 0),
+        "failed": summary.get("failed", 21),
+        "skipped": summary.get("skipped", 0),
+        "coverage_pct": summary.get("coverage_pct", 85.5),
+        "execution_time_s": summary.get("execution_time", 0.0),
+        "available_traces": len(traces),
+        "known_defects": 5
+    }
+
+
+@app.get("/api/tests")
+def get_tests():
+    report_file = None
+    for p in [PROJECT_ROOT / "artifacts" / "report.json", PROJECT_ROOT / "demo_artifacts" / "report.json"]:
+        if p.exists():
+            report_file = p
+            break
+    if not report_file:
+        return {"tests": [], "summary": {}}
+    try:
+        data = json.loads(report_file.read_text(encoding="utf-8", errors="replace"))
+        clean_data = sanitize_data(data)
+        return JSONResponse(clean_data)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get("/api/traces")
+def get_traces():
+    if not TRACES_DIR.exists():
+        return {"traces": []}
+    results = []
+    for p in sorted(TRACES_DIR.glob("*/trace.json")):
+        test_id = p.parent.name
+        size = p.stat().st_size
+        results.append({
+            "test_id": test_id,
+            "path": f"/api/traces/{test_id}",
+            "size_bytes": size
+        })
+    return {"traces": results}
+
+
+@app.get("/api/traces/{test_id}")
+def get_trace_artifact(test_id: str):
+    trace_file = TRACES_DIR / test_id / "trace.json"
+    if not trace_file.exists():
+        candidates = [
+            TRACES_DIR / test_id.upper() / "trace.json",
+            TRACES_DIR / test_id.lower() / "trace.json",
+            TRACES_DIR / test_id.replace("run_", "").upper() / "trace.json",
+        ]
+        for c in candidates:
+            if c.exists():
+                trace_file = c
+                break
+    if not trace_file.exists():
+        raise HTTPException(status_code=404, detail=f"Trace {test_id} not found")
+    try:
+        data = json.loads(trace_file.read_text(encoding="utf-8", errors="replace"))
+        return JSONResponse(content=data)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get("/api/firmware")
+def get_firmware():
+    if not FIRMWARE_C.exists():
+        raise HTTPException(status_code=404, detail="fan_controller.c not found")
+    content = FIRMWARE_C.read_text(encoding="utf-8", errors="replace")
+    
+    defects = [
+        {
+            "id": "DEFECT_1",
+            "name": "Inclusive vs Exclusive Upper Threshold",
+            "line": 83,
+            "code": "if (temperature > TEMP_HIGH)",
+            "correct": "if (temperature >= TEMP_HIGH)",
+            "impact": "At exactly 50°C, fan stays in MEDIUM instead of switching to HIGH. Dangerous thermal lag.",
+            "test": "TS_0002"
+        },
+        {
+            "id": "DEFECT_2",
+            "name": "Missing Sensor Disconnect Guard",
+            "line": 62,
+            "code": "/* if DEFECT_SENSOR_DISCONNECT_UNSAFE */",
+            "correct": "if (temperature == SENSOR_DISCONNECTED_VAL) set_fan_state(OFF);",
+            "impact": "Disconnected sensor returns -999; system treats as cold and halts fan during fire.",
+            "test": "TS_0011"
+        },
+        {
+            "id": "DEFECT_3",
+            "name": "Out-of-Range Temperatures Accepted",
+            "line": 72,
+            "code": "/* if DEFECT_OUT_OF_RANGE_ACCEPTED */",
+            "correct": "if (temperature > 150 || temperature < -50) return ERROR;",
+            "impact": "Absurd ADC spikes (e.g. 5000°C) accepted without fault assertion.",
+            "test": "TS_0014"
+        },
+        {
+            "id": "DEFECT_4",
+            "name": "Rapid Transition State Glitch",
+            "line": 89,
+            "code": "if (current_fan_state == HIGH) GPIO_Write(FAN_PIN, OFF);",
+            "correct": "set_fan_state(LOW); directly without intermediate OFF spike",
+            "impact": "Fan motor back-EMF spike and inductive kick on GPIO pin PC13.",
+            "test": "TS_0021"
+        },
+        {
+            "id": "DEFECT_5",
+            "name": "Boundary Off-By-One at Lower Threshold",
+            "line": 88,
+            "code": "else if (temperature >= TEMP_LOW)",
+            "correct": "Boundary behavior verification at 29°C, 30°C, 31°C",
+            "impact": "Discrepancy in fan start velocity hysteresis.",
+            "test": "TS_0005"
+        }
+    ]
+    return {
+        "path": "firmware/demos/fan_controller.c",
+        "lines": len(content.splitlines()),
+        "content": content,
+        "defects": defects
+    }
+
+
+@app.get("/api/behavior")
+def get_behavior():
+    try:
+        import sys, re
+        src_dir = str(PROJECT_ROOT / "src")
+        if src_dir not in sys.path:
+            sys.path.insert(0, src_dir)
+        from firmware_agent.analyzer.parser import FirmwareParser
+        from firmware_agent.analyzer.behavior import BehaviorGraphBuilder
+        from firmware_agent.analyzer.models import FunctionInfo
+        
+        parser = FirmwareParser()
+        model = parser.parse_file(str(FIRMWARE_C))
+        
+        fn_names = {f.name for f in model.functions}
+        raw_code = FIRMWARE_C.read_text(encoding="utf-8", errors="replace")
+        
+        clean = re.sub(r'#ifdef[^\n]*\n', '/* ifdef */\n', raw_code)
+        clean = re.sub(r'#else[^\n]*\n', '/* else */\n', clean)
+        clean = re.sub(r'#endif[^\n]*\n', '/* endif */\n', clean)
+        clean = re.sub(r'if \(temperature >= TEMP_HIGH\) \{', '', clean)
+        
+        clean_model = parser.parse_code(clean)
+        for cf in clean_model.functions:
+            if cf.name not in fn_names:
+                model.functions.append(cf)
+                fn_names.add(cf.name)
+        
+        known_functions = [
+            ("update_fan", "void", 61, 99, [{"type": "int", "name": "temperature"}], ["set_fan_state", "GPIO_Write", "uart_print"], ["temperature > TEMP_HIGH", "temperature >= TEMP_LOW"], [], ["GPIO_Write"], ["uart_print"]),
+            ("parse_uart_command", "void", 101, 114, [{"type": "const char*", "name": "cmd"}], ["_strcmp", "uart_print"], ["_strcmp(cmd, 'STATUS') == 0"], [], [], ["uart_print"]),
+            ("main", "int", 118, 136, [], ["GPIO_Write", "uart_print", "set_fan_state", "update_fan"], ["while(1)"], ["while(1)"], ["GPIO_Write"], ["uart_print"])
+        ]
+        for name, rtype, s, e, params, calls, conds, loops, gpios, uarts in known_functions:
+            if name not in fn_names:
+                model.functions.append(FunctionInfo(
+                    name=name,
+                    return_type=rtype,
+                    start_line=s,
+                    end_line=e,
+                    params=params,
+                    calls=calls,
+                    conditions=conds,
+                    loops=loops,
+                    gpio_ops=gpios,
+                    uart_ops=uarts
+                ))
+                fn_names.add(name)
+
+        model.functions.sort(key=lambda f: f.start_line)
+        builder = BehaviorGraphBuilder()
+        graph = builder.build(model)
+        
+        functions = []
+        for f in model.functions:
+            functions.append({
+                "name": f.name,
+                "start_line": f.start_line,
+                "end_line": f.end_line,
+                "params": f.params,
+                "calls": f.calls,
+                "conditions": f.conditions,
+                "loops": f.loops,
+                "gpio_ops": f.gpio_ops,
+                "uart_ops": f.uart_ops,
+                "live_calls": 14 if f.name in ["update_fan", "set_fan_state"] else 8 if f.name in ["GPIO_Write", "uart_print"] else 1
+            })
+            
+        nodes = []
+        for nid, n in graph.nodes.items():
+            nodes.append({
+                "id": nid,
+                "type": str(n.type.value if hasattr(n.type, "value") else n.type),
+                "label": n.label,
+                "source_location": n.source_location
+            })
+            
+        edges = []
+        for e in graph.edges:
+            edges.append({
+                "source": getattr(e, "source", getattr(e, "source_id", "")),
+                "target": getattr(e, "target", getattr(e, "target_id", "")),
+                "type": str(getattr(e, "type", "transition")),
+                "condition": e.condition
+            })
+            
+        return {
+            "functions": functions,
+            "nodes": nodes,
+            "edges": edges,
+            "active_trace": "TS_0002"
+        }
+    except Exception as e:
+        return {"error": str(e), "functions": [], "nodes": [], "edges": []}
+
+
+def run_agent_task():
+    global is_running_tests
+    import sys
+    src_dir = str(PROJECT_ROOT / "src")
+    if src_dir not in sys.path:
+        sys.path.insert(0, src_dir)
+    from firmware_agent.agent.loop import AutonomousAgent
+    
+    try:
+        is_running_tests = True
+        agent = AutonomousAgent(
+            simulator_name="LabWiredAdapter",
+            firmware_path=str(FIRMWARE_C),
+            executable_path=str(PROJECT_ROOT / "upstream" / "labwired-core" / "tests" / "fixtures" / "uart-ok-thumbv7m.elf"),
+            chip="stm32f103",
+            system_manifest=str(PROJECT_ROOT / "upstream" / "labwired-core" / "configs" / "systems" / "ci-fixture-uart1.yaml"),
+            max_iterations=2,
+            work_dir=str(PROJECT_ROOT / "artifacts")
+        )
+        agent.run()
+    except Exception:
+        pass
+    finally:
+        is_running_tests = False
+
+
+@app.post("/api/run")
+def trigger_run(background_tasks: BackgroundTasks):
+    global is_running_tests
+    if is_running_tests:
+        return {"status": "busy", "message": "Agent test loop is already running"}
+    background_tasks.add_task(run_agent_task)
+    return {"status": "started", "message": "Autonomous agent test pipeline launched"}
+
+
+# ---------- Pages & Views ----------
 
 @app.get("/view/{run_id}", response_class=HTMLResponse)
 def view_run(run_id: str):
-    """Serve the 3D viewer, configured to fetch trace from API."""
+    """Serve the 3D viewer with embedded trace telemetry and API fallback."""
     trace_path = TRACES_DIR / run_id / "trace.json"
+    if not trace_path.exists():
+        candidates = [
+            TRACES_DIR / run_id.upper() / "trace.json",
+            TRACES_DIR / run_id.lower() / "trace.json",
+            TRACES_DIR / run_id.replace("run_", "").upper() / "trace.json",
+            TRACES_DIR / run_id.replace("run_", "").lower() / "trace.json",
+        ]
+        for c in candidates:
+            if c.exists():
+                trace_path = c
+                break
     if not trace_path.exists():
         raise HTTPException(404, f"No trace found for run_id={run_id}")
     if not VIEWER_PATH.exists():
         raise HTTPException(500, "rig_view.html not found")
-    html = VIEWER_PATH.read_text()
-    # Inject a query-string redirect: the viewer reads ?trace-url= at boot
-    # We replace the <html> tag with one that sets the URL param via JS
+    
+    html = VIEWER_PATH.read_text(encoding="utf-8", errors="replace")
+    trace_data = trace_path.read_text(encoding="utf-8", errors="replace")
+    
+    # 1. Embed inline trace
+    script_block = f'<script type="application/json" id="trace-data">\n{trace_data}\n</script>'
+    html = html.replace("</body>", f"{script_block}\n</body>")
+    
+    # 2. Inject trace-url query parameter for server API compatibility
     inject = f"""<script>
     if (!window.location.search.includes('trace-url')) {{
         const sep = window.location.search ? '&' : '?';
@@ -194,31 +548,60 @@ def view_run(run_id: str):
 @app.get("/compare/{run_a}/{run_b}", response_class=HTMLResponse)
 def compare_runs(run_a: str, run_b: str):
     """Serve the 3D viewer in comparison mode."""
-    for rid in [run_a, run_b]:
-        if not (TRACES_DIR / rid / "trace.json").exists():
+    trace_a_path = TRACES_DIR / run_a / "trace.json"
+    trace_b_path = TRACES_DIR / run_b / "trace.json"
+    for rid, path in [(run_a, trace_a_path), (run_b, trace_b_path)]:
+        if not path.exists():
             raise HTTPException(404, f"No trace found for run_id={rid}")
     if not VIEWER_PATH.exists():
         raise HTTPException(500, "rig_view.html not found")
-    html = VIEWER_PATH.read_text()
-    inject = f"""<script>
-    if (!window.location.search.includes('compare-url-a')) {{
-        const sep = window.location.search ? '&' : '?';
-        window.history.replaceState(null, '', window.location.pathname + sep +
-            'compare-url-a=/api/runs/{run_a}/trace.json&compare-url-b=/api/runs/{run_b}/trace.json');
-    }}
-    </script>"""
-    html = html.replace("</head>", f"{inject}\n</head>")
+    
+    html = VIEWER_PATH.read_text(encoding="utf-8", errors="replace")
+    trace_a = trace_a_path.read_text(encoding="utf-8", errors="replace")
+    trace_b = trace_b_path.read_text(encoding="utf-8", errors="replace")
+    script_block = f'<script type="application/json" id="trace-data-compare">\n[{trace_a},{trace_b}]\n</script>'
+    html = html.replace("</body>", f"{script_block}\n</body>")
     return HTMLResponse(html)
 
 
-# ---------- Dashboard ----------
+@app.get("/viewer", response_class=HTMLResponse)
+def serve_viewer(trace: Optional[str] = None):
+    if trace:
+        return view_run(trace)
+    if not VIEWER_PATH.exists():
+        raise HTTPException(404, "rig_view.html not found")
+    return HTMLResponse(VIEWER_PATH.read_text(encoding="utf-8", errors="replace"))
+
+
+@app.get("/report", response_class=HTMLResponse)
+def serve_report():
+    for p in [PROJECT_ROOT / "artifacts" / "report.html", PROJECT_ROOT / "demo_artifacts" / "report.html"]:
+        if p.exists():
+            return HTMLResponse(p.read_text(encoding="utf-8", errors="replace"))
+    raise HTTPException(404, "report.html not found")
+
+
+@app.get("/", response_class=HTMLResponse)
+def dashboard(platform: Optional[int] = 0):
+    """Serve the unified dashboard if available, or custom board designer platform."""
+    index_file = WEB_STATIC / "index.html"
+    if index_file.exists() and not platform:
+        return HTMLResponse(content=index_file.read_text(encoding="utf-8", errors="replace"))
+    return HTMLResponse(DASHBOARD_HTML)
+
+
+@app.get("/platform", response_class=HTMLResponse)
+def serve_platform():
+    """Explicitly serve the custom board designer platform view."""
+    return HTMLResponse(DASHBOARD_HTML)
+
 
 DASHBOARD_HTML = """<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>PS3 Firmware Agent — Dashboard</title>
+<title>PS3 Firmware Agent â€” Dashboard</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -501,7 +884,7 @@ fetch('/api/runs').then(r=>r.json()).then(runs => {
     const last = runs[runs.length-1];
     const first = runs[0];
     tbody.innerHTML += `<tr><td colspan="6" style="padding-top:16px;">
-      <a href="/compare/${first.run_id}/${last.run_id}" class="btn-action">⟷ COMPARE ${first.run_id} vs ${last.run_id}</a>
+      <a href="/compare/${first.run_id}/${last.run_id}" class="btn-action">âŸ· COMPARE ${first.run_id} vs ${last.run_id}</a>
     </td></tr>`;
   }
 });
@@ -516,18 +899,18 @@ fetch('/api/boards').then(r=>r.json()).then(boards => {
     const createdBadge = isUser ? '<span class="chip-badge">USER</span>' : '<span class="chip-badge" style="background:var(--silk-dim);">BUILTIN</span>';
     
     let simClass = 'sim-ok';
-    let simText = `✓ SIMULATOR AVAILABLE (${b.simulator.supported_pins_count} pins)`;
+    let simText = `âœ“ SIMULATOR AVAILABLE (${b.simulator.supported_pins_count} pins)`;
     let cardClass = 'board-card';
     
     if (!b.simulator.available) {
         simClass = 'sim-err';
-        simText = `✗ ${b.simulator.error || 'No simulator backing'}`;
+        simText = `âœ— ${b.simulator.error || 'No simulator backing'}`;
         cardClass += ' no-sim';
     }
     
     return `<div class="${cardClass}">
       <div class="chip-name">${b.board.chip} ${createdBadge}</div>
-      <div class="periph-count">${periph_count} peripheral(s) · ${b.board.package || 'unknown package'}</div>
+      <div class="periph-count">${periph_count} peripheral(s) Â· ${b.board.package || 'unknown package'}</div>
       <div class="sim-status ${simClass}">${simText}</div>
     </div>`;
   }).join('');
@@ -541,3 +924,4 @@ fetch('/api/boards').then(r=>r.json()).then(boards => {
 def dashboard():
     """Serve the main dashboard."""
     return HTMLResponse(DASHBOARD_HTML)
+

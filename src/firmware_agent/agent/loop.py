@@ -89,6 +89,16 @@ class AutonomousAgent:
             
             results.append(exec_result)
             
+            try:
+                from firmware_agent.reporting.trace_emitter import emit_trace_v1
+                from firmware_agent.simulator.base import SimulationResult
+                trace_dir = os.path.join("artifacts", "traces", scenario.test_id)
+                os.makedirs(trace_dir, exist_ok=True)
+                sim_res = SimulationResult(**exec_result.simulation_result)
+                emit_trace_v1(sim_res, os.path.join(trace_dir, "trace.json"), chip=self.chip)
+            except Exception:
+                pass
+            
             if exec_result.passed:
                 self.console.print("    [green]PASS[/green]")
             else:

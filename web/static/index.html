@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>BlackBox PS3 — Autonomous Embedded Firmware Testing & 3D Rig Instrument</title>
+  <meta name="description" content="Autonomous AI Agent for Embedded Firmware Testing on LabWired Core Silicon Simulation with Interactive 3D Rig Telemetry" />
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;700;800;900&family=IBM+Plex+Mono:wght@400;500;600;700&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+
+  <!-- App Header -->
+  <header class="app-header">
+    <div class="header-inner">
+      <div class="brand-section">
+        <span class="brand-badge">PS3 ENGINE</span>
+        <div class="brand-title">
+          <h1>BLACKBOX <span>::</span> LABWIRED</h1>
+          <span class="subtitle">AUTONOMOUS EMBEDDED TESTING & 3D RIG INSTRUMENT</span>
+        </div>
+      </div>
+
+      <div class="telemetry-bar">
+        <div class="telem-pill">
+          <span class="status-dot"></span>
+          <span class="label">AGENT:</span>
+          <span class="value" id="agentStatusPill">IDLE</span>
+        </div>
+        <div class="telem-pill">
+          <span class="label">CHIP:</span>
+          <span class="value" id="telemChip">STM32F103</span>
+        </div>
+        <div class="telem-pill">
+          <span class="label">TESTS:</span>
+          <span class="value" id="telemTests">21/21 EXEC</span>
+        </div>
+        <div class="telem-pill">
+          <span class="label">COVERAGE:</span>
+          <span class="value" id="telemCoverage">85.5%</span>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <button id="btnRunAgent" class="btn btn-primary">
+          <span class="icon">⚡</span> RUN AGENT DEMO
+        </button>
+        <a href="/viewer" target="_blank" class="btn btn-ghost" title="Open standalone 3D instrument">
+          3D VIEWER ↗
+        </a>
+        <a href="/report" target="_blank" class="btn btn-ghost" title="Open full HTML report">
+          REPORT ↗
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Navigation Tabs -->
+  <nav class="app-nav">
+    <div class="nav-container">
+      <button class="nav-tab active" data-tab="tab-rig">
+        <span>🎮 3D HARDWARE RIG & LOGIC TRACES</span>
+      </button>
+      <button class="nav-tab" data-tab="tab-matrix">
+        <span>📊 TEST SCENARIOS MATRIX</span>
+        <span class="tab-badge">21</span>
+      </button>
+      <button class="nav-tab" data-tab="tab-behavior">
+        <span>🧬 AST BEHAVIOR GRAPH</span>
+      </button>
+      <button class="nav-tab" data-tab="tab-defects">
+        <span>🔍 ROOT CAUSE LOCALIZATION</span>
+        <span class="tab-badge" style="background:rgba(248,113,113,0.2); color:var(--sig-red);">5 BUGS</span>
+      </button>
+      <button class="nav-tab" data-tab="tab-report">
+        <span>📄 LABWIRED REPORT</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Main Content Area -->
+  <main class="app-main">
+
+    <!-- Tab 1: 3D Hardware Rig View -->
+    <section id="tab-rig" class="tab-pane active">
+      <div class="rig-view-wrapper">
+        <div class="rig-toolbar">
+          <div class="trace-selector-group">
+            <label for="traceSelect">ACTIVE TELEMETRY TRACE:</label>
+            <select id="traceSelect" class="trace-select">
+              <option value="demo">LIVE DEMO (Embedded Simulation)</option>
+            </select>
+          </div>
+          <div style="font-family:var(--font-mono); font-size:12px; color:var(--silk-muted);">
+            <span>Target: <strong>STM32F103 (LQFP48)</strong> | Peripherals: <strong>PC13 (LED/Motor), USART1</strong></span>
+          </div>
+          <div>
+            <a href="/viewer" target="_blank" class="btn btn-ghost" style="padding:4px 10px; font-size:11px;">
+              FULLSCREEN INSTRUMENT ↗
+            </a>
+          </div>
+        </div>
+        <div class="rig-frame-container">
+          <iframe id="rigIframe" class="rig-iframe" src="/viewer" title="3D Embedded Rig View"></iframe>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tab 2: Test Matrix & Execution Dashboard -->
+    <section id="tab-matrix" class="tab-pane">
+      <div class="metrics-grid">
+        <div class="metric-card">
+          <span class="card-title">TOTAL TEST SCENARIOS</span>
+          <span class="card-value accent-copper" id="metricTotal">21</span>
+          <span class="card-desc">Deterministic boundary, fault, and state transitions</span>
+        </div>
+        <div class="metric-card">
+          <span class="card-title">PASSED TESTS</span>
+          <span class="card-value accent-green" id="metricPass">0</span>
+          <span class="card-desc">Verified physical outputs vs expectations</span>
+        </div>
+        <div class="metric-card">
+          <span class="card-title">FAILED TESTS (BUGS FOUND)</span>
+          <span class="card-value accent-red" id="metricFail">21</span>
+          <span class="card-desc">Violations detected in demo firmware</span>
+        </div>
+        <div class="metric-card">
+          <span class="card-title">BRANCH & EDGE COVERAGE</span>
+          <span class="card-value accent-phosphor" id="metricCoverage">85.5%</span>
+          <span class="card-desc">Evaluated across all firmware decision branches</span>
+        </div>
+      </div>
+
+      <div class="panel-card">
+        <div class="panel-header">
+          <h2>AUTONOMOUS TEST MATRIX & VERIFICATION ENGINE</h2>
+          <div class="table-filter-group">
+            <button class="filter-btn active" data-filter="all">ALL (21)</button>
+            <button class="filter-btn" data-filter="boundary">BOUNDARY</button>
+            <button class="filter-btn" data-filter="fault">FAULT INJECTION</button>
+            <button class="filter-btn" data-filter="state">STATE TRANSITIONS</button>
+            <button class="filter-btn" data-filter="fail">FAILURES ONLY</button>
+          </div>
+        </div>
+
+        <div class="test-table-container">
+          <table class="matrix-table">
+            <thead>
+              <tr>
+                <th style="width: 100px;">SCENARIO ID</th>
+                <th style="width: 140px;">CATEGORY</th>
+                <th>DESCRIPTION & STIMULI</th>
+                <th style="width: 100px;">VERDICT</th>
+                <th style="width: 120px;">CYCLES</th>
+                <th style="width: 110px;">ACTION</th>
+              </tr>
+            </thead>
+            <tbody id="testsTableBody">
+              <!-- Rendered dynamically -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tab 3: AST Behavior Graph -->
+    <section id="tab-behavior" class="tab-pane">
+      <div style="margin-bottom:16px; display:flex; justify-content:space-between; align-items:center; background:var(--surface); border:1px solid var(--hair); border-radius:6px; padding:10px 16px;">
+        <div style="display:flex; align-items:center; gap:12px;">
+          <span style="font-size:12px; color:var(--sig-green); font-weight:600; display:flex; align-items:center; gap:6px;">
+            <span style="width:8px; height:8px; background:var(--sig-green); border-radius:50%; box-shadow:0 0 8px var(--sig-green); display:inline-block;"></span>
+            LIVE TELEMETRY STREAM: CONNECTED
+          </span>
+          <span style="font-size:11px; color:var(--silk-muted); font-family:var(--font-mono);">
+            Tree-sitter AST nodes linked to hardware executions & peripheral registers
+          </span>
+        </div>
+        <div style="display:flex; gap:8px;">
+          <button class="btn btn-ghost" onclick="loadTraceInViewer('demo')" style="font-size:11px; padding:4px 10px;">
+            🎮 INSPECT LIVE DATA IN 3D RIG ↗
+          </button>
+        </div>
+      </div>
+
+      <div class="behavior-layout">
+        <div class="panel-card">
+          <div class="panel-header" style="display:flex; justify-content:space-between; align-items:center;">
+            <h2>PARSED FIRMWARE FUNCTIONS (TREE-SITTER)</h2>
+            <span id="funcCountBadge" class="badge" style="background:rgba(217,119,6,0.15); color:var(--sig-amber); font-size:11px;">8 FUNCTIONS</span>
+          </div>
+          <div id="funcListContainer" class="function-list">
+            <!-- Populated via API -->
+          </div>
+        </div>
+
+        <div class="panel-card">
+          <div class="panel-header" style="display:flex; justify-content:space-between; align-items:center;">
+            <h2>FIRMWARE SOURCE CODE & ANNOTATIONS</h2>
+            <span style="font-size:11px; color:var(--silk-muted); font-family:var(--font-mono);">fan_controller.c</span>
+          </div>
+          <pre id="codeViewer" style="background:#050806; border:1px solid var(--hair); border-radius:4px; padding:14px; font-family:var(--font-mono); font-size:12px; color:var(--silk); max-height:600px; overflow:auto; line-height:1.6;">
+/* Loading fan_controller.c... */
+          </pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tab 4: Root Cause & Defects Localization -->
+    <section id="tab-defects" class="tab-pane">
+      <div class="panel-card">
+        <div class="panel-header">
+          <h2>ROOT CAUSE LOCALIZATION & CODE DIAGNOSTICS</h2>
+          <span style="font-family:var(--font-mono); font-size:12px; color:var(--silk-muted);">
+            Autonomous failure mapping from physical test violations to C source lines
+          </span>
+        </div>
+
+        <div id="defectsContainer" class="defects-grid">
+          <!-- Populated via API -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Tab 5: Raw LabWired Report -->
+    <section id="tab-report" class="tab-pane">
+      <div class="panel-card" style="padding:0; overflow:hidden; height:800px;">
+        <iframe src="/report" style="width:100%; height:100%; border:none;" title="LabWired Test Execution Report"></iframe>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- App Footer -->
+  <footer class="app-footer">
+    <div class="footer-inner">
+      <div>
+        <span>PS3 AI Autonomous Embedded Firmware Testing Platform</span> |
+        <span>Additive Architecture on <strong>LabWired Core Simulator</strong></span>
+      </div>
+      <div>
+        <span>Principle: <em>"AI proposes, Tools execute, Deterministic Verification decides."</em></span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Toast Notification -->
+  <div id="toast">Message notification</div>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>

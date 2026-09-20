@@ -1383,6 +1383,30 @@
       loadTrace(makeDemoTrace(), true); // boot straight into demo so the instrument is alive immediately
   }
 
+  // Dynamic message and query param loading
+  window.addEventListener('message', function(event) {
+    if (event.data && event.data.type === 'LOAD_TRACE') {
+      loadTrace(event.data.trace, false);
+    } else if (event.data && event.data.type === 'LOAD_DEMO') {
+      loadTrace(makeDemoTrace(), true);
+    }
+  });
+
+  try {
+    const urlParams = new URLSearchParams(window.location.search);
+    const traceParam = urlParams.get('trace');
+    if (traceParam) {
+      fetch('/api/traces/' + encodeURIComponent(traceParam))
+        .then(function(r) { return r.json(); })
+        .then(function(data) {
+          if (data && data.channels) {
+            loadTrace(data, false);
+          }
+        })
+        .catch(function(err) { console.warn("Failed loading trace param:", err); });
+    }
+  } catch(e) {}
+
   // Monkey-patch loadTrace to render fallback
   const _loadTrace = loadTrace;
   loadTrace = function(tr, demo) {
