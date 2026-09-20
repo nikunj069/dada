@@ -786,6 +786,15 @@ document.addEventListener('DOMContentLoaded', () => {
               fetchFirmware(), fetchBehavior(), fetchBoards()
             ]);
             showToast('Agent completed! All data refreshed.');
+            
+            // CRITICAL FIX: Automatically load the newly generated trace into the 3D Rig!
+            if (traceSelect && traceSelect.options.length > 1) {
+              const latestTraceId = traceSelect.options[traceSelect.options.length - 1].value;
+              if (latestTraceId !== 'demo') {
+                traceSelect.value = latestTraceId;
+                traceSelect.dispatchEvent(new Event('change'));
+              }
+            }
           }
         }, 2000);
       } catch (e) {
@@ -874,6 +883,17 @@ document.addEventListener('DOMContentLoaded', () => {
           // Auto switch to Dashboard tab
           const dashTab = document.querySelector('[data-tab="tab-rig"]');
           if (dashTab) dashTab.click();
+          
+          // CRITICAL FIX: Automatically load the newly generated trace into the 3D Rig!
+          if (traceSelect && traceSelect.options.length > 1) {
+            // Pick the last generated trace
+            const latestTraceId = traceSelect.options[traceSelect.options.length - 1].value;
+            if (latestTraceId !== 'demo') {
+              traceSelect.value = latestTraceId;
+              // Trigger change event to load it in the iframe
+              traceSelect.dispatchEvent(new Event('change'));
+            }
+          }
         }
       }, 2000);
     } catch (e) {
